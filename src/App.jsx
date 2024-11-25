@@ -1,9 +1,19 @@
-import "./App.css";
+import NavBar from "./components/NavBar";
+import NoteViewer from "./components/NoteViewer";
+import Option from "./components/Option";
+import LoginForm from "./components/LoginForm";
+import NoteEditor from "./components/NoteEditor";
+import Notification from "./components/Notification";
 
 function App() {
   return (
     <>
-      <h2>Notable Block</h2>
+      <NavBar />
+      <NoteViewer />
+      <Option />
+      <LoginForm />
+      <NoteEditor />
+      <Notification />
     </>
   );
 }
