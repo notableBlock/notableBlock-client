@@ -22,7 +22,7 @@ ${reset}
         height: 100%;
         font-size: 1rem;
         line-height: 1;
-        font-family: 'Noto Sans KR', sans-serif;
+        font-family: "Noto Sans KR", sans-serif;
         background-color: ${({ theme }) => theme.color.whiteColor};
     }
 
