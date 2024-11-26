@@ -1,19 +1,52 @@
-import NavBar from "./components/NavBar";
-import NoteViewer from "./components/NoteViewer";
-import Option from "./components/Option";
-import LoginForm from "./components/LoginForm";
-import NoteEditor from "./components/NoteEditor";
-import Notification from "./components/Notification";
+import { Routes, Route } from "react-router";
+
+import UserPage from "./pages/NotePage";
+import LoginPage from "./pages/LoginPage";
+import SharedPage from "./pages/SharedPage";
+import NoteTreePage from "./pages/NoteTreePage";
+import ErrorPage from "./pages/ErrorPage";
+import NoteDetailPage from "./pages/NoteDetailPage";
+import Layout from "./components/common/Layout";
 
 function App() {
   return (
     <>
-      <NavBar />
-      <NoteViewer />
-      <Option />
-      <LoginForm />
-      <NoteEditor />
-      <Notification />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <UserPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/shared"
+          element={
+            <Layout>
+              <SharedPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/noteTree"
+          element={
+            <Layout>
+              <NoteTreePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/note/:id"
+          element={
+            <Layout>
+              <NoteDetailPage />
+            </Layout>
+          }
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
     </>
   );
 }
