@@ -6,7 +6,7 @@ const OptionLayout = styled.div`
   width: 5rem;
   background: ${({ theme }) => theme.color.whiteColor};
   border: 1px solid ${({ theme }) => theme.color.borderColor};
-  box-shadow: 0 4px 12px ${({ theme }) => theme.color.shadowColor};
+  box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
 const OptionItem = styled.button`

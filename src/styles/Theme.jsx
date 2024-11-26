@@ -5,6 +5,7 @@ const color = {
   noteBlockColor: "#E3E3E3",
   messageColor: "#E8EFF5",
   borderColor: "#D6D6D6",
+  activeColor: "#FFFFFF40",
   shadowColor: "#0000003F",
   blackColor: "#000000",
   whiteColor: "#FFFFFF",
@@ -31,7 +32,6 @@ const fontWeight = {
   semiBold: "600",
   bold: "700",
   extraBold: "800",
-  black: "900",
   title: "900",
 };
 
