@@ -6,14 +6,15 @@ import SharedPage from "./pages/SharedPage";
 import NoteTreePage from "./pages/NoteTreePage";
 import ErrorPage from "./pages/ErrorPage";
 import NoteDetailPage from "./pages/NoteDetailPage";
-import Layout from "./components/common/Layout";
+import NicknamePage from "./pages/NicknamePage";
 
+import Layout from "./components/common/Layout";
 function App() {
   return (
     <>
       <Routes>
         <Route
-          path="/"
+          path="/user/:id"
           element={
             <Layout>
               <UserPage />
@@ -45,6 +46,7 @@ function App() {
           }
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/nickname" element={<NicknamePage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
