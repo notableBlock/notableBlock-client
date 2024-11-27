@@ -12,4 +12,8 @@ const LoginPageLayout = styled.div`
   );
 `;
 
-export { LoginPageLayout };
+const LoginPageItem = styled.div`
+  margin: auto;
+`;
+
+export { LoginPageLayout, LoginPageItem };
