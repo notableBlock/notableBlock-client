@@ -6,11 +6,13 @@ class NoteBlock extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.contentEditable = React.createRef();
     this.state = {
       htmlBackup: null,
       html: "",
       tag: "p",
+      previousKey: "",
     };
   }
 
@@ -35,6 +37,27 @@ class NoteBlock extends React.Component {
     this.setState({ html: e.target.value });
   }
 
+  handleKeyDown(e) {
+    if (e.key === "/") {
+      this.setState({ htmlBackup: this.state.html });
+    } else if (e.key === "Enter" && this.state.previousKey !== "Shift") {
+      if (e.nativeEvent.isComposing) return;
+      e.preventDefault();
+      this.props.addBlock({
+        id: this.props.id,
+        ref: this.contentEditable.current,
+      });
+    } else if (e.key === "Backspace" && (this.state.html === "" || this.state.html === "<br>")) {
+      e.preventDefault();
+      this.props.deleteBlock({
+        id: this.props.id,
+        ref: this.contentEditable.current,
+      });
+    }
+
+    this.setState({ previousKey: e.key });
+  }
+
   render() {
     return (
       <S.NoteBlock
@@ -42,6 +65,7 @@ class NoteBlock extends React.Component {
         html={this.state.html}
         tagName={this.state.tag}
         onChange={this.handleChange}
+        onKeyDown={this.handleKeyDown}
       />
     );
   }
