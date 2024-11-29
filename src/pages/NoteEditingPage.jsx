@@ -3,15 +3,15 @@ import * as S from "../styles/NoteDetailPageStyle";
 import NoteEditor from "../components/NoteEditor";
 import Button from "../components/common/Button";
 
-function NoteDetailPage() {
+function NoteEditingPage() {
   return (
-    <S.NoteDetailPageLayout>
+    <S.NoteEditingPageLayout>
       <NoteEditor />
-      <S.NoteDetailItem>
+      <S.EditingPageItem>
         <Button />
-      </S.NoteDetailItem>
-    </S.NoteDetailPageLayout>
+      </S.EditingPageItem>
+    </S.NoteEditingPageLayout>
   );
 }
 
-export default NoteDetailPage;
+export default NoteEditingPage;

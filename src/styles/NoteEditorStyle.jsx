@@ -9,12 +9,4 @@ const NoteEditorLayout = styled.div`
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
-const NoteEditorBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  align-item: center;
-  padding: 1rem;
-  background: ${({ theme }) => theme.color.noteBlockColor};
-`;
-
-export { NoteEditorLayout, NoteEditorBlock };
+export { NoteEditorLayout };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const NoteDetailPageLayout = styled.div`
+const NoteEditingPageLayout = styled.div`
   display: flex;
   width: 90vw;
   height: 100%;
@@ -10,10 +10,10 @@ const NoteDetailPageLayout = styled.div`
   }
 `;
 
-const NoteDetailItem = styled.div`
+const NoteEditingPageItem = styled.div`
   position: absolute;
   right: 3rem;
   bottom: 3rem;
 `;
 
-export { NoteDetailPageLayout, NoteDetailItem };
+export { NoteEditingPageLayout, NoteEditingPageItem };
