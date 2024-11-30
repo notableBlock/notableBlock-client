@@ -8,7 +8,7 @@ const NoteViewerLayout = styled.div`
   padding-top: 1rem;
   padding-bottom: 1rem;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
-  background: ${({ theme }) => theme.color.noteColor};
+  background-color: ${({ theme }) => theme.color.noteColor};
   gap: 1rem;
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;

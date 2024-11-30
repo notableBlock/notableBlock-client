@@ -14,7 +14,7 @@ const NotiLayout = styled.div`
 const NotiMessage = styled.div`
   padding: 1rem;
   border-radius: 0.35rem;
-  background: ${({ theme }) => theme.color.messageColor};
+  background-color: ${({ theme }) => theme.color.messageColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
   margin: 1rem;
 `;

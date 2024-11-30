@@ -8,7 +8,7 @@ const FormLayout = styled.div`
   height: 22rem;
   margin: auto;
   border-radius: 0.5rem;
-  background: ${({ theme }) => theme.color.whiteColor};
+  background-color: ${({ theme }) => theme.color.whiteColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 

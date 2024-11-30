@@ -38,8 +38,12 @@ const NavBarLink = styled(NavLink)`
   padding: 1rem;
 
   &.active {
-    background: ${({ theme }) => theme.color.activeColor};
+    background-color: ${({ theme }) => theme.color.activeColor};
     font-weight: bold;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.activeColor};
   }
 `;
 

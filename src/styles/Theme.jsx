@@ -6,6 +6,8 @@ const color = {
   messageColor: "#E8EFF5",
   borderColor: "#D6D6D6",
   activeColor: "#FFFFFF40",
+  focusColor: "#F5F6FB",
+  hoverColor: "#F8F8F8",
   shadowColor: "#0000003F",
   blackColor: "#000000",
   whiteColor: "#FFFFFF",

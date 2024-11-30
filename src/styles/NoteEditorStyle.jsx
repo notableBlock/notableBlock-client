@@ -5,7 +5,7 @@ const NoteEditorLayout = styled.div`
   height: 90%;
   padding: 3rem;
   margin: auto;
-  background: ${({ theme }) => theme.color.noteColor};
+  background-color: ${({ theme }) => theme.color.noteColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
