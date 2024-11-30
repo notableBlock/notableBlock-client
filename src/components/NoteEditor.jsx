@@ -8,7 +8,7 @@ import moveCaretToEnd from "./utils/moveCaretToEnd";
 import * as S from "../styles/NoteEditorStyle";
 
 function NoteEditor() {
-  const initialBlock = useMemo(() => ({ id: uid(), html: "", tag: "p" }), []);
+  const initialBlock = useMemo(() => ({ id: uid(), html: "", tag: "h1" }), []);
 
   const [blocks, setBlocks] = useState([initialBlock]);
   const addedBlockRef = useRef(null);
@@ -53,7 +53,7 @@ function NoteEditor() {
   const handleAddBlock = useCallback(
     (currentBlock) => {
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
-      const newBlock = { ...initialBlock, id: uid() };
+      const newBlock = { ...initialBlock, id: uid(), tag: "p" };
       const nextBlock = currentBlock.ref.nextElementSibling;
 
       updatedBlocks.splice(index + 1, 0, newBlock);
@@ -70,10 +70,12 @@ function NoteEditor() {
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
       const prevBlock = currentBlock.ref.previousElementSibling;
 
-      focusedBlockRef.current = prevBlock;
-      updatedBlocks.splice(index, 1);
+      if (prevBlock) {
+        focusedBlockRef.current = prevBlock;
+        updatedBlocks.splice(index, 1);
 
-      setBlocks(updatedBlocks);
+        setBlocks(updatedBlocks);
+      }
     },
     [blocks, updatedBlocks]
   );
