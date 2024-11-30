@@ -2,8 +2,8 @@ import React from "react";
 
 import SelectMenu from "./SelectMenu";
 
-import getCaretCoordinates from "./utils/getCaretCoordinates";
-import moveCaretToEnd from "./utils/moveCaretToEnd";
+import getCaretCoordinates from "../utils/getCaretCoordinates";
+import moveCaretToEnd from "../utils/moveCaretToEnd";
 
 import * as S from "../styles/NoteBlockStyle";
 
