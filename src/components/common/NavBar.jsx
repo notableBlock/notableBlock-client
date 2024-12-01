@@ -1,5 +1,7 @@
 import useGoogleAuth from "../../hooks/useGoogleAuth";
 
+import notableBlockLogo from "../../assets/images/notable-block-logo.png";
+
 import * as S from "../../styles/NavBarStyle";
 
 function NavBar() {
@@ -8,7 +10,7 @@ function NavBar() {
   return (
     <S.NavBarLayout>
       <S.NavBarItem>
-        <img src="/notable-block-logo.png" alt="notable-block 로고" />
+        <img src={notableBlockLogo} alt="notable-block 로고" />
       </S.NavBarItem>
       <S.NavBarItem type="title">Notable Block</S.NavBarItem>
       <S.NavBarLink to={`/user/${profile}`}>내 노트</S.NavBarLink>

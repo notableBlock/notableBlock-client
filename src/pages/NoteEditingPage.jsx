@@ -1,15 +1,17 @@
-import * as S from "../styles/NoteDetailPageStyle";
-
 import NoteEditor from "../components/NoteEditor";
 import Button from "../components/common/Button";
+
+import plusOptionIcon from "../assets/images/plus-option-icon.png";
+
+import * as S from "../styles/NoteEditingPageStyle";
 
 function NoteEditingPage() {
   return (
     <S.NoteEditingPageLayout>
       <NoteEditor />
-      <S.EditingPageItem>
-        <Button />
-      </S.EditingPageItem>
+      <S.NoteEditingPageItem>
+        <Button image={plusOptionIcon} />
+      </S.NoteEditingPageItem>
     </S.NoteEditingPageLayout>
   );
 }

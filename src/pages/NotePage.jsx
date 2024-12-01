@@ -1,5 +1,7 @@
 import * as S from "../styles/NotePageStyle";
 
+import plusOptionIcon from "../assets/images/plus-option-icon.png";
+
 import Button from "../components/common/Button";
 import NoteViewer from "../components/NoteViewer";
 
@@ -10,7 +12,7 @@ function NotePage() {
         <NoteViewer />
       </S.NoteLink>
       <S.NotePageItem type="option">
-        <Button />
+        <Button image={plusOptionIcon} />
       </S.NotePageItem>
     </S.NotePageLayout>
   );

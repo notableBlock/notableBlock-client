@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ButtonLayout = styled.button`
-  height: 2.8rem;
+  padding: 0.5rem;
   border-radius: 10rem;
   background-color: ${({ theme }) => theme.color.mainColor};
   color: ${({ theme }) => theme.color.whiteColor};

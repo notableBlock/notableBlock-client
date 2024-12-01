@@ -2,10 +2,12 @@ import ContentEditable from "react-contenteditable";
 
 import styled from "styled-components";
 
-const NoteBlock = styled(ContentEditable)`
+const NoteBlockLayout = styled.div``;
+
+const NoteBlockItem = styled(ContentEditable)`
   display: flex;
+  text-align: left;
   margin-top: 1rem;
-  justify-content: center;
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.noteBlockColor};
 
@@ -18,4 +20,4 @@ const NoteBlock = styled(ContentEditable)`
   }
 `;
 
-export { NoteBlock };
+export { NoteBlockLayout, NoteBlockItem };

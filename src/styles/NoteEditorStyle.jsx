@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const NoteEditorLayout = styled.div`
+  overflow: auto;
   width: 90%;
   height: 90%;
   padding: 3rem;
