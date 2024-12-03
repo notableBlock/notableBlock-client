@@ -1,12 +1,12 @@
 import { useRef, useEffect, useCallback, useMemo } from "react";
 
-import { useBlocksStore, initialBlock } from "../stores/useBlocksStore";
+import { useNoteStore, initialBlock } from "../stores/useNoteStore";
 
 import uid from "../utils/uid";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 
 const useControlBlocks = () => {
-  const { blocks, setBlocks } = useBlocksStore();
+  const { blocks, setBlocks } = useNoteStore();
 
   const addedBlockRef = useRef(null);
   const focusedBlockRef = useRef(null);

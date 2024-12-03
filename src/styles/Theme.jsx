@@ -5,6 +5,8 @@ const color = {
   noteBlockColor: "#E3E3E3",
   messageColor: "#E8EFF5",
   borderColor: "#D6D6D6",
+  successColor: "#49C54F",
+  failColor: "#E32D2D",
   activeColor: "#FFFFFF40",
   focusColor: "#F5F6FB",
   hoverColor: "#F8F8F8",
