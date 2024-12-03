@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 import { googleLogout } from "@react-oauth/google";
 import axios from "axios";
 
+import useUserStore from "../stores/useUserStore";
+
 const useGoogleAuth = () => {
   const navigate = useNavigate();
 
-  const [profile, setProfile] = useState(null);
-  const [idToken, setIdToken] = useState(null);
+  const { userId, setUserId, idToken, setIdToken } = useUserStore();
 
   const handleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
@@ -22,7 +23,7 @@ const useGoogleAuth = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     googleLogout();
-    setProfile(null);
+    setUserId(null);
     setIdToken(null);
     navigate("/login");
   };
@@ -33,12 +34,12 @@ const useGoogleAuth = () => {
     if (savedUserData) {
       const userId = JSON.parse(savedUserData);
 
-      setProfile(userId);
-      navigate(`/user/${userId}`);
+      setUserId(userId);
+      navigate(`/notes`);
     } else {
       navigate("/login");
     }
-  }, []);
+  }, [setUserId]);
 
   useEffect(() => {
     if (idToken) {
@@ -47,11 +48,10 @@ const useGoogleAuth = () => {
           const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/users`, {
             token: idToken,
           });
-
           localStorage.setItem("user", JSON.stringify(res.data.user._id));
 
-          setProfile(res.data.user._id);
-          navigate(`/user/${res.data.user._id}`);
+          setUserId(res.data.user._id);
+          navigate(`/notes`);
         } catch (error) {
           handleLoginError(error);
         }
@@ -59,10 +59,10 @@ const useGoogleAuth = () => {
 
       fetchUserProfile();
     }
-  }, [idToken, navigate]);
+  }, [idToken]);
 
   return {
-    profile,
+    userId,
     handleLoginSuccess,
     handleLogout,
   };

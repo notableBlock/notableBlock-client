@@ -1,14 +1,14 @@
-import * as S from "../styles/NotePageStyle";
+import * as S from "../styles/UserPageStyle";
 
 import NoteViewer from "../components/NoteViewer";
 
 function SharedPage() {
   return (
-    <S.NotePageLayout>
+    <S.UserPageLayout>
       <S.NoteLink>
         <NoteViewer to="/note/:id" />
       </S.NoteLink>
-    </S.NotePageLayout>
+    </S.UserPageLayout>
   );
 }
 

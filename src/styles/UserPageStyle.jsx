@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 import styled from "styled-components";
 
-const NotePageLayout = styled.div`
+const UserPageLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 5rem;
@@ -11,7 +11,7 @@ const NotePageLayout = styled.div`
 
 const NoteLink = styled(NavLink)``;
 
-const NotePageItem = styled.div`
+const UserPageItem = styled.div`
   ${({ type }) =>
     type === "option" &&
     `
@@ -20,4 +20,4 @@ const NotePageItem = styled.div`
     bottom: 3rem;`}
 `;
 
-export { NotePageLayout, NoteLink, NotePageItem };
+export { UserPageLayout, NoteLink, UserPageItem };

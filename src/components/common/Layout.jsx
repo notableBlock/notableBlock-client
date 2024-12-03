@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 import NavBar from "./NavBar";
 import Button from "./Button";
 
@@ -9,7 +11,9 @@ function Layout({ children }) {
   return (
     <S.Layout>
       <NavBar />
-      <S.Item>{children}</S.Item>
+      <S.Item>
+        <Outlet />
+      </S.Item>
       <S.Item type="notification">
         <Button image={notificationIcon} />
       </S.Item>
