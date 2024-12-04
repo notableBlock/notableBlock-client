@@ -4,11 +4,15 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ThemeProvider } from "styled-components";
+import axios from "axios";
 
 import App from "./App.jsx";
 
 import GlobalStyle from "./styles/GlobalStyle.jsx";
 import Theme from "./styles/Theme.jsx";
+
+axios.defaults.baseURL = `${import.meta.env.VITE_SERVER_URL}`;
+axios.defaults.withCredentials = true;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

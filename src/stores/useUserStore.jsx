@@ -1,11 +1,9 @@
 import { create } from "zustand";
 
 const useUserStore = create((set) => ({
-  userId: null,
-  idToken: null,
+  profile: null,
 
-  setUserId: (userId) => set({ userId: userId }),
-  setIdToken: (idToken) => set({ idToken: idToken }),
+  setProfile: (profile) => set({ profile: profile }),
 }));
 
 export default useUserStore;
