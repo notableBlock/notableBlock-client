@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import notableBlockLogo from "../assets/images/notable-block-logo.png";
+
 const FormLayout = styled.div`
   display: flex;
   justify-content: center;
@@ -20,10 +22,13 @@ const FormTitle = styled.div`
     font-size: ${({ theme }) => theme.fontSize.xxxLarge};
     font-weight: ${({ theme }) => theme.fontWeight.title};
   }
+`;
 
-  img {
-    width: 5.5rem;
-  }
+const FormImage = styled.img.attrs({
+  src: notableBlockLogo,
+  alt: "notable-block 로고",
+})`
+  width: 5rem;
 `;
 
 const FormButton = styled.button`
@@ -42,4 +47,4 @@ const FormButton = styled.button`
   }
 `;
 
-export { FormLayout, FormTitle, FormButton };
+export { FormLayout, FormTitle, FormImage, FormButton };

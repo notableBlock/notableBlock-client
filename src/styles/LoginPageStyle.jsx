@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
+import googleLogo from "../assets/images/google-logo.png";
+
 const LoginPageLayout = styled.div`
   display: flex;
   justify-content: center;
-  align-item: center;
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
@@ -24,10 +25,13 @@ const LoginPageButton = styled.button`
   box-shadow: 0 4px 12px ${({ theme }) => theme.color.shadowColor};
   font-weight: ${({ theme }) => theme.fontWeight.semiBold};
   cursor: pointer;
-
-  img {
-    width: 1rem;
-  }
 `;
 
-export { LoginPageLayout, LoginPageButton };
+const LoginPageImage = styled.img.attrs({
+  src: googleLogo,
+  alt: "구글 로고",
+})`
+  width: 1rem;
+`;
+
+export { LoginPageLayout, LoginPageButton, LoginPageImage };

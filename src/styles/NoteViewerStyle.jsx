@@ -41,4 +41,11 @@ const NoteViewerFooter = styled.div`
   padding-left: 1rem;
 `;
 
-export { NoteViewerLayout, NoteViewerHeader, NoteViewerContent, NoteViewerFooter };
+const NoteViewerImage = styled.img.attrs(({ $src }) => ({
+  src: $src,
+  alt: "사용자 사진",
+}))`
+  width: 3rem;
+`;
+
+export { NoteViewerLayout, NoteViewerHeader, NoteViewerContent, NoteViewerFooter, NoteViewerImage };

@@ -29,9 +29,9 @@ function NoteViewer({
         })}
       </S.NoteViewerContent>
       <S.NoteViewerFooter>
-        <img src={creatorPicture} alt="원본소유자 사진" />
+        <S.NoteViewerImage $src={creatorPicture} />
         <p>원본 소유자: {creator}</p>
-        <img src={editorPicture} alt="수정자 사진" />
+        <S.NoteViewerImage $src={editorPicture} />
         <p>수정자: {editor}</p>
         <p>마지막 수정날짜: {updatedAt}</p>
       </S.NoteViewerFooter>

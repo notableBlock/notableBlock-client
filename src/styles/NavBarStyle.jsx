@@ -1,5 +1,7 @@
 import { NavLink } from "react-router";
 
+import notableBlockLogo from "../assets/images/notable-block-logo.png";
+
 import styled from "styled-components";
 
 const NavBarLayout = styled.nav`
@@ -17,10 +19,6 @@ const NavBarLayout = styled.nav`
   );
   color: ${({ theme }) => theme.color.whiteColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
-
-  img {
-    width: 3rem;
-  }
 `;
 
 const NavBarItem = styled.div`
@@ -32,6 +30,20 @@ const NavBarItem = styled.div`
     `
     font-weight: ${theme.fontWeight.bold};
   `}
+
+  ${({ type }) =>
+    type === "logout" &&
+    `
+    cursor: pointer;
+  `}
+`;
+
+const NavBarImage = styled.img.attrs(({ $picture }) => ({
+  src: $picture || notableBlockLogo,
+  alt: $picture ? "사용자 사진" : "notable-block 로고",
+}))`
+  width: 2.5rem;
+  border-radius: 5rem;
 `;
 
 const NavBarLink = styled(NavLink)`
@@ -54,4 +66,4 @@ const NavBarUserContainer = styled.div`
   color: ${({ theme }) => theme.color.whiteColor};
 `;
 
-export { NavBarLayout, NavBarItem, NavBarLink, NavBarUserContainer };
+export { NavBarLayout, NavBarItem, NavBarImage, NavBarLink, NavBarUserContainer };
