@@ -3,7 +3,7 @@ import styled from "styled-components";
 const NoteViewerLayout = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30rem;
+  width: 80vw;
   height: 100%;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -11,6 +11,11 @@ const NoteViewerLayout = styled.div`
   background-color: ${({ theme }) => theme.color.noteColor};
   gap: 1rem;
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
+
+  img {
+    width: 2rem;
+    border-radius: 5rem;
+  }
 `;
 
 const NoteViewerHeader = styled.div`
@@ -21,7 +26,10 @@ const NoteViewerHeader = styled.div`
 `;
 
 const NoteViewerContent = styled.div`
-  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 3rem;
   border-top: 1px solid ${({ theme }) => theme.color.borderColor};
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
 `;
