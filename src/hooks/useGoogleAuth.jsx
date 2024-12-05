@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
-
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 
 import useUserStore from "../stores/useUserStore";
+
+import { login } from "../services/googleAuth";
 
 const useGoogleAuth = () => {
   const navigate = useNavigate();
@@ -12,12 +12,13 @@ const useGoogleAuth = () => {
   const handleLogin = useGoogleLogin({
     scope: "email profile",
     onSuccess: async ({ code }) => {
-      axios.post(`${import.meta.env.VITE_SERVER_URL}/users`, { code }).then(({ data }) => {
-        const { profile, access_token } = data;
-        axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+      try {
+        const profile = await login(code);
         setProfile(profile);
         navigate("/notes");
-      });
+      } catch (err) {
+        console.log(err);
+      }
     },
     onError: (errorResponse) => {
       console.error(errorResponse);
