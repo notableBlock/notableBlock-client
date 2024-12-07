@@ -4,13 +4,14 @@ import { matchSorter } from "match-sorter";
 
 import useSelectionStore from "../../stores/useSelectionStore";
 
-import { selectableTags } from "../../assets/data/selectableMenus";
+import { tagsMenu } from "../../assets/data/menu";
 import { INITIAL_SELECTION_INDEX } from "../../constants";
 
 import * as S from "../../styles/SelectMenuStyle";
 
 function SelectMenu({ onSelect, onClose, position, menu }, ref) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();
+
   const [command, setCommand] = useState("");
   const positionAttributes = useMemo(() => {
     return position ? { top: position.y, left: position.x } : "auto";
@@ -18,7 +19,7 @@ function SelectMenu({ onSelect, onClose, position, menu }, ref) {
 
   useEffect(() => {
     if (command) {
-      const filteredItems = matchSorter(selectableTags, command, { keys: ["tag"] });
+      const filteredItems = matchSorter(tagsMenu, command, { keys: ["tag"] });
       setItems(filteredItems);
     } else {
       setItems(menu);
@@ -27,7 +28,6 @@ function SelectMenu({ onSelect, onClose, position, menu }, ref) {
 
   const handleKeyDown = useCallback(
     (e) => {
-      let newIndex;
       switch (e.key) {
         case "Enter":
           e.preventDefault();
@@ -40,16 +40,16 @@ function SelectMenu({ onSelect, onClose, position, menu }, ref) {
           break;
         case "ArrowUp":
           e.preventDefault();
-          newIndex =
-            selectionIndex === INITIAL_SELECTION_INDEX ? items.length - 1 : selectionIndex - 1;
-          setSelectionIndex(newIndex);
+          setSelectionIndex((prev) =>
+            prev === INITIAL_SELECTION_INDEX ? items.length - 1 : prev - 1
+          );
           break;
         case "ArrowDown":
         case "Tab":
           e.preventDefault();
-          newIndex =
-            selectionIndex === items.length - 1 ? INITIAL_SELECTION_INDEX : selectionIndex + 1;
-          setSelectionIndex(newIndex);
+          setSelectionIndex((prev) =>
+            prev === items.length - 1 ? INITIAL_SELECTION_INDEX : prev + 1
+          );
           break;
         default:
           setCommand((prev) => prev + e.key);

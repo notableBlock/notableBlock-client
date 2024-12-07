@@ -7,7 +7,7 @@ import NoteViewer from "../components/NoteViewer";
 import useControlNotes from "../hooks/useControlNotes";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
-import { selectableCreations } from "../assets/data/selectableMenus";
+import { creationMenu } from "../assets/data/menu";
 import plusOptionIcon from "../assets/images/plus-option-icon.png";
 
 import * as S from "../styles/UserPageStyle";
@@ -55,7 +55,7 @@ function UserPage() {
         {isOpen && (
           <SelectMenu
             ref={modalRef}
-            menu={selectableCreations}
+            menu={creationMenu}
             onSelect={handleCreateNewNote}
             onClick={handleCreatingTrigger}
           />

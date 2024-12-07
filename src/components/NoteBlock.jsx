@@ -4,7 +4,7 @@ import SelectMenu from "./common/SelectMenu";
 
 import getCaretCoordinates from "../utils/getCaretCoordinates";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
-import { selectableTags } from "../assets/data/selectableMenus";
+import { tagsMenu } from "../assets/data/menu";
 
 import * as S from "../styles/NoteBlockStyle";
 
@@ -117,7 +117,7 @@ class NoteBlock extends React.Component {
             onSelect={this.handleSelectTag}
             onClose={this.handleCloseSelectMenu}
             position={this.state.selectMenuPosition}
-            menu={selectableTags}
+            menu={tagsMenu}
           />
         )}
         <S.NoteBlockItem
