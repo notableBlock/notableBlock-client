@@ -11,11 +11,6 @@ const NoteViewerLayout = styled.div`
   background-color: ${({ theme }) => theme.color.noteColor};
   gap: 1rem;
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
-
-  img {
-    width: 2rem;
-    border-radius: 5rem;
-  }
 `;
 
 const NoteViewerHeader = styled.div`
@@ -23,6 +18,10 @@ const NoteViewerHeader = styled.div`
   justify-content: space-between;
   padding-left: 1rem;
   padding-right: 1rem;
+
+  img {
+    width: 2rem;
+  }
 `;
 
 const NoteViewerContent = styled.div`
@@ -45,7 +44,8 @@ const NoteViewerImage = styled.img.attrs(({ $src }) => ({
   src: $src,
   alt: "사용자 사진",
 }))`
-  width: 3rem;
+  width: 2rem;
+  border-radius: 5rem;
 `;
 
 export { NoteViewerLayout, NoteViewerHeader, NoteViewerContent, NoteViewerFooter, NoteViewerImage };

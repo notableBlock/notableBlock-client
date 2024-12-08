@@ -1,4 +1,14 @@
+import { useRef, useState } from "react";
+
 import DOMPurify from "isomorphic-dompurify";
+
+import Button from "./common/Button";
+import SelectMenu from "./common/SelectMenu";
+
+import useOnClickOutside from "../hooks/useOnClickOutside";
+import useControlNotes from "../hooks/useControlNotes";
+
+import kebabMenuIcon from "../assets/images/kebab-menu-icon.png";
 
 import * as S from "../styles/NoteViewerStyle";
 
@@ -13,12 +23,29 @@ function NoteViewer({
   updatedAt,
   shared,
 }) {
+  const { handleDeleteNote, handleShareNote, handleExportToLocal, handleSelectMenu } =
+    useControlNotes();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef(null);
+
+  const handleOpenModal = () => setIsOpen(true);
+  const handleCloseModal = () => setIsOpen(false);
+  useOnClickOutside(modalRef, handleCloseModal);
+
+  const menu = [
+    { id: 1, tag: handleShareNote, label: "공유하기" },
+    { id: 2, tag: handleExportToLocal, label: "로컬로 내보내기" },
+    { id: 3, tag: handleDeleteNote, label: "삭제하기" },
+  ];
+
   return (
     <S.NoteViewerLayout>
       <S.NoteViewerHeader>
         <p>생성날짜: {createdAt}</p>
         <p>공유 여부: {shared ? "✅" : "❌"}</p>
-        <p>ℹ️</p>
+        {isOpen && <SelectMenu ref={modalRef} menu={menu} onSelect={handleSelectMenu} />}
+        <Button image={kebabMenuIcon} onClick={handleOpenModal} />
       </S.NoteViewerHeader>
       <S.NoteViewerContent>
         {content.map((block, key) => {

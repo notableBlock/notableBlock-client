@@ -31,9 +31,4 @@ const tagsMenu = [
   },
 ];
 
-const creationMenu = [
-  { id: "1", tag: "create a New Note", label: "새 노트 생성하기" },
-  { id: "2", tag: "import to Local", label: "로컬에서 가져오기" },
-];
-
-export { tagsMenu, creationMenu };
+export { tagsMenu };
