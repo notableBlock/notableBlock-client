@@ -2,10 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 
 import { useNavigate } from "react-router";
 
-import { createNote, getNote, updateNote } from "../services/note";
+import { createNote, getNote, updateNote, deleteNote } from "../services/note";
 
 const useControlNotes = () => {
-  const [acting, setActing] = useState("");
   const [fetchedNotes, setFetchedNotes] = useState([]);
   const navigate = useNavigate();
 
@@ -27,10 +26,6 @@ const useControlNotes = () => {
     }
   }, [navigate]);
 
-  const handleCreatingTrigger = () => {
-    setActing("creating");
-  };
-
   const updateNoteOnServer = useCallback(async (blocks, setIsSaving, noteId) => {
     try {
       await updateNote(blocks, noteId);
@@ -40,18 +35,35 @@ const useControlNotes = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (acting === "creating") {
-      handleCreateNewNote();
-      setActing("done");
+  const handleDeleteNote = useCallback(
+    async (noteId) => {
+      try {
+        await deleteNote(noteId);
+        setFetchedNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+      } catch (err) {
+        navigate("/error", { state: { message: "노트를 삭제하는데 실패했습니다." } });
+      }
+    },
+    [navigate]
+  );
+
+  const handleSelectMenu = (selectedAction) => {
+    if (selectedAction) {
+      selectedAction();
     }
-  }, [acting, handleCreateNewNote]);
+  };
 
   useEffect(() => {
     handleGetUserNote();
   }, [handleGetUserNote]);
 
-  return { fetchedNotes, handleCreateNewNote, handleCreatingTrigger, updateNoteOnServer };
+  return {
+    fetchedNotes,
+    handleCreateNewNote,
+    handleDeleteNote,
+    updateNoteOnServer,
+    handleSelectMenu,
+  };
 };
 
 export default useControlNotes;

@@ -12,8 +12,15 @@ import plusOptionIcon from "../assets/images/plus-option-icon.png";
 import * as S from "../styles/UserPageStyle";
 
 function UserPage() {
-  const { fetchedNotes, handleCreateNewNote, handleImportToLocal, handleSelectMenu } =
-    useControlNotes();
+  const {
+    fetchedNotes,
+    handleCreateNewNote,
+    handleImportToLocal,
+    handleDeleteNote,
+    handleShareNote,
+    handleExportToLocal,
+    handleSelectMenu,
+  } = useControlNotes();
 
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
@@ -29,7 +36,7 @@ function UserPage() {
 
   return (
     <S.UserPageLayout>
-      {fetchedNotes.map((note, key) => {
+      {fetchedNotes.map((note) => {
         const {
           _id,
           blocks,
@@ -43,19 +50,22 @@ function UserPage() {
         } = note;
 
         return (
-          <S.NoteLink key={key} to={`/notes/${_id}`}>
-            <NoteViewer
-              noteId={_id}
-              content={blocks}
-              creator={creator}
-              creatorPicture={creatorPicture}
-              createdAt={createdAt}
-              editor={editor}
-              editorPicture={editorPicture}
-              updatedAt={updatedAt}
-              shared={shared}
-            />
-          </S.NoteLink>
+          <NoteViewer
+            key={_id}
+            noteId={_id}
+            content={blocks}
+            creator={creator}
+            creatorPicture={creatorPicture}
+            createdAt={createdAt}
+            editor={editor}
+            editorPicture={editorPicture}
+            updatedAt={updatedAt}
+            shared={shared}
+            onSelectMenu={handleSelectMenu}
+            onShareNote={handleShareNote}
+            onDeleteNote={handleDeleteNote}
+            onExportToLocal={handleExportToLocal}
+          />
         );
       })}
       <S.UserPageItem type="option">

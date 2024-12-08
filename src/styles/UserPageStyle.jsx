@@ -1,5 +1,3 @@
-import { NavLink } from "react-router";
-
 import styled from "styled-components";
 
 const UserPageLayout = styled.div`
@@ -8,8 +6,6 @@ const UserPageLayout = styled.div`
   margin: 5rem;
   gap: 3rem;
 `;
-
-const NoteLink = styled(NavLink)``;
 
 const UserPageItem = styled.div`
   ${({ type }) =>
@@ -20,4 +16,4 @@ const UserPageItem = styled.div`
     bottom: 3rem;`}
 `;
 
-export { UserPageLayout, NoteLink, UserPageItem };
+export { UserPageLayout, UserPageItem };

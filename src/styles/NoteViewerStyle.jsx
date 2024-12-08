@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import styled from "styled-components";
 
 const NoteViewerLayout = styled.div`
@@ -40,6 +41,8 @@ const NoteViewerFooter = styled.div`
   padding-left: 1rem;
 `;
 
+const NoteLink = styled(NavLink)``;
+
 const NoteViewerImage = styled.img.attrs(({ $src }) => ({
   src: $src,
   alt: "사용자 사진",
@@ -48,4 +51,11 @@ const NoteViewerImage = styled.img.attrs(({ $src }) => ({
   border-radius: 5rem;
 `;
 
-export { NoteViewerLayout, NoteViewerHeader, NoteViewerContent, NoteViewerFooter, NoteViewerImage };
+export {
+  NoteViewerLayout,
+  NoteViewerHeader,
+  NoteViewerContent,
+  NoteViewerFooter,
+  NoteViewerImage,
+  NoteLink,
+};
