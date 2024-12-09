@@ -54,11 +54,11 @@ function NoteViewer({
       </S.NoteViewerHeader>
       <S.NoteLink to={`/${path}/${noteId}`}>
         <S.NoteViewerContent>
-          {content.map((block, key) => {
+          {content.map((block) => {
             const HTMLTag = block.tag;
             const html = DOMPurify.sanitize(block.html);
 
-            return <HTMLTag key={key} dangerouslySetInnerHTML={{ __html: html }} />;
+            return <HTMLTag key={block.id} dangerouslySetInnerHTML={{ __html: html }} />;
           })}
         </S.NoteViewerContent>
       </S.NoteLink>

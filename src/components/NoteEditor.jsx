@@ -24,17 +24,19 @@ function NoteEditor({ setIsSaving }) {
 
   return (
     <S.NoteEditorLayout>
-      {blocks.map((block, key) => (
-        <NoteBlock
-          key={key}
-          id={block.id}
-          tag={block.tag}
-          html={block.html}
-          updatePage={handleUpdateBlock}
-          addBlock={handleAddBlock}
-          deleteBlock={handleDeleteBlock}
-        />
-      ))}
+      {blocks.map((block) => {
+        return (
+          <NoteBlock
+            key={block.id}
+            id={block.id}
+            tag={block.tag}
+            html={block.html}
+            updatePage={handleUpdateBlock}
+            addBlock={handleAddBlock}
+            deleteBlock={handleDeleteBlock}
+          />
+        );
+      })}
     </S.NoteEditorLayout>
   );
 }
