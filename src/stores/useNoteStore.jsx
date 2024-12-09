@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
-const initialBlock = { id: "", html: "", tag: "h1" };
+import uid from "../utils/uid";
+
+const initialBlock = { id: uid(), html: "", tag: "h1" };
 
 const useNoteStore = create((set) => ({
   blocks: [initialBlock],
