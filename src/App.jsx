@@ -18,12 +18,16 @@ function App() {
           <Route path="" element={<UserPage />} />
           <Route path=":noteId" element={<NoteEditingPage />} />
         </Route>
-        <Route path="shared" element={<SharedPage />} />
+        <Route path="/shared" element={<Outlet />}>
+          <Route path="" element={<SharedPage />} />
+          <Route path=":noteId" element={<NoteEditingPage />} />
+        </Route>
         <Route path="noteTree" element={<NoteTreePage />} />
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/nickname" element={<NicknamePage />} />
+      <Route path="/error" element={<ErrorPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

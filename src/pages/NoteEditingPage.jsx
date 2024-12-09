@@ -9,6 +9,7 @@ import * as S from "../styles/NoteEditingPageStyle";
 
 function NoteEditingPage() {
   const [isSaving, setIsSaving] = useState(false);
+
   return (
     <S.NoteEditingPageLayout>
       <S.SavingStatusItem $isSaving={isSaving}>

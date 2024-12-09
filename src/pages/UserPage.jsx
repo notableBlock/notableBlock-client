@@ -52,6 +52,7 @@ function UserPage() {
         return (
           <NoteViewer
             key={_id}
+            path="notes"
             noteId={_id}
             content={blocks}
             creator={creator}

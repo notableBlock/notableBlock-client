@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import { useNavigate } from "react-router";
 
-import { createNote, getNote, updateNote, deleteNote } from "../services/note";
+import { createNote, getNote, updateNote, deleteNote, shareNote } from "../services/note";
 
 const useControlNotes = () => {
   const [fetchedNotes, setFetchedNotes] = useState([]);
@@ -17,7 +17,7 @@ const useControlNotes = () => {
     }
   }, [navigate]);
 
-  const handleGetUserNote = useCallback(async () => {
+  const handleGetUserNotes = useCallback(async () => {
     try {
       const fetchedData = await getNote();
       setFetchedNotes(fetchedData);
@@ -47,6 +47,21 @@ const useControlNotes = () => {
     [navigate]
   );
 
+  const handleShareNote = useCallback(
+    async (noteId) => {
+      try {
+        const updatedNote = await shareNote(noteId);
+
+        setFetchedNotes((prevNotes) =>
+          prevNotes.map((note) => (note._id === updatedNote._id ? updatedNote : note))
+        );
+      } catch (err) {
+        navigate("/error", { state: { message: "노트를 공유하는데 실패했씁니다." } });
+      }
+    },
+    [navigate]
+  );
+
   const handleSelectMenu = (selectedAction) => {
     if (selectedAction) {
       selectedAction();
@@ -54,13 +69,14 @@ const useControlNotes = () => {
   };
 
   useEffect(() => {
-    handleGetUserNote();
-  }, [handleGetUserNote]);
+    handleGetUserNotes();
+  }, [handleGetUserNotes]);
 
   return {
     fetchedNotes,
     handleCreateNewNote,
     handleDeleteNote,
+    handleShareNote,
     updateNoteOnServer,
     handleSelectMenu,
   };

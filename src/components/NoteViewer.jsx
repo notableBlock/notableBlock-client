@@ -12,6 +12,7 @@ import kebabMenuIcon from "../assets/images/kebab-menu-icon.png";
 import * as S from "../styles/NoteViewerStyle";
 
 function NoteViewer({
+  path,
   noteId,
   content,
   creator,
@@ -34,7 +35,7 @@ function NoteViewer({
   useOnClickOutside(modalRef, handleCloseModal);
 
   const menu = [
-    { id: 1, tag: () => onShareNote(), label: "공유하기" },
+    { id: 1, tag: () => onShareNote(noteId), label: "공유하기" },
     { id: 2, tag: () => onExportToLocal(), label: "로컬로 내보내기" },
     {
       id: 3,
@@ -47,11 +48,11 @@ function NoteViewer({
     <S.NoteViewerLayout>
       <S.NoteViewerHeader>
         <p>생성날짜: {createdAt}</p>
-        <p>공유 여부: {shared ? "✅" : "❌"}</p>
+        <p>{shared === undefined ? "블록체인으로 보호중" : `공유 여부: ${shared ? "✅" : "❌"}`}</p>
         {isOpen && <SelectMenu ref={modalRef} menu={menu} onSelect={onSelectMenu} />}
         <Button image={kebabMenuIcon} onClick={handleOpenModal} />
       </S.NoteViewerHeader>
-      <S.NoteLink to={`/notes/${noteId}`}>
+      <S.NoteLink to={`/${path}/${noteId}`}>
         <S.NoteViewerContent>
           {content.map((block, key) => {
             const HTMLTag = block.tag;

@@ -2,8 +2,8 @@ import axios from "axios";
 
 const createNote = async () => {
   try {
-    const response = await axios.post("/notes");
-    const { data } = response;
+    const { data } = await axios.post("/notes");
+
     return data;
   } catch (err) {
     console.log(err);
@@ -19,6 +19,7 @@ const getNote = async () => {
     return await Promise.all(
       notesId.map(async (noteId) => {
         const { data } = await axios.get(`/notes/${noteId}`);
+
         return data;
       })
     );
@@ -51,4 +52,16 @@ const deleteNote = async (noteId) => {
   }
 };
 
-export { updateNote, createNote, getNote, deleteNote };
+const shareNote = async (noteId) => {
+  try {
+    const { data } = await axios.patch(`/notes/${noteId}`);
+    const { note } = data;
+
+    return note;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { updateNote, createNote, getNote, deleteNote, shareNote };
