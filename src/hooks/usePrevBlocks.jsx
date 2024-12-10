@@ -5,7 +5,7 @@ const usePrevBlocks = (blocks) => {
 
   useEffect(() => {
     prevBlocksRef.current = blocks;
-  });
+  }, [blocks]);
 
   return prevBlocksRef.current;
 };

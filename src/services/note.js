@@ -11,7 +11,7 @@ const createNote = async () => {
   }
 };
 
-const getNote = async () => {
+const getAllNote = async () => {
   try {
     const { data } = await axios.get("/notes");
     const { notesId } = data;
@@ -23,6 +23,18 @@ const getNote = async () => {
         return data;
       })
     );
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getBlocks = async (noteId) => {
+  try {
+    const { data } = await axios.get(`/notes/${noteId}`);
+    const { blocks } = data;
+
+    return blocks;
   } catch (err) {
     console.log(err);
     throw err;
@@ -64,4 +76,4 @@ const shareNote = async (noteId) => {
   }
 };
 
-export { updateNote, createNote, getNote, deleteNote, shareNote };
+export { updateNote, createNote, getAllNote, getBlocks, deleteNote, shareNote };

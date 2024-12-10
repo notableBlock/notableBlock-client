@@ -1,13 +1,13 @@
-import { useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 
-import { useNoteStore, initialBlock } from "../stores/useNoteStore";
+import { getBlocks } from "../services/note";
 
-import uid from "../utils/uid";
+import objectId from "../utils/objectId";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 
 const useControlBlocks = () => {
-  const { blocks, setBlocks } = useNoteStore();
-
+  const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1" }), []);
+  const [blocks, setBlocks] = useState([initialBlock]);
   const addedBlockRef = useRef(null);
   const focusedBlockRef = useRef(null);
 
@@ -28,7 +28,7 @@ const useControlBlocks = () => {
       focusedBlock.focus();
       moveCaretToEnd(focusedBlock);
     }
-  }, [blocks.length]);
+  }, [blocks]);
 
   const handleUpdateBlock = useCallback(
     (updatedBlock) => {
@@ -41,14 +41,14 @@ const useControlBlocks = () => {
 
       setBlocks(newBlocks);
     },
-    [blocks, setBlocks]
+    [blocks]
   );
 
   const handleAddBlock = useCallback(
     (currentBlock) => {
       const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
 
-      const newBlock = { ...initialBlock, id: uid(), tag: "p" };
+      const newBlock = { ...initialBlock, id: objectId(), tag: "p" };
       const nextBlock = currentBlock.ref.nextElementSibling;
 
       const newBlocks = [
@@ -62,7 +62,7 @@ const useControlBlocks = () => {
 
       setBlocks(newBlocks);
     },
-    [blocks, setBlocks]
+    [blocks, initialBlock]
   );
 
   const handleDeleteBlock = useCallback(
@@ -70,7 +70,6 @@ const useControlBlocks = () => {
       const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
 
       const prevBlock = currentBlock.ref.previousElementSibling;
-
       const newBlocks = [
         ...blocks.slice(0, currentBlockIndex),
         ...blocks.slice(currentBlockIndex + 1),
@@ -85,7 +84,22 @@ const useControlBlocks = () => {
     [blocks, setBlocks]
   );
 
-  return { blocks, handleUpdateBlock, handleAddBlock, handleDeleteBlock };
+  const getBlocksFromServer = useCallback(
+    async (noteId) => {
+      const fetchedBlocks = await getBlocks(noteId);
+
+      fetchedBlocks.length ? setBlocks(fetchedBlocks) : setBlocks([initialBlock]);
+    },
+    [initialBlock]
+  );
+
+  return {
+    blocks,
+    handleUpdateBlock,
+    handleAddBlock,
+    handleDeleteBlock,
+    getBlocksFromServer,
+  };
 };
 
 export default useControlBlocks;
