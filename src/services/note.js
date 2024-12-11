@@ -76,4 +76,25 @@ const shareNote = async (noteId) => {
   }
 };
 
-export { updateNote, createNote, getAllNote, getBlocks, deleteNote, shareNote };
+const exportNote = async (noteId) => {
+  try {
+    const { data } = await axios.get(`/notes/${noteId}/download`, { responseType: "blob" });
+
+    const url = window.URL.createObjectURL(
+      new Blob([data], { type: "text/markdown; charset=utf-8" })
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `${noteId}.md`);
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { updateNote, createNote, getAllNote, getBlocks, deleteNote, shareNote, exportNote };

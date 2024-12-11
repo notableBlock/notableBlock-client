@@ -2,7 +2,14 @@ import { useState, useCallback } from "react";
 
 import { useNavigate } from "react-router";
 
-import { createNote, getAllNote, updateNote, deleteNote, shareNote } from "../services/note";
+import {
+  createNote,
+  getAllNote,
+  updateNote,
+  deleteNote,
+  shareNote,
+  exportNote,
+} from "../services/note";
 
 const useControlNotes = () => {
   const navigate = useNavigate();
@@ -17,7 +24,7 @@ const useControlNotes = () => {
     }
   }, [navigate]);
 
-  const handleGetUserNotes = useCallback(async () => {
+  const getUserNotes = useCallback(async () => {
     try {
       const fetchedData = await getAllNote();
       setFetchedNotes(fetchedData);
@@ -55,7 +62,18 @@ const useControlNotes = () => {
           prevNotes.map((note) => (note._id === updatedNote._id ? updatedNote : note))
         );
       } catch (err) {
-        navigate("/error", { state: { message: "노트를 공유하는데 실패했씁니다." } });
+        navigate("/error", { state: { message: "노트를 공유하는데 실패했습니다." } });
+      }
+    },
+    [navigate]
+  );
+
+  const handleExportToLocal = useCallback(
+    async (noteId) => {
+      try {
+        await exportNote(noteId);
+      } catch (err) {
+        navigate("/error", { state: { message: "노트를 로컬로 내보내는데 실패했습니다." } });
       }
     },
     [navigate]
@@ -69,11 +87,12 @@ const useControlNotes = () => {
 
   return {
     fetchedNotes,
+    getUserNotes,
     handleCreateNewNote,
     handleDeleteNote,
     handleShareNote,
     handleSelectMenu,
-    handleGetUserNotes,
+    handleExportToLocal,
     updateNoteOnServer,
   };
 };

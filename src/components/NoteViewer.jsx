@@ -36,7 +36,7 @@ function NoteViewer({
 
   const menu = [
     { id: 1, tag: () => onShareNote(noteId), label: "공유하기" },
-    { id: 2, tag: () => onExportToLocal(), label: "로컬로 내보내기" },
+    { id: 2, tag: () => onExportToLocal(noteId), label: "로컬로 내보내기" },
     {
       id: 3,
       tag: () => onDeleteNote(noteId),
