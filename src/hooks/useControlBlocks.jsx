@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 
-import { getBlocks } from "../services/note";
+import { useNavigate } from "react-router";
 
+import { getBlocks } from "../services/note";
 import objectId from "../utils/objectId";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 
 const useControlBlocks = () => {
+  const navigate = useNavigate();
+
   const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
   const addedBlockRef = useRef(null);
@@ -86,11 +89,15 @@ const useControlBlocks = () => {
 
   const getBlocksFromServer = useCallback(
     async (noteId) => {
-      const fetchedBlocks = await getBlocks(noteId);
+      try {
+        const fetchedBlocks = await getBlocks(noteId);
 
-      fetchedBlocks.length ? setBlocks(fetchedBlocks) : setBlocks([initialBlock]);
+        fetchedBlocks.length ? setBlocks(fetchedBlocks) : setBlocks([initialBlock]);
+      } catch (err) {
+        navigate("/error", { state: { message: "해당 노트의 블록을 가져오는데 실패했습니다." } });
+      }
     },
-    [initialBlock]
+    [initialBlock, navigate]
   );
 
   return {

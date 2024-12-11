@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 import { useNavigate } from "react-router";
 
-import { createNote, getNote, updateNote, deleteNote, shareNote } from "../services/note";
+import { createNote, getAllNote, updateNote, deleteNote, shareNote } from "../services/note";
 
 const useControlNotes = () => {
-  const [fetchedNotes, setFetchedNotes] = useState([]);
   const navigate = useNavigate();
+  const [fetchedNotes, setFetchedNotes] = useState([]);
 
   const handleCreateNewNote = useCallback(async () => {
     try {
@@ -19,7 +19,7 @@ const useControlNotes = () => {
 
   const handleGetUserNotes = useCallback(async () => {
     try {
-      const fetchedData = await getNote();
+      const fetchedData = await getAllNote();
       setFetchedNotes(fetchedData);
     } catch (err) {
       navigate("/error", { state: { message: "노트를 불러오는데 실패했습니다." } });
@@ -51,7 +51,6 @@ const useControlNotes = () => {
     async (noteId) => {
       try {
         const updatedNote = await shareNote(noteId);
-
         setFetchedNotes((prevNotes) =>
           prevNotes.map((note) => (note._id === updatedNote._id ? updatedNote : note))
         );
@@ -68,17 +67,14 @@ const useControlNotes = () => {
     }
   };
 
-  useEffect(() => {
-    handleGetUserNotes();
-  }, [handleGetUserNotes]);
-
   return {
     fetchedNotes,
     handleCreateNewNote,
     handleDeleteNote,
     handleShareNote,
-    updateNoteOnServer,
     handleSelectMenu,
+    handleGetUserNotes,
+    updateNoteOnServer,
   };
 };
 
