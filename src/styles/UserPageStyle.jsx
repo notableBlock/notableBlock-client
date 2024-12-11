@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const UserPageLayout = styled.div`
   display: flex;
+  width: 80vw;
   flex-wrap: wrap;
   margin: 5rem;
   gap: 3rem;

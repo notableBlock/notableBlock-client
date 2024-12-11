@@ -4,8 +4,9 @@ import loadingIcon from "../assets/images/loading-icon.gif";
 
 const LoadingLayout = styled.div`
   display: flex;
-  width: 90vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
