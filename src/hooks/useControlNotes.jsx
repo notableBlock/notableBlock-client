@@ -9,6 +9,7 @@ import {
   deleteNote,
   shareNote,
   exportNote,
+  importNote,
 } from "../services/note";
 
 const useControlNotes = () => {
@@ -79,6 +80,26 @@ const useControlNotes = () => {
     [navigate]
   );
 
+  const handleImportFromLocal = useCallback(
+    async (e) => {
+      const localFile = e.target.files[0];
+
+      try {
+        if (localFile) {
+          const formData = new FormData();
+          formData.append("file", localFile);
+
+          const newNote = await importNote(formData);
+
+          setFetchedNotes((prevNotes) => [...prevNotes, newNote]);
+        }
+      } catch (err) {
+        navigate("/error", { state: { message: "노트를 로컬에서 가져오는데 실패했습니다." } });
+      }
+    },
+    [navigate]
+  );
+
   const handleSelectMenu = (selectedAction) => {
     if (selectedAction) {
       selectedAction();
@@ -88,12 +109,13 @@ const useControlNotes = () => {
   return {
     fetchedNotes,
     getUserNotes,
+    updateNoteOnServer,
     handleCreateNewNote,
     handleDeleteNote,
     handleShareNote,
     handleSelectMenu,
     handleExportToLocal,
-    updateNoteOnServer,
+    handleImportFromLocal,
   };
 };
 

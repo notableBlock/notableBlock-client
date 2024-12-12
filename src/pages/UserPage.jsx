@@ -15,9 +15,9 @@ import * as S from "../styles/UserPageStyle";
 function UserPage() {
   const {
     fetchedNotes,
-    handleGetUserNotes,
+    getUserNotes,
     handleCreateNewNote,
-    handleImportToLocal,
+    handleImportFromLocal,
     handleDeleteNote,
     handleShareNote,
     handleExportToLocal,
@@ -26,10 +26,11 @@ function UserPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
   const modalRef = useRef(null);
   const menu = [
-    { id: 1, tag: handleCreateNewNote, label: "새 노트 만들기" },
-    { id: 2, tag: handleImportToLocal, label: "로컬에서 가져오기" },
+    { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
+    { id: 2, label: "로컬에서 가져오기" },
   ];
 
   const handleOpenModal = () => setIsOpen(true);
@@ -39,12 +40,12 @@ function UserPage() {
   useEffect(() => {
     const fetchNotes = async () => {
       setIsLoading(true);
-      await handleGetUserNotes();
+      await getUserNotes();
       setIsLoading(false);
     };
 
     fetchNotes();
-  }, [handleGetUserNotes]);
+  }, [getUserNotes]);
 
   return (
     <S.UserPageLayout>
@@ -86,7 +87,14 @@ function UserPage() {
         })
       )}
       <S.UserPageItem type="option">
-        {isOpen && <SelectMenu ref={modalRef} menu={menu} onSelect={handleSelectMenu} />}
+        {isOpen && (
+          <SelectMenu
+            ref={modalRef}
+            menu={menu}
+            onSelect={handleSelectMenu}
+            onImportFromLocal={handleImportFromLocal}
+          />
+        )}
         <Button image={plusOptionIcon} onClick={handleOpenModal} />
       </S.UserPageItem>
     </S.UserPageLayout>

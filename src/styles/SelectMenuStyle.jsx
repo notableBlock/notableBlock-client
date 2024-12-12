@@ -13,12 +13,15 @@ const SelectMenuLayout = styled.div`
 `;
 
 const SelectMenuItem = styled.button`
+  width: 100%;
   padding: 0.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
   background-color: ${({ $isSelected, theme }) =>
     $isSelected ? theme.color.mainColor : theme.color.whiteColor};
   color: ${({ $isSelected, theme }) =>
     $isSelected ? theme.color.whiteColor : theme.color.blackColor};
+  font-weight: ${({ theme }) => theme.fontWeight.normal};
+  font-size: ${({ theme }) => theme.fontSize.small};
   cursor: pointer;
 
   &:hover {
@@ -31,4 +34,12 @@ const SelectMenuItem = styled.button`
   }
 `;
 
-export { SelectMenuLayout, SelectMenuItem };
+const SelectMenuContainer = styled.div`
+  padding: 0;
+`;
+
+const SelectMenuInput = styled.input`
+  display: none;
+`;
+
+export { SelectMenuLayout, SelectMenuItem, SelectMenuContainer, SelectMenuInput };

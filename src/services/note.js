@@ -97,4 +97,28 @@ const exportNote = async (noteId) => {
   }
 };
 
-export { updateNote, createNote, getAllNote, getBlocks, deleteNote, shareNote, exportNote };
+const importNote = async (formData) => {
+  try {
+    const { data } = await axios.post("/notes/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const { note } = data;
+
+    return note;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export {
+  updateNote,
+  createNote,
+  getAllNote,
+  getBlocks,
+  deleteNote,
+  shareNote,
+  exportNote,
+  importNote,
+};

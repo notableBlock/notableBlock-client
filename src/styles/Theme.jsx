@@ -20,6 +20,7 @@ const fontSize = {
   xxSmall: "0.4rem",
   xSmall: "0.6rem",
   small: "0.8rem",
+  medium: "1.0rem",
   large: "1.2rem",
   xLarge: "1.4rem",
   xxLarge: "1.6rem",
