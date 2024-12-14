@@ -10,11 +10,14 @@ import {
   shareNote,
   exportNote,
   importNote,
+  getAllSharedNote,
+  copySharedNote,
 } from "../services/note";
 
 const useControlNotes = () => {
   const navigate = useNavigate();
   const [fetchedNotes, setFetchedNotes] = useState([]);
+  const [fetchedSharedNotes, setFetchedSharedNotes] = useState([]);
 
   const handleCreateNewNote = useCallback(async () => {
     try {
@@ -100,6 +103,28 @@ const useControlNotes = () => {
     [navigate]
   );
 
+  const getSharedNotes = useCallback(async () => {
+    try {
+      const fetchedData = await getAllSharedNote();
+      setFetchedSharedNotes(fetchedData);
+    } catch (err) {
+      navigate("/error", { state: { message: "공유 노트를 불러오는데 실패했습니다." } });
+    }
+  }, [navigate]);
+
+  const handleCopySharedNote = useCallback(
+    async (noteId) => {
+      try {
+        await copySharedNote(noteId);
+      } catch (err) {
+        navigate("/error", {
+          state: { message: "공유 노트를 내 노트로 가져오는데 실패했습니다." },
+        });
+      }
+    },
+    [navigate]
+  );
+
   const handleSelectMenu = (selectedAction) => {
     if (selectedAction) {
       selectedAction();
@@ -108,7 +133,9 @@ const useControlNotes = () => {
 
   return {
     fetchedNotes,
+    fetchedSharedNotes,
     getUserNotes,
+    getSharedNotes,
     updateNoteOnServer,
     handleCreateNewNote,
     handleDeleteNote,
@@ -116,6 +143,7 @@ const useControlNotes = () => {
     handleSelectMenu,
     handleExportToLocal,
     handleImportFromLocal,
+    handleCopySharedNote,
   };
 };
 

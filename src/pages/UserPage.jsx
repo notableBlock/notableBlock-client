@@ -28,9 +28,20 @@ function UserPage() {
   const [isOpen, setIsOpen] = useState(false);
 
   const modalRef = useRef(null);
-  const menu = [
+
+  const plusMenu = [
     { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
     { id: 2, label: "로컬에서 가져오기" },
+  ];
+
+  const kebabMenu = (noteId) => [
+    { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
+    { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
+    {
+      id: 3,
+      tag: () => handleDeleteNote(noteId),
+      label: "삭제하기",
+    },
   ];
 
   const handleOpenModal = () => setIsOpen(true);
@@ -78,10 +89,8 @@ function UserPage() {
               editorPicture={editorPicture}
               updatedAt={updatedAt}
               shared={shared}
+              kebabMenu={kebabMenu(_id)}
               onSelectMenu={handleSelectMenu}
-              onShareNote={handleShareNote}
-              onDeleteNote={handleDeleteNote}
-              onExportToLocal={handleExportToLocal}
             />
           );
         })
@@ -90,7 +99,7 @@ function UserPage() {
         {isOpen && (
           <SelectMenu
             ref={modalRef}
-            menu={menu}
+            menu={plusMenu}
             onSelect={handleSelectMenu}
             onImportFromLocal={handleImportFromLocal}
           />

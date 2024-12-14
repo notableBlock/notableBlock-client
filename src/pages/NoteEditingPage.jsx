@@ -21,7 +21,7 @@ function NoteEditingPage() {
   const modalRef = useRef(null);
   const { noteId } = useParams();
 
-  const menu = [
+  const plusMenu = [
     { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
     { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
   ];
@@ -37,7 +37,7 @@ function NoteEditingPage() {
       </S.SavingStatusItem>
       <NoteEditor setIsSaving={setIsSaving} />
       <S.NoteEditingPageItem>
-        {isOpen && <SelectMenu ref={modalRef} menu={menu} onSelect={handleSelectMenu} />}
+        {isOpen && <SelectMenu ref={modalRef} menu={plusMenu} onSelect={handleSelectMenu} />}
         <Button image={plusOptionIcon} onClick={handleOpenModal} />
       </S.NoteEditingPageItem>
     </S.NoteEditingPageLayout>

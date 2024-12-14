@@ -1,26 +1,31 @@
 import { useState, useEffect } from "react";
 
 import NoteViewer from "../components/NoteViewer";
-
-import useControlShared from "../hooks/useControlShared";
-
-import * as S from "../styles/UserPageStyle";
 import Loading from "../components/common/Loading";
 
+import useControlNotes from "../hooks/useControlNotes";
+
+import * as S from "../styles/UserPageStyle";
+
 function SharedPage() {
-  const { fetchedSharedNotes, handleGetSharedNotes } = useControlShared();
+  const { fetchedSharedNotes, handleSelectMenu, getSharedNotes, handleCopySharedNote } =
+    useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchShareNotes = async () => {
       setIsLoading(true);
-      await handleGetSharedNotes();
+      await getSharedNotes();
       setIsLoading(false);
     };
 
     fetchShareNotes();
-  }, [handleGetSharedNotes]);
+  }, [getSharedNotes]);
+
+  const kebabMenu = (noteId) => [
+    { id: 1, tag: () => handleCopySharedNote(noteId), label: "내 노트로 가져오기" },
+  ];
 
   return (
     <S.UserPageLayout>
@@ -51,6 +56,8 @@ function SharedPage() {
               editor={editor}
               editorPicture={editorPicture}
               updatedAt={updatedAt}
+              kebabMenu={kebabMenu(_id)}
+              onSelectMenu={handleSelectMenu}
             />
           );
         })

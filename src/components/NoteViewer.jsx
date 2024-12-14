@@ -23,9 +23,7 @@ function NoteViewer({
   updatedAt,
   shared,
   onSelectMenu,
-  onDeleteNote,
-  onShareNote,
-  onExportToLocal,
+  kebabMenu,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
@@ -34,22 +32,12 @@ function NoteViewer({
   const handleCloseModal = () => setIsOpen(false);
   useOnClickOutside(modalRef, handleCloseModal);
 
-  const menu = [
-    { id: 1, tag: () => onShareNote(noteId), label: "공유하기" },
-    { id: 2, tag: () => onExportToLocal(noteId), label: "로컬로 내보내기" },
-    {
-      id: 3,
-      tag: () => onDeleteNote(noteId),
-      label: "삭제하기",
-    },
-  ];
-
   return (
     <S.NoteViewerLayout>
       <S.NoteViewerHeader>
         <p>생성날짜: {createdAt}</p>
         <p>{shared === undefined ? "블록체인으로 보호중" : `공유 여부: ${shared ? "✅" : "❌"}`}</p>
-        {isOpen && <SelectMenu ref={modalRef} menu={menu} onSelect={onSelectMenu} />}
+        {isOpen && <SelectMenu ref={modalRef} menu={kebabMenu} onSelect={onSelectMenu} />}
         <Button image={kebabMenuIcon} onClick={handleOpenModal} />
       </S.NoteViewerHeader>
       <S.NoteLink to={`/${path}/${noteId}`}>

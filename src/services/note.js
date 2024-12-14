@@ -80,9 +80,7 @@ const exportNote = async (noteId) => {
   try {
     const { data } = await axios.get(`/notes/${noteId}/download`, { responseType: "blob" });
 
-    const url = window.URL.createObjectURL(
-      new Blob([data], { type: "text/markdown; charset=utf-8" })
-    );
+    const url = URL.createObjectURL(data);
     const link = document.createElement("a");
     link.href = url;
     link.setAttribute("download", `${noteId}.md`);
@@ -90,7 +88,7 @@ const exportNote = async (noteId) => {
     link.click();
 
     document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
   } catch (err) {
     console.log(err);
     throw err;
@@ -99,7 +97,7 @@ const exportNote = async (noteId) => {
 
 const importNote = async (formData) => {
   try {
-    const { data } = await axios.post("/notes/upload", formData, {
+    const { data } = await axios.post("/notes/uploads", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -112,6 +110,33 @@ const importNote = async (formData) => {
   }
 };
 
+const getAllSharedNote = async () => {
+  try {
+    const { data } = await axios.get("/shared");
+    const { notesId } = data;
+
+    return await Promise.all(
+      notesId.map(async (noteId) => {
+        const { data } = await axios.get(`/shared/${noteId}`);
+
+        return data;
+      })
+    );
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const copySharedNote = async (noteId) => {
+  try {
+    await axios.post(`/shared/${noteId}`);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export {
   updateNote,
   createNote,
@@ -121,4 +146,6 @@ export {
   shareNote,
   exportNote,
   importNote,
+  getAllSharedNote,
+  copySharedNote,
 };
