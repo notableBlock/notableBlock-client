@@ -6,7 +6,6 @@ import SharedPage from "./pages/SharedPage";
 import NoteTreePage from "./pages/NoteTreePage";
 import ErrorPage from "./pages/ErrorPage";
 import NoteEditingPage from "./pages/NoteEditingPage";
-import NicknamePage from "./pages/NicknamePage";
 
 import Layout from "./components/common/Layout";
 
@@ -26,7 +25,6 @@ function App() {
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/nickname" element={<NicknamePage />} />
       <Route path="/error" element={<ErrorPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
