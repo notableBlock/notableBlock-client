@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 
 import NoteBlock from "./NoteBlock";
 
@@ -18,8 +18,11 @@ function NoteEditor({ setIsSaving }) {
   const { updateNoteOnServer } = useControlNotes();
   const prevBlocks = usePrevBlocks(blocks);
   const { noteId } = useParams();
+  const { pathname } = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const isSharedPage = pathname.indexOf("/shared") !== -1;
 
   useEffect(() => {
     const fetchBlocks = async () => {
@@ -51,6 +54,7 @@ function NoteEditor({ setIsSaving }) {
             updatePage={handleUpdateBlock}
             addBlock={handleAddBlock}
             deleteBlock={handleDeleteBlock}
+            isSharedPage={isSharedPage}
           />
         ))
       )}

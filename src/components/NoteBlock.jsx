@@ -127,6 +127,7 @@ class NoteBlock extends React.Component {
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
+          disabled={this.props.isSharedPage}
         />
       </>
     );
