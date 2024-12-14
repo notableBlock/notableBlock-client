@@ -13,36 +13,16 @@ import plusOptionIcon from "../assets/images/plus-option-icon.png";
 import * as S from "../styles/UserPageStyle";
 
 function UserPage() {
-  const {
-    fetchedNotes,
-    getUserNotes,
-    handleCreateNewNote,
-    handleImportFromLocal,
-    handleDeleteNote,
-    handleShareNote,
-    handleExportToLocal,
-    handleSelectMenu,
-  } = useControlNotes();
+  const { fetchedNotes, getUserNotes, handleImportFromLocal, handleSelectMenu, getMenu } =
+    useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const modalRef = useRef(null);
 
-  const plusMenu = [
-    { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
-    { id: 2, label: "로컬에서 가져오기" },
-  ];
-
-  const kebabMenu = (noteId) => [
-    { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
-    { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
-    {
-      id: 3,
-      tag: () => handleDeleteNote(noteId),
-      label: "삭제하기",
-    },
-  ];
+  const kebabMenu = getMenu("노트 관리");
+  const plusMenu = getMenu("노트 생성 및 가져오기");
 
   const handleOpenModal = () => setIsOpen(true);
   const handleCloseModal = () => setIsOpen(false);

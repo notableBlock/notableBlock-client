@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 
 import NoteEditor from "../components/NoteEditor";
 import Button from "../components/common/Button";
@@ -14,17 +14,18 @@ import plusOptionIcon from "../assets/images/plus-option-icon.png";
 import * as S from "../styles/NoteEditingPageStyle";
 
 function NoteEditingPage() {
-  const { handleSelectMenu, handleShareNote, handleExportToLocal } = useControlNotes();
+  const { handleSelectMenu, getMenu } = useControlNotes();
 
   const [isSaving, setIsSaving] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
   const { noteId } = useParams();
+  const { pathname } = useLocation();
 
-  const plusMenu = [
-    { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
-    { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
-  ];
+  const isSharedPage = pathname.indexOf("/shared") !== -1;
+
+  const initialMenu = getMenu(isSharedPage ? "노트 가져오기" : "노트 관리");
+  const plusMenu = initialMenu(noteId);
 
   const handleOpenModal = () => setIsOpen(true);
   const handleCloseModal = () => setIsOpen(false);

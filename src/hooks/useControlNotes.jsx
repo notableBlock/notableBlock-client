@@ -51,6 +51,7 @@ const useControlNotes = () => {
       try {
         await deleteNote(noteId);
         setFetchedNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+        navigate("/notes");
       } catch (err) {
         navigate("/error", { state: { message: "노트를 삭제하는데 실패했습니다." } });
       }
@@ -131,19 +132,39 @@ const useControlNotes = () => {
     }
   };
 
+  const getMenu = (menuType) => {
+    switch (menuType) {
+      case "노트 관리":
+        return (noteId) => [
+          { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
+          { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
+          {
+            id: 3,
+            tag: () => handleDeleteNote(noteId),
+            label: "삭제하기",
+          },
+        ];
+      case "노트 생성 및 가져오기":
+        return [
+          { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
+          { id: 2, label: "로컬에서 가져오기" },
+        ];
+      case "노트 가져오기":
+        return (noteId) => [
+          { id: 1, tag: () => handleCopySharedNote(noteId), label: "내 노트로 가져오기" },
+        ];
+    }
+  };
+
   return {
     fetchedNotes,
     fetchedSharedNotes,
     getUserNotes,
     getSharedNotes,
     updateNoteOnServer,
-    handleCreateNewNote,
-    handleDeleteNote,
-    handleShareNote,
     handleSelectMenu,
-    handleExportToLocal,
     handleImportFromLocal,
-    handleCopySharedNote,
+    getMenu,
   };
 };
 

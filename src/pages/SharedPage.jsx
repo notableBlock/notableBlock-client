@@ -8,8 +8,7 @@ import useControlNotes from "../hooks/useControlNotes";
 import * as S from "../styles/UserPageStyle";
 
 function SharedPage() {
-  const { fetchedSharedNotes, handleSelectMenu, getSharedNotes, handleCopySharedNote } =
-    useControlNotes();
+  const { fetchedSharedNotes, handleSelectMenu, getSharedNotes, getMenu } = useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,9 +22,7 @@ function SharedPage() {
     fetchShareNotes();
   }, [getSharedNotes]);
 
-  const kebabMenu = (noteId) => [
-    { id: 1, tag: () => handleCopySharedNote(noteId), label: "내 노트로 가져오기" },
-  ];
+  const kebabMenu = getMenu("노트 가져오기");
 
   return (
     <S.UserPageLayout>
