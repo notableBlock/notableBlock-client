@@ -1,15 +1,16 @@
+import { forwardRef } from "react";
+
 import * as S from "../../styles/FormStyle";
 
-function Form({ children }) {
+function Form({ children, title, notification }, ref) {
   return (
-    <S.FormLayout>
-      <S.FormTitle>
-        <S.FormImage />
-        <h2>Notable Block</h2>
-      </S.FormTitle>
+    <S.FormLayout ref={ref} $notification={notification}>
+      {!notification && <S.FormImage />}
+      <S.FormTitle>{title}</S.FormTitle>
       {children}
     </S.FormLayout>
   );
 }
+const FormRef = forwardRef(Form);
 
-export default Form;
+export default FormRef;

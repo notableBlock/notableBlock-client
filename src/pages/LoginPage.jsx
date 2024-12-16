@@ -9,7 +9,7 @@ function LoginPage() {
 
   return (
     <S.LoginPageLayout>
-      <Form>
+      <Form title="Notable Block">
         <S.LoginPageButton onClick={handleLogin}>
           <S.LoginPageImage />
           <p>구글 로그인 하기</p>
