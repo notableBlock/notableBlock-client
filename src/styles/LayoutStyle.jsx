@@ -8,8 +8,8 @@ const Layout = styled.div`
 const Item = styled.div`
   overflow: auto;
 
-  ${({ type }) =>
-    type === "notification" &&
+  ${({ $notification }) =>
+    $notification === "notification" &&
     `
     position: absolute;
     top: 1rem;
@@ -18,4 +18,15 @@ const Item = styled.div`
   `}
 `;
 
-export { Layout, Item };
+const NotiContainer = styled.div`
+  position: absolute;
+  right: 5rem;
+`;
+
+const Toast = styled.div`
+  position: absolute;
+  bottom: 8rem;
+  right: 3rem;
+`;
+
+export { Layout, Item, NotiContainer, Toast };

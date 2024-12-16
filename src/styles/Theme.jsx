@@ -11,6 +11,7 @@ const color = {
   focusColor: "#F5F6FB",
   hoverColor: "#F8F8F8",
   shadowColor: "#0000003F",
+  redColor: "#ff0000",
   blackColor: "#000000",
   whiteColor: "#FFFFFF",
 };

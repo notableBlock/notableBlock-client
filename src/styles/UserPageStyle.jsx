@@ -9,8 +9,8 @@ const UserPageLayout = styled.div`
 `;
 
 const UserPageItem = styled.div`
-  ${({ type }) =>
-    type === "option" &&
+  ${({ $type }) =>
+    $type === "option" &&
     `
     position: absolute;
     right: 3rem;

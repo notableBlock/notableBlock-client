@@ -23,19 +23,9 @@ const NavBarLayout = styled.nav`
 
 const NavBarItem = styled.div`
   padding: 1rem;
-  font-weight: ${({ theme }) => theme.fontWeight.normal};
-
-  ${({ type, theme }) =>
-    type === "title" &&
-    `
-    font-weight: ${theme.fontWeight.bold};
-  `}
-
-  ${({ type }) =>
-    type === "logout" &&
-    `
-    cursor: pointer;
-  `}
+  font-weight: ${({ $type, theme }) =>
+    $type === "title" ? theme.fontWeight.title : theme.fontWeight.normal};
+  cursor: ${({ $type }) => ($type === "logout" ? "pointer" : "defaults")};
 `;
 
 const NavBarImage = styled.img.attrs(({ $picture }) => ({
