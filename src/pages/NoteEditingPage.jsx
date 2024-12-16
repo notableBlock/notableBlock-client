@@ -4,7 +4,7 @@ import { useParams, useLocation } from "react-router";
 
 import NoteEditor from "../components/NoteEditor";
 import Button from "../components/common/Button";
-import SelectMenu from "../components/common/SelectMenu";
+import SelectMenu from "../components/SelectMenu";
 
 import useControlNotes from "../hooks/useControlNotes";
 import useOnClickOutside from "../hooks/useOnClickOutside";

@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import DOMPurify from "isomorphic-dompurify";
 
 import Button from "./common/Button";
-import SelectMenu from "./common/SelectMenu";
+import SelectMenu from "./SelectMenu";
 
 import useOnClickOutside from "../hooks/useOnClickOutside";
 

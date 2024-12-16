@@ -2,12 +2,12 @@ import { forwardRef, useState, useEffect, useCallback, useMemo, useRef } from "r
 
 import { matchSorter } from "match-sorter";
 
-import useSelectionStore from "../../stores/useSelectionStore";
+import useSelectionStore from "../stores/useSelectionStore";
 
-import { tagsMenu } from "../../assets/data/menu";
-import { INITIAL_SELECTION_INDEX } from "../../constants";
+import { tagsMenu } from "../assets/data/menu";
+import { INITIAL_SELECTION_INDEX } from "../constants";
 
-import * as S from "../../styles/SelectMenuStyle";
+import * as S from "../styles/SelectMenuStyle";
 
 function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, ref) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();

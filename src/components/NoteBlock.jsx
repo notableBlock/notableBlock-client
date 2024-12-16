@@ -1,6 +1,6 @@
 import React from "react";
 
-import SelectMenu from "./common/SelectMenu";
+import SelectMenu from "./SelectMenu";
 
 import getCaretCoordinates from "../utils/getCaretCoordinates";
 import moveCaretToEnd from "../utils/moveCaretToEnd";

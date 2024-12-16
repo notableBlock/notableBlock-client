@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import Button from "../components/common/Button";
-import SelectMenu from "../components/common/SelectMenu";
+import SelectMenu from "../components/SelectMenu";
 import NoteViewer from "../components/NoteViewer";
 import Loading from "../components/common/Loading";
 
@@ -75,7 +75,7 @@ function UserPage() {
           );
         })
       )}
-      <S.UserPageItem type="option">
+      <S.UserPageItem $type="option">
         {isOpen && (
           <SelectMenu
             ref={modalRef}
