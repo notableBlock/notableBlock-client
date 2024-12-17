@@ -14,7 +14,7 @@ function NavBar() {
       <S.NavBarItem>
         <S.NavBarImage />
       </S.NavBarItem>
-      <S.NavBarItem type="title">Notable Block</S.NavBarItem>
+      <S.NavBarItem $type="title">Notable Block</S.NavBarItem>
       <S.NavBarLink to={`/notes`}>내 노트</S.NavBarLink>
       <S.NavBarLink to="/shared">실시간 공유 노트</S.NavBarLink>
       <S.NavBarLink to={`/noteTree`}>내 노트 트리</S.NavBarLink>
@@ -23,7 +23,7 @@ function NavBar() {
           <S.NavBarImage $picture={picture} />
           {name || "게스트"}
         </S.NavBarItem>
-        <S.NavBarItem onClick={handleLogout} type="logout">
+        <S.NavBarItem onClick={handleLogout} $type="logout">
           ◀ 로그아웃
         </S.NavBarItem>
       </S.NavBarUserContainer>

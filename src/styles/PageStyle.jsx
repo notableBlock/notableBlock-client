@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import googleLogo from "../assets/images/google-logo.png";
 
-const LoginPageLayout = styled.div`
+const PageLayout = styled.div`
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -13,7 +13,7 @@ const LoginPageLayout = styled.div`
   );
 `;
 
-const LoginPageButton = styled.button`
+const PageButton = styled.button`
   display: flex;
   justify-content: center;
   width: 10rem;
@@ -27,11 +27,15 @@ const LoginPageButton = styled.button`
   cursor: pointer;
 `;
 
-const LoginPageImage = styled.img.attrs({
+const PageMessage = styled.p`
+  padding: 1rem;
+`;
+
+const PageImage = styled.img.attrs({
   src: googleLogo,
   alt: "구글 로고",
 })`
   width: 1rem;
 `;
 
-export { LoginPageLayout, LoginPageButton, LoginPageImage };
+export { PageLayout, PageButton, PageMessage, PageImage };
