@@ -62,12 +62,18 @@ class NoteBlock extends React.Component {
     ) {
       if (e.nativeEvent.isComposing) return;
       e.preventDefault();
+
       this.props.addBlock({
         id: this.props.id,
         ref: this.contentEditable.current,
       });
-    } else if ((e.key === "Backspace" && !this.state.html) || this.state.html === "<br>") {
+    } else if (
+      e.key === "Backspace" &&
+      (!this.state.html || this.state.html === "<br>") &&
+      this.props.blockCount !== 1
+    ) {
       e.preventDefault();
+
       this.props.deleteBlock({
         id: this.props.id,
         ref: this.contentEditable.current,

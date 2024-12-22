@@ -55,6 +55,7 @@ function NoteEditor({ setIsSaving }) {
             addBlock={handleAddBlock}
             deleteBlock={handleDeleteBlock}
             isSharedPage={isSharedPage}
+            blockCount={blocks.length}
           />
         ))
       )}
