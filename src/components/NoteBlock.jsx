@@ -40,7 +40,7 @@ class NoteBlock extends React.Component {
     const hasTagChanged = prevState.tag !== this.state.tag;
 
     if (hasHTMLChanged || hasTagChanged) {
-      this.props.updatePage({
+      this.props.onUpdatePage({
         id: this.props.id,
         html: this.state.html,
         tag: this.state.tag,
@@ -63,7 +63,7 @@ class NoteBlock extends React.Component {
       if (e.nativeEvent.isComposing) return;
       e.preventDefault();
 
-      this.props.addBlock({
+      this.props.onAddBlock({
         id: this.props.id,
         ref: this.contentEditable.current,
       });
@@ -74,10 +74,30 @@ class NoteBlock extends React.Component {
     ) {
       e.preventDefault();
 
-      this.props.deleteBlock({
+      this.props.onDeleteBlock({
         id: this.props.id,
         ref: this.contentEditable.current,
       });
+    } else if (e.key === "ArrowUp" && this.state.isSelectMenuOpen === false) {
+      e.preventDefault();
+
+      this.props.onFocusBlockByArrowKey(
+        {
+          id: this.props.id,
+          ref: this.contentEditable.current,
+        },
+        e.key
+      );
+    } else if (e.key === "ArrowDown" && this.state.isSelectMenuOpen === false) {
+      e.preventDefault();
+
+      this.props.onFocusBlockByArrowKey(
+        {
+          id: this.props.id,
+          ref: this.contentEditable.current,
+        },
+        e.key
+      );
     }
 
     this.setState({ previousKey: e.key });

@@ -13,8 +13,14 @@ import Loading from "./common/Loading";
 import * as S from "../styles/NoteEditorStyle";
 
 function NoteEditor({ setIsSaving }) {
-  const { blocks, handleUpdateBlock, handleAddBlock, handleDeleteBlock, getBlocksFromServer } =
-    useControlBlocks();
+  const {
+    blocks,
+    handleUpdateBlock,
+    handleAddBlock,
+    handleDeleteBlock,
+    handleBlockFocusByArrowKey,
+    getBlocksFromServer,
+  } = useControlBlocks();
   const { updateNoteOnServer } = useControlNotes();
   const prevBlocks = usePrevBlocks(blocks);
   const { noteId } = useParams();
@@ -51,9 +57,10 @@ function NoteEditor({ setIsSaving }) {
             id={block.id}
             tag={block.tag}
             html={block.html}
-            updatePage={handleUpdateBlock}
-            addBlock={handleAddBlock}
-            deleteBlock={handleDeleteBlock}
+            onUpdatePage={handleUpdateBlock}
+            onAddBlock={handleAddBlock}
+            onDeleteBlock={handleDeleteBlock}
+            onFocusBlockByArrowKey={handleBlockFocusByArrowKey}
             isSharedPage={isSharedPage}
             blockCount={blocks.length}
           />

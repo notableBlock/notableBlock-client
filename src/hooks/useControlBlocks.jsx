@@ -87,6 +87,24 @@ const useControlBlocks = () => {
     [blocks, setBlocks]
   );
 
+  const handleBlockFocusByArrowKey = (currentBlock, arrowKey) => {
+    let targetBlock = null;
+
+    switch (arrowKey) {
+      case "ArrowUp":
+        targetBlock = currentBlock.ref.previousElementSibling;
+        break;
+      case "ArrowDown":
+        targetBlock = currentBlock.ref.nextElementSibling;
+        break;
+    }
+
+    if (targetBlock) {
+      focusedBlockRef.current = targetBlock;
+      setBlocks([...blocks]);
+    }
+  };
+
   const getBlocksFromServer = useCallback(
     async (noteId) => {
       try {
@@ -105,6 +123,7 @@ const useControlBlocks = () => {
     handleUpdateBlock,
     handleAddBlock,
     handleDeleteBlock,
+    handleBlockFocusByArrowKey,
     getBlocksFromServer,
   };
 };
