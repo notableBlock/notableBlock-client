@@ -8,27 +8,30 @@ import * as S from "../styles/NotificationStyle";
 
 function Toast() {
   const navigate = useNavigate();
-  const { toast, setToast, setAddNotification, isToastVisible, SetIsToastVisible } =
+  const { toast, setToast, setAddNotification, isToastVisible, setIsToastVisible } =
     useNotificationStore();
 
   useEffect(() => {
     if (isToastVisible) {
       const timer = setTimeout(() => {
-        SetIsToastVisible(false);
+        setIsToastVisible(false);
       }, 2000);
 
       return () => clearTimeout(timer);
     }
-  }, [isToastVisible, SetIsToastVisible]);
+  }, [isToastVisible, setIsToastVisible]);
 
   useEffect(() => {
     const eventSource = new EventSource(`${import.meta.env.VITE_SERVER_URL}/notification`);
 
     eventSource.onmessage = (event) => {
       const { fullDocument } = JSON.parse(event.data);
-      setToast([fullDocument]);
-      setAddNotification(fullDocument);
-      SetIsToastVisible(true);
+
+      if (fullDocument) {
+        setToast([fullDocument]);
+        setAddNotification(fullDocument);
+      }
+      setIsToastVisible(true);
     };
 
     eventSource.onerror = () => {
@@ -39,7 +42,7 @@ function Toast() {
     return () => {
       eventSource.close();
     };
-  }, [setToast, SetIsToastVisible, setAddNotification, navigate]);
+  }, [setToast, setIsToastVisible, setAddNotification, navigate]);
 
   return (
     <>
@@ -56,7 +59,7 @@ function Toast() {
                 </S.NotiMessage>
               </S.SlideIn>
             ) : (
-              <S.SlideOut>
+              <S.SlideOut onAnimationEnd={() => setToast([])}>
                 <S.NotiMessage>{message}</S.NotiMessage>
               </S.SlideOut>
             )}
