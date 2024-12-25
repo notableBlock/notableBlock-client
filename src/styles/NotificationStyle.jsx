@@ -6,11 +6,14 @@ const NotiLayout = styled.div`
   flex-direction: column;
   overflow-x: hidden;
   width: 100%;
+  scrollbar-gutter: stable both-edges;
   color: ${({ theme }) => theme.color.blackColor};
 `;
 
 const NotiContainer = styled.div`
-  width: 42.5rem;
+  display: flex;
+  flex-direction: column-reverse;
+  width: 41.5rem;
 `;
 
 const NotiMessage = styled.div`
