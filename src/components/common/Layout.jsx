@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { Outlet } from "react-router";
 
@@ -8,6 +8,7 @@ import Button from "./Button";
 import NotificationHub from "../NotificationHub";
 import Form from "./Form";
 
+import useControlNotifications from "../../hooks/useControlNotifications";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import notificationIcon from "../../assets/images/notification-icon.png";
@@ -15,6 +16,8 @@ import notificationIcon from "../../assets/images/notification-icon.png";
 import * as S from "../../styles/LayoutStyle";
 
 function Layout({ children }) {
+  const { toast, getUserNotifications } = useControlNotifications();
+
   const modalRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,6 +25,10 @@ function Layout({ children }) {
   const handleCloseModal = () => setIsOpen(false);
 
   useOnClickOutside(modalRef, handleCloseModal);
+
+  useEffect(() => {
+    getUserNotifications();
+  }, [toast, getUserNotifications]);
 
   return (
     <S.Layout>

@@ -8,8 +8,7 @@ import * as S from "../styles/NotificationStyle";
 
 function Toast() {
   const navigate = useNavigate();
-  const { toast, setToast, setAddNotification, isToastVisible, setIsToastVisible } =
-    useNotificationStore();
+  const { toast, setToast, isToastVisible, setIsToastVisible } = useNotificationStore();
 
   useEffect(() => {
     if (isToastVisible) {
@@ -22,14 +21,15 @@ function Toast() {
   }, [isToastVisible, setIsToastVisible]);
 
   useEffect(() => {
-    const eventSource = new EventSource(`${import.meta.env.VITE_SERVER_URL}/notification`);
+    const eventSource = new EventSource(`${import.meta.env.VITE_SERVER_URL}/notification/live`, {
+      withCredentials: true,
+    });
 
     eventSource.onmessage = (event) => {
       const { fullDocument } = JSON.parse(event.data);
 
       if (fullDocument) {
         setToast([fullDocument]);
-        setAddNotification(fullDocument);
       }
       setIsToastVisible(true);
     };
@@ -42,7 +42,7 @@ function Toast() {
     return () => {
       eventSource.close();
     };
-  }, [setToast, setIsToastVisible, setAddNotification, navigate]);
+  }, [setToast, setIsToastVisible, navigate]);
 
   return (
     <>

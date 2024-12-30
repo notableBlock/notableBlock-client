@@ -9,10 +9,7 @@ const useNotificationStore = create((set) => ({
 
   setIsToastVisible: (isToastVisible) => set({ isToastVisible }),
 
-  setAddNotification: (notification) =>
-    set((state) => ({
-      allNotification: [...state.allNotification, notification],
-    })),
+  setAllNotification: (allNotification) => set({ allNotification }),
 
   setRemoveNotification: (notificationId) =>
     set((state) => ({
