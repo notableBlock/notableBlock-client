@@ -4,7 +4,11 @@ import { useNavigate } from "react-router";
 
 import useNotificationStore from "../stores/useNotificationStore";
 
-import { getAllNotification, deleteNotification } from "../services/notification";
+import {
+  getAllNotification,
+  deleteNotification,
+  deleteAllNotification,
+} from "../services/notification";
 
 const useControlNotifications = () => {
   const navigate = useNavigate();
@@ -32,7 +36,22 @@ const useControlNotifications = () => {
     [setRemoveNotification, navigate]
   );
 
-  return { toast, allNotification, getUserNotifications, handleDeleteNotification };
+  const handleDeleteAllNotification = useCallback(async () => {
+    try {
+      await deleteAllNotification();
+      setAllNotification([]);
+    } catch (err) {
+      navigate("/error", { state: { message: "전체 알림을 삭제하는데 실패했습니다." } });
+    }
+  }, [setAllNotification, navigate]);
+
+  return {
+    toast,
+    allNotification,
+    getUserNotifications,
+    handleDeleteNotification,
+    handleDeleteAllNotification,
+  };
 };
 
 export default useControlNotifications;

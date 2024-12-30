@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getAllNotification = async () => {
   try {
-    const { data } = await axios.get(`/notification`);
+    const { data } = await axios.get("/notification");
     const { notificationsId } = data;
 
     return await Promise.all(
@@ -27,4 +27,13 @@ const deleteNotification = async (notificationId) => {
   }
 };
 
-export { getAllNotification, deleteNotification };
+const deleteAllNotification = async () => {
+  try {
+    await axios.delete("/notification");
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { getAllNotification, deleteNotification, deleteAllNotification };

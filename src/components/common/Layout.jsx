@@ -16,7 +16,7 @@ import notificationIcon from "../../assets/images/notification-icon.png";
 import * as S from "../../styles/LayoutStyle";
 
 function Layout({ children }) {
-  const { toast, getUserNotifications } = useControlNotifications();
+  const { toast, getUserNotifications, handleDeleteAllNotification } = useControlNotifications();
 
   const modalRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +43,7 @@ function Layout({ children }) {
         {isOpen && (
           <S.NotiContainer>
             <Form ref={modalRef} title="🔔 알림 확인" notification="notification">
+              <S.Button onClick={handleDeleteAllNotification}>모두 삭제</S.Button>
               <NotificationHub />
             </Form>
           </S.NotiContainer>

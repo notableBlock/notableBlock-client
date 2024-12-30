@@ -29,4 +29,14 @@ const Toast = styled.div`
   right: 3rem;
 `;
 
-export { Layout, Item, NotiContainer, Toast };
+const Button = styled.button`
+  align-self: flex-end;
+  margin-right: 1.75rem;
+  color: ${({ theme }) => theme.color.whiteColor};
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export { Layout, Item, NotiContainer, Toast, Button };
