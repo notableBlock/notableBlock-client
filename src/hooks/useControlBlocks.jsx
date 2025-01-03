@@ -9,7 +9,7 @@ import moveCaretToEnd from "../utils/moveCaretToEnd";
 const useControlBlocks = () => {
   const navigate = useNavigate();
 
-  const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1" }), []);
+  const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageURL: "" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
   const addedBlockRef = useRef(null);
   const focusedBlockRef = useRef(null);
@@ -38,7 +38,12 @@ const useControlBlocks = () => {
       const updatedIndex = blocks.findIndex((block) => block.id === updatedBlock.id);
       const newBlocks = blocks.map((block, index) =>
         index === updatedIndex
-          ? { ...block, tag: updatedBlock.tag, html: updatedBlock.html }
+          ? {
+              ...block,
+              tag: updatedBlock.tag,
+              html: updatedBlock.html,
+              imageURL: updatedBlock.imageURL,
+            }
           : block
       );
 
@@ -51,7 +56,7 @@ const useControlBlocks = () => {
     (currentBlock) => {
       const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
 
-      const newBlock = { ...initialBlock, id: objectId(), tag: "p" };
+      const newBlock = { ...initialBlock, id: objectId(), tag: "p", imageURL: "" };
       const nextBlock = currentBlock.ref.nextElementSibling;
 
       const newBlocks = [

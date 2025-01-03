@@ -27,6 +27,7 @@ function NoteViewer({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
+  const textContent = content.filter((block) => block.tag !== "img");
 
   const handleOpenModal = () => setIsOpen(true);
   const handleCloseModal = () => setIsOpen(false);
@@ -37,12 +38,14 @@ function NoteViewer({
       <S.NoteViewerHeader>
         <p>생성날짜: {createdAt}</p>
         <p>{shared === undefined ? "블록체인으로 보호중" : `공유 여부: ${shared ? "✅" : "❌"}`}</p>
-        {isOpen && <SelectMenu ref={modalRef} menu={kebabMenu} onSelect={onSelectMenu} />}
-        <Button image={kebabMenuIcon} onClick={handleOpenModal} />
+        <div>
+          {isOpen && <SelectMenu ref={modalRef} menu={kebabMenu} onSelect={onSelectMenu} />}
+          <Button image={kebabMenuIcon} onClick={handleOpenModal} />
+        </div>
       </S.NoteViewerHeader>
       <S.NoteLink to={`/${path}/${noteId}`}>
         <S.NoteViewerContent>
-          {content.map((block) => {
+          {textContent.map((block) => {
             const HTMLTag = block.tag;
             const html = DOMPurify.sanitize(block.html);
 

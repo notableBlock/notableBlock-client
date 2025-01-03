@@ -137,6 +137,21 @@ const copySharedNote = async (noteId) => {
   }
 };
 
+const uploadNoteImage = async (noteId, formData) => {
+  try {
+    const { data } = await axios.post(`/notes/${noteId}/images`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return data.imageURL;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export {
   updateNote,
   createNote,
@@ -148,4 +163,5 @@ export {
   importNote,
   getAllSharedNote,
   copySharedNote,
+  uploadNoteImage,
 };

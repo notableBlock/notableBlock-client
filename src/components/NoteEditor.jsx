@@ -57,12 +57,14 @@ function NoteEditor({ setIsSaving }) {
             id={block.id}
             tag={block.tag}
             html={block.html}
+            imageURL={block.imageURL}
             onUpdatePage={handleUpdateBlock}
             onAddBlock={handleAddBlock}
             onDeleteBlock={handleDeleteBlock}
             onFocusBlockByArrowKey={handleBlockFocusByArrowKey}
             isSharedPage={isSharedPage}
             blockCount={blocks.length}
+            noteId={noteId}
           />
         ))
       )}

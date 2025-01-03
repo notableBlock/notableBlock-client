@@ -2,6 +2,7 @@ import React from "react";
 
 import SelectMenu from "./SelectMenu";
 
+import { uploadNoteImage } from "../services/note";
 import getCaretCoordinates from "../utils/getCaretCoordinates";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 import { tagsMenu } from "../assets/data/menu";
@@ -17,11 +18,14 @@ class NoteBlock extends React.Component {
     this.handleOpenSelectMenu = this.handleOpenSelectMenu.bind(this);
     this.handleCloseSelectMenu = this.handleCloseSelectMenu.bind(this);
     this.handleSelectTag = this.handleSelectTag.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
     this.contentEditable = React.createRef();
+    this.fileInput = null;
     this.state = {
       htmlBackup: null,
       html: "",
       tag: "p",
+      imageURL: "",
       previousKey: "",
       isSelectMenuOpen: false,
       selectMenuPosition: {
@@ -32,18 +36,20 @@ class NoteBlock extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ html: this.props.html, tag: this.props.tag });
+    this.setState({ html: this.props.html, tag: this.props.tag, imageURL: this.props.imageURL });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const hasHTMLChanged = prevState.html !== this.state.html;
-    const hasTagChanged = prevState.tag !== this.state.tag;
+    const isHTMLChanged = this.props.html !== this.state.html;
+    const isTagChanged = this.props.tag !== this.state.tag;
+    const isImageChanged = this.props.imageURL !== this.state.imageURL;
 
-    if (hasHTMLChanged || hasTagChanged) {
+    if (isHTMLChanged || isTagChanged || isImageChanged) {
       this.props.onUpdatePage({
         id: this.props.id,
         html: this.state.html,
         tag: this.state.tag,
+        imageURL: this.state.imageURL,
       });
     }
   }
@@ -129,10 +135,43 @@ class NoteBlock extends React.Component {
   }
 
   handleSelectTag(tag) {
-    this.setState({ tag: tag, html: this.state.htmlBackup }, () => {
-      moveCaretToEnd(this.contentEditable.current);
-      this.handleCloseSelectMenu();
-    });
+    if (tag === "img") {
+      this.setState({ ...this.state, tag: tag }, () => {
+        this.handleCloseSelectMenu();
+
+        if (this.fileInput) {
+          this.fileInput.click();
+        }
+
+        this.props.onAddBlock({
+          id: this.props.id,
+          html: "",
+          tag: "p",
+          imageURL: "",
+          ref: this.contentEditable.current,
+        });
+      });
+    } else {
+      this.setState({ tag: tag, html: this.state.htmlBackup }, () => {
+        moveCaretToEnd(this.contentEditable.current);
+        this.handleCloseSelectMenu();
+      });
+    }
+  }
+
+  async handleImageUpload() {
+    if (this.fileInput && this.fileInput.files[0]) {
+      const imageFile = this.fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", imageFile);
+
+      try {
+        const imageURL = await uploadNoteImage(this.props.noteId, formData);
+        this.setState({ imageURL: imageURL });
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 
   render() {
@@ -146,15 +185,37 @@ class NoteBlock extends React.Component {
             menu={tagsMenu}
           />
         )}
-        <S.NoteBlockItem
-          innerRef={this.contentEditable}
-          html={this.state.html}
-          tagName={this.state.tag}
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          onKeyUp={this.handleKeyUp}
-          disabled={this.props.isSharedPage}
-        />
+        {this.state.tag !== "img" && (
+          <S.NoteBlockTextItem
+            innerRef={this.contentEditable}
+            html={this.state.html}
+            tagName={this.state.tag}
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+            onKeyUp={this.handleKeyUp}
+            disabled={this.props.isSharedPage}
+          />
+        )}
+        {this.state.tag === "img" && (
+          <S.NoteBlockImageItem data-tag={this.state.tag} ref={this.contentEditable}>
+            <input
+              id={`${this.props.id}_fileInput`}
+              name={this.state.tag}
+              type="file"
+              onChange={this.handleImageUpload}
+              ref={(ref) => (this.fileInput = ref)}
+              hidden
+            />
+            {!this.state.imageURL && (
+              <label htmlFor={`${this.props.id}_fileInput`}>
+                이미지가 선택되지 않았습니다. 선택해주세요.
+              </label>
+            )}
+            {this.state.imageURL && (
+              <img src={`${import.meta.env.VITE_SERVER_URL}` + this.state.imageURL} />
+            )}
+          </S.NoteBlockImageItem>
+        )}
       </>
     );
   }
