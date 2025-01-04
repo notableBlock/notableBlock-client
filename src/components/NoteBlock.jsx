@@ -85,6 +85,7 @@ class NoteBlock extends React.Component {
         ref: this.contentEditable.current,
       });
     } else if (e.key === "ArrowUp" && this.state.isSelectMenuOpen === false) {
+      if (e.nativeEvent.isComposing) return;
       e.preventDefault();
 
       this.props.onFocusBlockByArrowKey(
@@ -95,6 +96,7 @@ class NoteBlock extends React.Component {
         e.key
       );
     } else if (e.key === "ArrowDown" && this.state.isSelectMenuOpen === false) {
+      if (e.nativeEvent.isComposing) return;
       e.preventDefault();
 
       this.props.onFocusBlockByArrowKey(
