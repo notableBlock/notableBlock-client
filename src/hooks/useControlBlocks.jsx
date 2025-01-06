@@ -2,6 +2,8 @@ import { useState, useCallback, useMemo } from "react";
 
 import { useNavigate } from "react-router";
 
+import usePrevBlocks from "./usePrevBlocks";
+
 import { getBlocks } from "../services/note";
 import objectId from "../utils/objectId";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
@@ -12,6 +14,7 @@ const useControlBlocks = () => {
   const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageURL: "" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
   const [currentBlockId, setCurrentBlockId] = useState(null);
+  const prevBlocks = usePrevBlocks(blocks);
 
   const handleUpdateBlock = useCallback(
     (updatedBlock) => {
@@ -83,6 +86,26 @@ const useControlBlocks = () => {
     }
   };
 
+  const focusNextBlock = useCallback(() => {
+    const nextBlockIndex = blocks.findIndex((block) => block.id === currentBlockId) + 1;
+    const nextBlock = document.querySelector(`[data-block-id="${blocks[nextBlockIndex]?.id}"]`);
+
+    if (nextBlock) {
+      moveCaretToEnd(nextBlock);
+      nextBlock.focus();
+    }
+  }, [blocks, currentBlockId]);
+
+  const focusPrevBlock = useCallback(() => {
+    const prevBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlockId) - 1;
+    const prevBlock = document.querySelector(`[data-block-id="${blocks[prevBlockIndex]?.id}"]`);
+
+    if (prevBlock) {
+      moveCaretToEnd(prevBlock);
+      prevBlock.focus();
+    }
+  }, [blocks, currentBlockId, prevBlocks]);
+
   const getBlocksFromServer = useCallback(
     async (noteId) => {
       try {
@@ -104,6 +127,8 @@ const useControlBlocks = () => {
     handleDeleteBlock,
     handleBlockFocusByArrowKey,
     getBlocksFromServer,
+    focusNextBlock,
+    focusPrevBlock,
   };
 };
 

@@ -3,23 +3,23 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router";
 
 import NoteBlock from "./NoteBlock";
+import Loading from "./common/Loading";
 
 import useControlNotes from "../hooks/useControlNotes";
 import useControlBlocks from "../hooks/useControlBlocks";
 import usePrevBlocks from "../hooks/usePrevBlocks";
-
-import Loading from "./common/Loading";
 
 import * as S from "../styles/NoteEditorStyle";
 
 function NoteEditor({ setIsSaving }) {
   const {
     blocks,
-    currentBlockId,
     handleUpdateBlock,
     handleAddBlock,
     handleDeleteBlock,
     handleBlockFocusByArrowKey,
+    focusNextBlock,
+    focusPrevBlock,
     getBlocksFromServer,
   } = useControlBlocks();
   const { updateNoteOnServer } = useControlNotes();
@@ -48,26 +48,12 @@ function NoteEditor({ setIsSaving }) {
   }, [blocks, noteId, prevBlocks, setIsSaving, updateNoteOnServer]);
 
   useEffect(() => {
-    const focusNextBlock = () => {
-      const nextBlockIndex = blocks.findIndex((block) => block.id === currentBlockId) + 1;
-      const nextBlock = document.querySelector(`[data-block-id="${blocks[nextBlockIndex]?.id}"]`);
-
-      if (nextBlock) nextBlock.focus();
-    };
-
-    const focusPrevBlock = () => {
-      const prevBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlockId) - 1;
-      const prevBlock = document.querySelector(`[data-block-id="${blocks[prevBlockIndex]?.id}"]`);
-
-      if (prevBlock) prevBlock.focus();
-    };
-
     if (prevBlocks && prevBlocks.length + 1 === blocks.length) {
       focusNextBlock();
     } else if (prevBlocks && prevBlocks.length - 1 === blocks.length) {
       focusPrevBlock();
     }
-  }, [blocks, currentBlockId, prevBlocks]);
+  }, [blocks, prevBlocks, focusNextBlock, focusPrevBlock]);
 
   return (
     <S.NoteEditorLayout>
