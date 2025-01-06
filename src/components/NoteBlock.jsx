@@ -6,6 +6,7 @@ import { uploadNoteImage } from "../services/note";
 import getCaretCoordinates from "../utils/getCaretCoordinates";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 import { tagsMenu } from "../assets/data/menu";
+import dragHandleIcon from "../assets/images/drag-handle-icon.png";
 
 import * as S from "../styles/NoteBlockStyle";
 
@@ -115,20 +116,26 @@ class NoteBlock extends React.Component {
     if (e.key === "/") this.handleOpenSelectMenu();
   }
 
-  handleOpenSelectMenu() {
+  handleOpenSelectMenu(e) {
     const { x, y } = getCaretCoordinates();
+    const isDragHandleClicked = Boolean(e?.target);
+
+    if (isDragHandleClicked) {
+      this.setState({ htmlBackup: this.state.html });
+    }
 
     this.setState({
       isSelectMenuOpen: true,
       selectMenuPosition: { x, y },
     });
 
-    document.addEventListener("click", this.handleCloseSelectMenu);
+    setTimeout(() => {
+      document.addEventListener("click", this.handleCloseSelectMenu);
+    }, 0);
   }
 
   handleCloseSelectMenu() {
     this.setState({
-      htmlBackup: null,
       isSelectMenuOpen: false,
       selectMenuPosition: { x: null, y: null },
     });
@@ -187,6 +194,7 @@ class NoteBlock extends React.Component {
             menu={tagsMenu}
           />
         )}
+        <S.NoteBlockDragItem $image={dragHandleIcon} onClick={this.handleOpenSelectMenu} />
         {this.state.tag !== "img" && (
           <S.NoteBlockTextItem
             innerRef={this.contentEditable}
