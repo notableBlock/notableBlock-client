@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 import { useNavigate } from "react-router";
 
@@ -11,27 +11,7 @@ const useControlBlocks = () => {
 
   const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageURL: "" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
-  const addedBlockRef = useRef(null);
-  const focusedBlockRef = useRef(null);
-
-  useEffect(() => {
-    const addedBlock = addedBlockRef.current;
-    const focusedBlock = focusedBlockRef.current;
-
-    if (addedBlock) {
-      const nextBlock = addedBlock.nextElementSibling;
-
-      if (nextBlock) {
-        nextBlock.focus();
-        moveCaretToEnd(nextBlock);
-      }
-
-      addedBlockRef.current = null;
-    } else if (focusedBlock) {
-      focusedBlock.focus();
-      moveCaretToEnd(focusedBlock);
-    }
-  }, [blocks]);
+  const [currentBlockId, setCurrentBlockId] = useState(null);
 
   const handleUpdateBlock = useCallback(
     (updatedBlock) => {
@@ -54,19 +34,15 @@ const useControlBlocks = () => {
 
   const handleAddBlock = useCallback(
     (currentBlock) => {
+      setCurrentBlockId(currentBlock.id);
+
       const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
-
       const newBlock = { ...initialBlock, id: objectId(), tag: "p", imageURL: "" };
-      const nextBlock = currentBlock.ref.nextElementSibling;
-
       const newBlocks = [
         ...blocks.slice(0, currentBlockIndex + 1),
         newBlock,
         ...blocks.slice(currentBlockIndex + 1),
       ];
-
-      focusedBlockRef.current = nextBlock;
-      addedBlockRef.current = currentBlock.ref;
 
       setBlocks(newBlocks);
     },
@@ -75,17 +51,13 @@ const useControlBlocks = () => {
 
   const handleDeleteBlock = useCallback(
     (currentBlock) => {
-      const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
+      setCurrentBlockId(currentBlock.id);
 
-      const prevBlock = currentBlock.ref.previousElementSibling;
+      const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
       const newBlocks = [
         ...blocks.slice(0, currentBlockIndex),
         ...blocks.slice(currentBlockIndex + 1),
       ];
-
-      if (prevBlock) {
-        focusedBlockRef.current = prevBlock;
-      }
 
       setBlocks(newBlocks);
     },
@@ -93,20 +65,21 @@ const useControlBlocks = () => {
   );
 
   const handleBlockFocusByArrowKey = (currentBlock, arrowKey) => {
-    let targetBlock = null;
+    let targetBlockIndex = null;
 
     switch (arrowKey) {
       case "ArrowUp":
-        targetBlock = currentBlock.ref.previousElementSibling;
+        targetBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id) - 1;
         break;
       case "ArrowDown":
-        targetBlock = currentBlock.ref.nextElementSibling;
+        targetBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id) + 1;
         break;
     }
 
+    const targetBlock = document.querySelector(`[data-block-id="${blocks[targetBlockIndex]?.id}"]`);
     if (targetBlock) {
-      focusedBlockRef.current = targetBlock;
-      setBlocks([...blocks]);
+      moveCaretToEnd(targetBlock);
+      targetBlock.focus();
     }
   };
 
@@ -114,7 +87,6 @@ const useControlBlocks = () => {
     async (noteId) => {
       try {
         const fetchedBlocks = await getBlocks(noteId);
-
         fetchedBlocks.length ? setBlocks(fetchedBlocks) : setBlocks([initialBlock]);
       } catch (err) {
         navigate("/error", { state: { message: "해당 노트의 블록을 가져오는데 실패했습니다." } });
@@ -125,6 +97,8 @@ const useControlBlocks = () => {
 
   return {
     blocks,
+    setBlocks,
+    currentBlockId,
     handleUpdateBlock,
     handleAddBlock,
     handleDeleteBlock,

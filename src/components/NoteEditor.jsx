@@ -15,6 +15,7 @@ import * as S from "../styles/NoteEditorStyle";
 function NoteEditor({ setIsSaving }) {
   const {
     blocks,
+    currentBlockId,
     handleUpdateBlock,
     handleAddBlock,
     handleDeleteBlock,
@@ -46,27 +47,51 @@ function NoteEditor({ setIsSaving }) {
     }
   }, [blocks, noteId, prevBlocks, setIsSaving, updateNoteOnServer]);
 
+  useEffect(() => {
+    const focusNextBlock = () => {
+      const nextBlockIndex = blocks.findIndex((block) => block.id === currentBlockId) + 1;
+      const nextBlock = document.querySelector(`[data-block-id="${blocks[nextBlockIndex]?.id}"]`);
+
+      if (nextBlock) nextBlock.focus();
+    };
+
+    const focusPrevBlock = () => {
+      const prevBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlockId) - 1;
+      const prevBlock = document.querySelector(`[data-block-id="${blocks[prevBlockIndex]?.id}"]`);
+
+      if (prevBlock) prevBlock.focus();
+    };
+
+    if (prevBlocks && prevBlocks.length + 1 === blocks.length) {
+      focusNextBlock();
+    } else if (prevBlocks && prevBlocks.length - 1 === blocks.length) {
+      focusPrevBlock();
+    }
+  }, [blocks, currentBlockId, prevBlocks]);
+
   return (
     <S.NoteEditorLayout>
       {isLoading ? (
         <Loading />
       ) : (
-        blocks.map((block) => (
-          <NoteBlock
-            key={block.id}
-            id={block.id}
-            tag={block.tag}
-            html={block.html}
-            imageURL={block.imageURL}
-            onUpdatePage={handleUpdateBlock}
-            onAddBlock={handleAddBlock}
-            onDeleteBlock={handleDeleteBlock}
-            onFocusBlockByArrowKey={handleBlockFocusByArrowKey}
-            isSharedPage={isSharedPage}
-            blockCount={blocks.length}
-            noteId={noteId}
-          />
-        ))
+        blocks.map((block) => {
+          return (
+            <NoteBlock
+              key={block.id}
+              id={block.id}
+              tag={block.tag}
+              html={block.html}
+              imageURL={block.imageURL}
+              onUpdatePage={handleUpdateBlock}
+              onAddBlock={handleAddBlock}
+              onDeleteBlock={handleDeleteBlock}
+              onFocusBlockByArrowKey={handleBlockFocusByArrowKey}
+              isSharedPage={isSharedPage}
+              blockCount={blocks.length}
+              noteId={noteId}
+            />
+          );
+        })
       )}
     </S.NoteEditorLayout>
   );

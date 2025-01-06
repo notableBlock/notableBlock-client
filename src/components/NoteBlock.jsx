@@ -178,7 +178,7 @@ class NoteBlock extends React.Component {
 
   render() {
     return (
-      <>
+      <S.NoteBlockLayout>
         {this.state.isSelectMenuOpen && (
           <SelectMenu
             onSelect={this.handleSelectTag}
@@ -190,6 +190,7 @@ class NoteBlock extends React.Component {
         {this.state.tag !== "img" && (
           <S.NoteBlockTextItem
             innerRef={this.contentEditable}
+            data-block-id={this.props.id}
             html={this.state.html}
             tagName={this.state.tag}
             onChange={this.handleChange}
@@ -199,11 +200,16 @@ class NoteBlock extends React.Component {
           />
         )}
         {this.state.tag === "img" && (
-          <S.NoteBlockImageItem data-tag={this.state.tag} ref={this.contentEditable}>
+          <S.NoteBlockImageItem
+            data-block-id={this.props.id}
+            data-tag={this.state.tag}
+            ref={this.contentEditable}
+          >
             <input
               id={`${this.props.id}_fileInput`}
               name={this.state.tag}
               type="file"
+              accept="image/*"
               onChange={this.handleImageUpload}
               ref={(ref) => (this.fileInput = ref)}
               hidden
@@ -218,7 +224,7 @@ class NoteBlock extends React.Component {
             )}
           </S.NoteBlockImageItem>
         )}
-      </>
+      </S.NoteBlockLayout>
     );
   }
 }
