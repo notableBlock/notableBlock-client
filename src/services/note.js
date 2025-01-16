@@ -152,6 +152,15 @@ const uploadNoteImage = async (noteId, formData) => {
   }
 };
 
+const deleteNoteImage = async (imageURL) => {
+  try {
+    await axios.delete(`/notes/${imageURL}`);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export {
   updateNote,
   createNote,
@@ -164,4 +173,5 @@ export {
   getAllSharedNote,
   copySharedNote,
   uploadNoteImage,
+  deleteNoteImage,
 };

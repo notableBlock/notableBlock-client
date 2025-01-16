@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import usePrevBlocks from "./usePrevBlocks";
 
 import { getBlocks } from "../services/note";
+import { deleteNoteImage } from "../services/note";
 import objectId from "../utils/objectId";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 
@@ -19,6 +20,7 @@ const useControlBlocks = () => {
   const handleUpdateBlock = useCallback(
     (updatedBlock) => {
       const updatedIndex = blocks.findIndex((block) => block.id === updatedBlock.id);
+      const oldBlock = blocks[updatedIndex];
       const newBlocks = blocks.map((block, index) =>
         index === updatedIndex
           ? {
@@ -31,6 +33,14 @@ const useControlBlocks = () => {
       );
 
       setBlocks(newBlocks);
+
+      if (
+        oldBlock.imageURL &&
+        ((oldBlock.tag === "img" && updatedBlock.tag !== "img") ||
+          oldBlock.imageURL !== updatedBlock.imageURL)
+      ) {
+        deleteNoteImage(oldBlock.imageURL);
+      }
     },
     [blocks]
   );

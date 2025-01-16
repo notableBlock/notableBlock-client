@@ -40,18 +40,27 @@ class NoteBlock extends React.Component {
     this.setState({ html: this.props.html, tag: this.props.tag, imageURL: this.props.imageURL });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     const isHTMLChanged = this.props.html !== this.state.html;
     const isTagChanged = this.props.tag !== this.state.tag;
     const isImageChanged = this.props.imageURL !== this.state.imageURL;
+    const hasImageUrlWithoutImageTag = this.state.tag !== "img" && Boolean(this.state.imageURL);
 
-    if (isHTMLChanged || isTagChanged || isImageChanged) {
-      this.props.onUpdatePage({
-        id: this.props.id,
-        html: this.state.html,
-        tag: this.state.tag,
-        imageURL: this.state.imageURL,
-      });
+    const updatePage = () => {
+      if (isHTMLChanged || isTagChanged || isImageChanged) {
+        this.props.onUpdatePage({
+          id: this.props.id,
+          html: this.state.html,
+          tag: this.state.tag,
+          imageURL: this.state.imageURL,
+        });
+      }
+    };
+
+    if (hasImageUrlWithoutImageTag) {
+      this.setState({ html: "", imageURL: "" }, updatePage);
+    } else {
+      updatePage();
     }
   }
 

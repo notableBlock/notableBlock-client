@@ -24,7 +24,7 @@ const NoteBlockTextItem = styled(ContentEditable)`
 `;
 
 const NoteBlockImageItem = styled.div`
-  margin-top: 1rem;
+  flex-grow: 1;
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.noteBlockColor};
 
