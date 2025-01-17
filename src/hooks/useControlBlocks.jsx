@@ -95,7 +95,13 @@ const useControlBlocks = () => {
         break;
     }
 
-    const targetBlock = document.querySelector(`[data-block-id="${blocks[targetBlockIndex]?.id}"]`);
+    if (targetBlockIndex < 0 || targetBlockIndex >= blocks.length) return;
+
+    if (blocks[targetBlockIndex].tag === "img") {
+      targetBlockIndex += arrowKey === "ArrowUp" ? -1 : 1;
+    }
+
+    const targetBlock = document.querySelector(`[data-block-id="${blocks[targetBlockIndex].id}"]`);
 
     if (targetBlock) {
       moveCaretToEnd(targetBlock);
