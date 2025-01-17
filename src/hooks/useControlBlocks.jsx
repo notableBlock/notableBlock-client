@@ -34,10 +34,16 @@ const useControlBlocks = () => {
 
       setBlocks(newBlocks);
 
+      const hasNoDuplicateImage = !newBlocks.some(
+        (block, index) =>
+          oldBlock.imageURL && index !== updatedIndex && block.imageURL === oldBlock.imageURL
+      );
+
       if (
         oldBlock.imageURL &&
         ((oldBlock.tag === "img" && updatedBlock.tag !== "img") ||
-          oldBlock.imageURL !== updatedBlock.imageURL)
+          oldBlock.imageURL !== updatedBlock.imageURL) &&
+        hasNoDuplicateImage
       ) {
         deleteNoteImage(oldBlock.imageURL);
       }
