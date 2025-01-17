@@ -145,16 +145,16 @@ const uploadNoteImage = async (noteId, formData) => {
       },
     });
 
-    return data.imageURL;
+    return data.imageUrl;
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
 
-const deleteNoteImage = async (imageURL) => {
+const deleteNoteImage = async (imageUrl) => {
   try {
-    await axios.delete(`/notes/${imageURL}`);
+    await axios.delete(`/notes/${imageUrl}`);
   } catch (err) {
     console.log(err);
     throw err;

@@ -12,7 +12,7 @@ import moveCaretToEnd from "../utils/moveCaretToEnd";
 const useControlBlocks = () => {
   const navigate = useNavigate();
 
-  const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageURL: "" }), []);
+  const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageUrl: "" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
   const [currentBlockId, setCurrentBlockId] = useState(null);
   const prevBlocks = usePrevBlocks(blocks);
@@ -27,7 +27,7 @@ const useControlBlocks = () => {
               ...block,
               tag: updatedBlock.tag,
               html: updatedBlock.html,
-              imageURL: updatedBlock.imageURL,
+              imageUrl: updatedBlock.imageUrl,
             }
           : block
       );
@@ -36,16 +36,16 @@ const useControlBlocks = () => {
 
       const hasNoDuplicateImage = !newBlocks.some(
         (block, index) =>
-          oldBlock.imageURL && index !== updatedIndex && block.imageURL === oldBlock.imageURL
+          oldBlock.imageUrl && index !== updatedIndex && block.imageUrl === oldBlock.imageUrl
       );
 
       if (
-        oldBlock.imageURL &&
+        oldBlock.imageUrl &&
         ((oldBlock.tag === "img" && updatedBlock.tag !== "img") ||
-          oldBlock.imageURL !== updatedBlock.imageURL) &&
+          oldBlock.imageUrl !== updatedBlock.imageUrl) &&
         hasNoDuplicateImage
       ) {
-        deleteNoteImage(oldBlock.imageURL);
+        deleteNoteImage(oldBlock.imageUrl);
       }
     },
     [blocks]
@@ -56,7 +56,7 @@ const useControlBlocks = () => {
       setCurrentBlockId(currentBlock.id);
 
       const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
-      const newBlock = { ...initialBlock, id: objectId(), tag: "p", imageURL: "" };
+      const newBlock = { ...initialBlock, id: objectId(), tag: "p", imageUrl: "" };
       const newBlocks = [
         ...blocks.slice(0, currentBlockIndex + 1),
         newBlock,
@@ -96,6 +96,7 @@ const useControlBlocks = () => {
     }
 
     const targetBlock = document.querySelector(`[data-block-id="${blocks[targetBlockIndex]?.id}"]`);
+
     if (targetBlock) {
       moveCaretToEnd(targetBlock);
       targetBlock.focus();

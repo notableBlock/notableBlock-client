@@ -26,7 +26,7 @@ class NoteBlock extends React.Component {
       htmlBackup: null,
       html: "",
       tag: "p",
-      imageURL: "",
+      imageUrl: "",
       previousKey: "",
       isSelectMenuOpen: false,
       selectMenuPosition: {
@@ -37,14 +37,14 @@ class NoteBlock extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ html: this.props.html, tag: this.props.tag, imageURL: this.props.imageURL });
+    this.setState({ html: this.props.html, tag: this.props.tag, imageUrl: this.props.imageUrl });
   }
 
   componentDidUpdate() {
     const isHTMLChanged = this.props.html !== this.state.html;
     const isTagChanged = this.props.tag !== this.state.tag;
-    const isImageChanged = this.props.imageURL !== this.state.imageURL;
-    const hasImageUrlWithoutImageTag = this.state.tag !== "img" && Boolean(this.state.imageURL);
+    const isImageChanged = this.props.imageUrl !== this.state.imageUrl;
+    const hasImageUrlWithoutImageTag = this.state.tag !== "img" && Boolean(this.state.imageUrl);
 
     const updatePage = () => {
       if (isHTMLChanged || isTagChanged || isImageChanged) {
@@ -52,13 +52,13 @@ class NoteBlock extends React.Component {
           id: this.props.id,
           html: this.state.html,
           tag: this.state.tag,
-          imageURL: this.state.imageURL,
+          imageUrl: this.state.imageUrl,
         });
       }
     };
 
     if (hasImageUrlWithoutImageTag) {
-      this.setState({ html: "", imageURL: "" }, updatePage);
+      this.setState({ html: "", imageUrl: "" }, updatePage);
     } else {
       updatePage();
     }
@@ -165,7 +165,7 @@ class NoteBlock extends React.Component {
           id: this.props.id,
           html: "",
           tag: "p",
-          imageURL: "",
+          imageUrl: "",
           ref: this.contentEditable.current,
         });
       });
@@ -184,8 +184,8 @@ class NoteBlock extends React.Component {
       formData.append("file", imageFile);
 
       try {
-        const imageURL = await uploadNoteImage(this.props.noteId, formData);
-        this.setState({ imageURL: imageURL });
+        const imageUrl = await uploadNoteImage(this.props.noteId, formData);
+        this.setState({ imageUrl: imageUrl });
       } catch (err) {
         console.log(err);
       }
@@ -231,13 +231,13 @@ class NoteBlock extends React.Component {
               ref={(ref) => (this.fileInput = ref)}
               hidden
             />
-            {!this.state.imageURL && (
+            {!this.state.imageUrl && (
               <label htmlFor={`${this.props.id}_fileInput`}>
                 이미지가 선택되지 않았습니다. 선택해주세요.
               </label>
             )}
-            {this.state.imageURL && (
-              <img src={`${import.meta.env.VITE_SERVER_URL}` + this.state.imageURL} />
+            {this.state.imageUrl && (
+              <img src={`${import.meta.env.VITE_SERVER_URL}` + this.state.imageUrl} />
             )}
           </S.NoteBlockImageItem>
         )}
