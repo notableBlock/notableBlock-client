@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router";
 
 import SelectMenu from "./SelectMenu";
 
@@ -10,240 +11,237 @@ import dragHandleIcon from "../assets/images/drag-handle-icon.png";
 
 import * as S from "../styles/NoteBlockStyle";
 
-class NoteBlock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.handleOpenSelectMenu = this.handleOpenSelectMenu.bind(this);
-    this.handleCloseSelectMenu = this.handleCloseSelectMenu.bind(this);
-    this.handleSelectTag = this.handleSelectTag.bind(this);
-    this.handleImageUpload = this.handleImageUpload.bind(this);
-    this.contentEditable = React.createRef();
-    this.fileInput = null;
-    this.state = {
-      htmlBackup: null,
-      html: "",
-      tag: "p",
-      imageUrl: "",
-      previousKey: "",
-      isSelectMenuOpen: false,
-      selectMenuPosition: {
-        x: null,
-        y: null,
-      },
-    };
-  }
+function NoteBlock({
+  id,
+  html: propsHtml,
+  tag: propsTag,
+  imageUrl: propsImageUrl,
+  blockCount,
+  noteId,
+  isSharedPage,
+  onUpdatePage,
+  onAddBlock,
+  onDeleteBlock,
+  onFocusBlockByArrowKey,
+}) {
+  const navigate = useNavigate();
 
-  componentDidMount() {
-    this.setState({ html: this.props.html, tag: this.props.tag, imageUrl: this.props.imageUrl });
-  }
+  const [htmlBackup, setHtmlBackup] = useState(null);
+  const [html, setHtml] = useState(propsHtml);
+  const [tag, setTag] = useState(propsTag);
+  const [imageUrl, setImageUrl] = useState(propsImageUrl);
+  const [previousKey, setPreviousKey] = useState("");
+  const [isSelectMenuOpen, setIsSelectMenuOpen] = useState(false);
+  const [selectMenuPosition, setSelectMenuPosition] = useState({ x: null, y: null });
 
-  componentDidUpdate() {
-    const isHTMLChanged = this.props.html !== this.state.html;
-    const isTagChanged = this.props.tag !== this.state.tag;
-    const isImageChanged = this.props.imageUrl !== this.state.imageUrl;
-    const hasImageUrlWithoutImageTag = this.state.tag !== "img" && Boolean(this.state.imageUrl);
+  const isSelectMenuOpenRef = useRef(isSelectMenuOpen);
+  const blockCountRef = useRef(blockCount);
+  const contentEditableRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    isSelectMenuOpenRef.current = isSelectMenuOpen;
+    blockCountRef.current = blockCount;
+  }, [isSelectMenuOpen, blockCount]);
+
+  useEffect(() => {
+    const isHTMLChanged = propsHtml !== html;
+    const isTagChanged = propsTag !== tag;
+    const isImageChanged = propsImageUrl !== imageUrl;
+    const hasImageUrlWithoutImageTag = tag !== "img" && Boolean(imageUrl);
 
     const updatePage = () => {
       if (isHTMLChanged || isTagChanged || isImageChanged) {
-        this.props.onUpdatePage({
-          id: this.props.id,
-          html: this.state.html,
-          tag: this.state.tag,
-          imageUrl: this.state.imageUrl,
+        onUpdatePage({
+          id,
+          html,
+          tag,
+          imageUrl,
         });
       }
     };
 
     if (hasImageUrlWithoutImageTag) {
-      this.setState({ html: "", imageUrl: "" }, updatePage);
+      setHtml("");
+      setImageUrl("");
+      updatePage();
     } else {
       updatePage();
     }
-  }
+  }, [html, tag, imageUrl, propsHtml, propsTag, propsImageUrl, id, onUpdatePage]);
 
-  handleChange(e) {
-    this.setState({ html: e.target.value });
-  }
-
-  handleKeyDown(e) {
-    if (e.key === "/") {
-      this.setState({ htmlBackup: this.state.html });
-    } else if (
-      e.key === "Enter" &&
-      this.state.previousKey !== "Shift" &&
-      !this.state.isSelectMenuOpen
-    ) {
-      if (e.nativeEvent.isComposing) return;
-      e.preventDefault();
-
-      this.props.onAddBlock({
-        id: this.props.id,
-        ref: this.contentEditable.current,
-      });
-    } else if (
-      e.key === "Backspace" &&
-      (!this.state.html || this.state.html === "<br>") &&
-      this.props.blockCount !== 1
-    ) {
-      e.preventDefault();
-
-      this.props.onDeleteBlock({
-        id: this.props.id,
-        ref: this.contentEditable.current,
-      });
-    } else if (e.key === "ArrowUp" && this.state.isSelectMenuOpen === false) {
-      if (e.nativeEvent.isComposing) return;
-      e.preventDefault();
-
-      this.props.onFocusBlockByArrowKey(
-        {
-          id: this.props.id,
-          ref: this.contentEditable.current,
-        },
-        e.key
-      );
-    } else if (e.key === "ArrowDown" && this.state.isSelectMenuOpen === false) {
-      if (e.nativeEvent.isComposing) return;
-      e.preventDefault();
-
-      this.props.onFocusBlockByArrowKey(
-        {
-          id: this.props.id,
-          ref: this.contentEditable.current,
-        },
-        e.key
-      );
+  useEffect(() => {
+    if (previousKey === "/") {
+      setHtmlBackup(html);
     }
+  }, [previousKey]);
 
-    this.setState({ previousKey: e.key });
-  }
+  const handleChange = (e) => {
+    setHtml(e.target.value);
+  };
 
-  handleKeyUp(e) {
-    if (e.key === "/") this.handleOpenSelectMenu();
-  }
-
-  handleOpenSelectMenu(e) {
-    const { x, y } = getCaretCoordinates();
-    const isDragHandleClicked = Boolean(e?.target);
-
-    if (isDragHandleClicked) {
-      this.setState({ htmlBackup: this.state.html });
-    }
-
-    this.setState({
-      isSelectMenuOpen: true,
-      selectMenuPosition: { x, y },
-    });
-
-    setTimeout(() => {
-      document.addEventListener("click", this.handleCloseSelectMenu);
-    }, 0);
-  }
-
-  handleCloseSelectMenu() {
-    this.setState({
-      isSelectMenuOpen: false,
-      selectMenuPosition: { x: null, y: null },
-    });
-
-    document.removeEventListener("click", this.handleCloseSelectMenu);
-  }
-
-  handleSelectTag(tag) {
-    if (tag === "img") {
-      this.setState({ ...this.state, tag: tag }, () => {
-        this.handleCloseSelectMenu();
-
-        if (this.fileInput) {
-          this.fileInput.click();
-        }
-
-        this.props.onAddBlock({
-          id: this.props.id,
-          html: "",
-          tag: "p",
-          imageUrl: "",
-          ref: this.contentEditable.current,
+  const handleKeyDown = useCallback(
+    (e) => {
+      const userText = contentEditableRef.current.innerHTML;
+      if (e.key === "Enter" && previousKey !== "Shift" && !isSelectMenuOpenRef.current) {
+        if (e.nativeEvent.isComposing) return;
+        e.preventDefault();
+        onAddBlock({
+          id,
+          ref: contentEditableRef.current,
         });
+      } else if (
+        e.key === "Backspace" &&
+        (!userText || userText === "<br>") &&
+        blockCountRef.current !== 1
+      ) {
+        e.preventDefault();
+        onDeleteBlock({
+          id,
+          ref: contentEditableRef.current,
+        });
+      } else if (e.key === "ArrowUp" && !isSelectMenuOpenRef.current) {
+        if (e.nativeEvent.isComposing) return;
+        e.preventDefault();
+        onFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, e.key);
+      } else if (e.key === "ArrowDown" && !isSelectMenuOpenRef.current) {
+        if (e.nativeEvent.isComposing) return;
+        e.preventDefault();
+        onFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, e.key);
+      }
+      setPreviousKey(e.key);
+    },
+    [id, onAddBlock, onDeleteBlock, onFocusBlockByArrowKey, previousKey]
+  );
+
+  const handleKeyUp = (e) => {
+    if (e.key === "/") {
+      handleOpenSelectMenu(e);
+    }
+  };
+
+  const handleCloseSelectMenu = useCallback(() => {
+    setIsSelectMenuOpen(false);
+    setSelectMenuPosition({ x: null, y: null });
+    document.removeEventListener("click", handleCloseSelectMenu);
+  }, []);
+
+  const handleOpenSelectMenu = useCallback(
+    (e) => {
+      const { x, y } = getCaretCoordinates();
+
+      if (e.type === "click") {
+        setHtmlBackup(html);
+      }
+
+      setIsSelectMenuOpen(true);
+      setSelectMenuPosition({ x, y });
+
+      setTimeout(() => {
+        document.addEventListener("click", handleCloseSelectMenu);
+      }, 0);
+    },
+    [html, handleCloseSelectMenu]
+  );
+
+  useEffect(() => {
+    return () => {
+      document.removeEventListener("click", handleCloseSelectMenu);
+    };
+  }, [handleCloseSelectMenu]);
+
+  const handleSelectTag = (selectedTag) => {
+    if (selectedTag === "img") {
+      setTag(selectedTag);
+      handleCloseSelectMenu();
+
+      setTimeout(() => {
+        if (fileInputRef.current) {
+          fileInputRef.current.click();
+        }
+      }, 0);
+
+      onAddBlock({
+        id,
+        html: "",
+        tag: "p",
+        imageUrl: "",
+        ref: contentEditableRef.current,
       });
     } else {
-      this.setState({ tag: tag, html: this.state.htmlBackup }, () => {
-        moveCaretToEnd(this.contentEditable.current);
-        this.handleCloseSelectMenu();
-      });
-    }
-  }
+      setTag(selectedTag);
+      setHtml(htmlBackup);
 
-  async handleImageUpload() {
-    if (this.fileInput && this.fileInput.files[0]) {
-      const imageFile = this.fileInput.files[0];
+      setTimeout(() => {
+        moveCaretToEnd(contentEditableRef.current);
+      }, 0);
+
+      handleCloseSelectMenu();
+    }
+  };
+
+  const handleImageUpload = async () => {
+    if (fileInputRef.current && fileInputRef.current.files[0]) {
+      const imageFile = fileInputRef.current.files[0];
       const formData = new FormData();
       formData.append("file", imageFile);
 
       try {
-        const imageUrl = await uploadNoteImage(this.props.noteId, formData);
-        this.setState({ imageUrl: imageUrl });
+        const uploadedUrl = await uploadNoteImage(noteId, formData);
+        setImageUrl(uploadedUrl);
       } catch (err) {
-        console.log(err);
+        navigate("/error", { state: { message: "이미지를 첨부하는데 실패했습니다." } });
       }
     }
-  }
+  };
 
-  render() {
-    return (
-      <S.NoteBlockLayout>
-        {this.state.isSelectMenuOpen && (
-          <SelectMenu
-            onSelect={this.handleSelectTag}
-            onClose={this.handleCloseSelectMenu}
-            position={this.state.selectMenuPosition}
-            menu={tagsMenu}
+  return (
+    <S.NoteBlockLayout>
+      {isSelectMenuOpen && (
+        <SelectMenu
+          onSelect={handleSelectTag}
+          onClose={handleCloseSelectMenu}
+          position={selectMenuPosition}
+          menu={tagsMenu}
+        />
+      )}
+      <S.NoteBlockDragItem $image={dragHandleIcon} onClick={handleOpenSelectMenu} />
+      {tag !== "img" && (
+        <S.NoteBlockTextItem
+          innerRef={contentEditableRef}
+          data-block-id={id}
+          html={html}
+          tagName={tag}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
+          disabled={isSharedPage}
+        />
+      )}
+      {tag === "img" && (
+        <S.NoteBlockImageItem data-block-id={id} data-tag={tag} ref={contentEditableRef}>
+          <input
+            id={`${id}_fileInput`}
+            name={tag}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            ref={fileInputRef}
+            hidden
           />
-        )}
-        <S.NoteBlockDragItem $image={dragHandleIcon} onClick={this.handleOpenSelectMenu} />
-        {this.state.tag !== "img" && (
-          <S.NoteBlockTextItem
-            innerRef={this.contentEditable}
-            data-block-id={this.props.id}
-            html={this.state.html}
-            tagName={this.state.tag}
-            onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
-            onKeyUp={this.handleKeyUp}
-            disabled={this.props.isSharedPage}
-          />
-        )}
-        {this.state.tag === "img" && (
-          <S.NoteBlockImageItem
-            data-block-id={this.props.id}
-            data-tag={this.state.tag}
-            ref={this.contentEditable}
-          >
-            <input
-              id={`${this.props.id}_fileInput`}
-              name={this.state.tag}
-              type="file"
-              accept="image/*"
-              onChange={this.handleImageUpload}
-              ref={(ref) => (this.fileInput = ref)}
-              hidden
+          {!imageUrl && (
+            <label htmlFor={`${id}_fileInput`}>이미지가 선택되지 않았습니다. 선택해주세요.</label>
+          )}
+          {imageUrl && (
+            <img
+              src={`${import.meta.env.VITE_SERVER_URL}${imageUrl}`}
+              alt={/[^\/]+(?=\.[^\/.]*$)/.exec(imageUrl)[0]}
             />
-            {!this.state.imageUrl && (
-              <label htmlFor={`${this.props.id}_fileInput`}>
-                이미지가 선택되지 않았습니다. 선택해주세요.
-              </label>
-            )}
-            {this.state.imageUrl && (
-              <img src={`${import.meta.env.VITE_SERVER_URL}` + this.state.imageUrl} />
-            )}
-          </S.NoteBlockImageItem>
-        )}
-      </S.NoteBlockLayout>
-    );
-  }
+          )}
+        </S.NoteBlockImageItem>
+      )}
+    </S.NoteBlockLayout>
+  );
 }
 
 export default NoteBlock;

@@ -19,95 +19,113 @@ const useControlBlocks = () => {
 
   const handleUpdateBlock = useCallback(
     (updatedBlock) => {
-      const updatedIndex = blocks.findIndex((block) => block.id === updatedBlock.id);
-      const oldBlock = blocks[updatedIndex];
-      const newBlocks = blocks.map((block, index) =>
-        index === updatedIndex
-          ? {
-              ...block,
-              tag: updatedBlock.tag,
-              html: updatedBlock.html,
-              imageUrl: updatedBlock.imageUrl,
-            }
-          : block
-      );
+      setBlocks((prevBlocks) => {
+        const updatedIndex = prevBlocks.findIndex((block) => block.id === updatedBlock.id);
 
-      setBlocks(newBlocks);
+        if (updatedIndex === -1) {
+          return prevBlocks;
+        }
 
-      const hasNoDuplicateImage = !newBlocks.some(
-        (block, index) =>
-          oldBlock.imageUrl && index !== updatedIndex && block.imageUrl === oldBlock.imageUrl
-      );
+        const oldBlock = prevBlocks[updatedIndex];
+        const newBlocks = prevBlocks.map((block, index) =>
+          index === updatedIndex
+            ? {
+                ...block,
+                tag: updatedBlock.tag,
+                html: updatedBlock.html,
+                imageUrl: updatedBlock.imageUrl,
+              }
+            : block
+        );
 
-      if (
-        oldBlock.imageUrl &&
-        ((oldBlock.tag === "img" && updatedBlock.tag !== "img") ||
-          oldBlock.imageUrl !== updatedBlock.imageUrl) &&
-        hasNoDuplicateImage
-      ) {
-        deleteNoteImage(oldBlock.imageUrl);
-      }
+        const hasNoDuplicateImage = !newBlocks.some(
+          (block, index) =>
+            oldBlock.imageUrl && index !== updatedIndex && block.imageUrl === oldBlock.imageUrl
+        );
+
+        if (
+          oldBlock.imageUrl &&
+          ((oldBlock.tag === "img" && updatedBlock.tag !== "img") ||
+            oldBlock.imageUrl !== updatedBlock.imageUrl) &&
+          hasNoDuplicateImage
+        ) {
+          deleteNoteImage(oldBlock.imageUrl);
+        }
+
+        return newBlocks;
+      });
     },
-    [blocks]
+    [setBlocks]
   );
 
   const handleAddBlock = useCallback(
     (currentBlock) => {
+      setBlocks((prevBlocks) => {
+        const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
+        const newBlock = { ...initialBlock, id: objectId(), tag: "p", imageUrl: "" };
+        return [
+          ...prevBlocks.slice(0, currentBlockIndex + 1),
+          newBlock,
+          ...prevBlocks.slice(currentBlockIndex + 1),
+        ];
+      });
+
       setCurrentBlockId(currentBlock.id);
-
-      const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
-      const newBlock = { ...initialBlock, id: objectId(), tag: "p", imageUrl: "" };
-      const newBlocks = [
-        ...blocks.slice(0, currentBlockIndex + 1),
-        newBlock,
-        ...blocks.slice(currentBlockIndex + 1),
-      ];
-
-      setBlocks(newBlocks);
     },
-    [blocks, initialBlock]
+    [initialBlock]
   );
 
   const handleDeleteBlock = useCallback(
     (currentBlock) => {
-      setCurrentBlockId(currentBlock.id);
+      setBlocks((prevBlocks) => {
+        const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
+        const newBlocks = [
+          ...prevBlocks.slice(0, currentBlockIndex),
+          ...prevBlocks.slice(currentBlockIndex + 1),
+        ];
 
-      const currentBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id);
-      const newBlocks = [
-        ...blocks.slice(0, currentBlockIndex),
-        ...blocks.slice(currentBlockIndex + 1),
-      ];
+        setCurrentBlockId(currentBlock.id);
 
-      setBlocks(newBlocks);
+        return newBlocks;
+      });
     },
-    [blocks, setBlocks]
+    [setCurrentBlockId]
   );
 
-  const handleBlockFocusByArrowKey = (currentBlock, arrowKey) => {
-    let targetBlockIndex = null;
+  const handleBlockFocusByArrowKey = useCallback(
+    (currentBlock, arrowKey) => {
+      setBlocks((prevBlocks) => {
+        const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
 
-    switch (arrowKey) {
-      case "ArrowUp":
-        targetBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id) - 1;
-        break;
-      case "ArrowDown":
-        targetBlockIndex = blocks.findIndex((block) => block.id === currentBlock.id) + 1;
-        break;
-    }
+        if (currentBlockIndex === -1) {
+          return prevBlocks;
+        }
 
-    if (targetBlockIndex < 0 || targetBlockIndex >= blocks.length) return;
+        let targetBlockIndex =
+          arrowKey === "ArrowUp" ? currentBlockIndex - 1 : currentBlockIndex + 1;
 
-    if (blocks[targetBlockIndex].tag === "img") {
-      targetBlockIndex += arrowKey === "ArrowUp" ? -1 : 1;
-    }
+        if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
 
-    const targetBlock = document.querySelector(`[data-block-id="${blocks[targetBlockIndex].id}"]`);
+        while (prevBlocks[targetBlockIndex]?.tag === "img") {
+          targetBlockIndex += arrowKey === "ArrowUp" ? -1 : 1;
 
-    if (targetBlock) {
-      moveCaretToEnd(targetBlock);
-      targetBlock.focus();
-    }
-  };
+          if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
+        }
+
+        const targetBlock = document.querySelector(
+          `[data-block-id="${prevBlocks[targetBlockIndex].id}"]`
+        );
+
+        if (targetBlock) {
+          moveCaretToEnd(targetBlock);
+          targetBlock.focus();
+        }
+
+        return prevBlocks;
+      });
+    },
+    [setBlocks]
+  );
 
   const focusNextBlock = useCallback(() => {
     const nextBlockIndex = blocks.findIndex((block) => block.id === currentBlockId) + 1;
@@ -120,9 +138,11 @@ const useControlBlocks = () => {
   }, [blocks, currentBlockId]);
 
   const focusPrevBlock = useCallback(() => {
-    const prevBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlockId) - 1;
+    const prevBlockIndex = Math.max(
+      prevBlocks.findIndex((block) => block.id === currentBlockId) - 1,
+      0
+    );
     const prevBlock = document.querySelector(`[data-block-id="${blocks[prevBlockIndex]?.id}"]`);
-
     if (prevBlock) {
       moveCaretToEnd(prevBlock);
       prevBlock.focus();
