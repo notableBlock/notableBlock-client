@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { forwardRef, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router";
 
 import SelectMenu from "./SelectMenu";
@@ -11,19 +11,22 @@ import dragHandleIcon from "../assets/images/drag-handle-icon.png";
 
 import * as S from "../styles/NoteBlockStyle";
 
-function NoteBlock({
-  id,
-  html: propsHtml,
-  tag: propsTag,
-  imageUrl: propsImageUrl,
-  blockCount,
-  noteId,
-  isSharedPage,
-  onUpdatePage,
-  onAddBlock,
-  onDeleteBlock,
-  onFocusBlockByArrowKey,
-}) {
+function NoteBlock(
+  {
+    id,
+    html: propsHtml,
+    tag: propsTag,
+    imageUrl: propsImageUrl,
+    blockCount,
+    noteId,
+    isSharedPage,
+    onUpdatePage,
+    onAddBlock,
+    onDeleteBlock,
+    onFocusBlockByArrowKey,
+  },
+  ref
+) {
   const navigate = useNavigate();
 
   const [htmlBackup, setHtmlBackup] = useState(null);
@@ -194,7 +197,6 @@ function NoteBlock({
       }
     }
   };
-
   return (
     <S.NoteBlockLayout>
       {isSelectMenuOpen && (
@@ -209,7 +211,7 @@ function NoteBlock({
       {tag !== "img" && (
         <S.NoteBlockTextItem
           innerRef={contentEditableRef}
-          data-block-id={id}
+          ref={ref}
           html={html}
           tagName={tag}
           onChange={handleChange}
@@ -219,7 +221,7 @@ function NoteBlock({
         />
       )}
       {tag === "img" && (
-        <S.NoteBlockImageItem data-block-id={id} data-tag={tag} ref={contentEditableRef}>
+        <S.NoteBlockImageItem ref={ref}>
           <input
             id={`${id}_fileInput`}
             name={tag}
@@ -244,4 +246,6 @@ function NoteBlock({
   );
 }
 
-export default NoteBlock;
+const NoteBlockRef = forwardRef(NoteBlock);
+
+export default NoteBlockRef;

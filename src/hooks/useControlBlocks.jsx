@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 
 import { useNavigate } from "react-router";
 
@@ -15,6 +15,8 @@ const useControlBlocks = () => {
   const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageUrl: "" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
   const [currentBlockId, setCurrentBlockId] = useState(null);
+  const blocksRef = useRef({});
+
   const prevBlocks = usePrevBlocks(blocks);
 
   const handleUpdateBlock = useCallback(
@@ -92,44 +94,38 @@ const useControlBlocks = () => {
     [setCurrentBlockId]
   );
 
-  const handleBlockFocusByArrowKey = useCallback(
-    (currentBlock, arrowKey) => {
-      setBlocks((prevBlocks) => {
-        const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
+  const handleBlockFocusByArrowKey = useCallback((currentBlock, arrowKey) => {
+    setBlocks((prevBlocks) => {
+      const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
 
-        if (currentBlockIndex === -1) {
-          return prevBlocks;
-        }
+      if (currentBlockIndex === -1) return prevBlocks;
 
-        let targetBlockIndex =
-          arrowKey === "ArrowUp" ? currentBlockIndex - 1 : currentBlockIndex + 1;
+      let targetBlockIndex = arrowKey === "ArrowUp" ? currentBlockIndex - 1 : currentBlockIndex + 1;
+
+      if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
+
+      while (prevBlocks[targetBlockIndex]?.tag === "img") {
+        targetBlockIndex += arrowKey === "ArrowUp" ? -1 : 1;
 
         if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
+      }
 
-        while (prevBlocks[targetBlockIndex]?.tag === "img") {
-          targetBlockIndex += arrowKey === "ArrowUp" ? -1 : 1;
+      const targetBlockId = prevBlocks[targetBlockIndex].id;
+      const targetBlock = blocksRef.current[targetBlockId];
 
-          if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
-        }
+      if (targetBlock) {
+        moveCaretToEnd(targetBlock);
+        targetBlock.focus();
+      }
 
-        const targetBlock = document.querySelector(
-          `[data-block-id="${prevBlocks[targetBlockIndex].id}"]`
-        );
-
-        if (targetBlock) {
-          moveCaretToEnd(targetBlock);
-          targetBlock.focus();
-        }
-
-        return prevBlocks;
-      });
-    },
-    [setBlocks]
-  );
+      return prevBlocks;
+    });
+  }, []);
 
   const focusNextBlock = useCallback(() => {
     const nextBlockIndex = blocks.findIndex((block) => block.id === currentBlockId) + 1;
-    const nextBlock = document.querySelector(`[data-block-id="${blocks[nextBlockIndex]?.id}"]`);
+    const nextBlockId = blocks[nextBlockIndex].id;
+    const nextBlock = blocksRef.current[nextBlockId];
 
     if (nextBlock) {
       moveCaretToEnd(nextBlock);
@@ -138,11 +134,21 @@ const useControlBlocks = () => {
   }, [blocks, currentBlockId]);
 
   const focusPrevBlock = useCallback(() => {
-    const prevBlockIndex = Math.max(
-      prevBlocks.findIndex((block) => block.id === currentBlockId) - 1,
-      0
-    );
-    const prevBlock = document.querySelector(`[data-block-id="${blocks[prevBlockIndex]?.id}"]`);
+    let prevBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlockId) - 1;
+
+    while (prevBlockIndex >= 0 && blocks[prevBlockIndex].tag === "img") {
+      prevBlockIndex--;
+    }
+
+    if (prevBlockIndex < 0) {
+      prevBlockIndex = blocks.findIndex((block) => block.tag !== "img");
+    }
+
+    if (prevBlockIndex < 0) return;
+
+    const prevBlockId = blocks[prevBlockIndex]?.id;
+    const prevBlock = blocksRef.current[prevBlockId];
+
     if (prevBlock) {
       moveCaretToEnd(prevBlock);
       prevBlock.focus();
@@ -161,6 +167,14 @@ const useControlBlocks = () => {
     [initialBlock, navigate]
   );
 
+  const cleanUpInvalidBlocksRef = () => {
+    Object.keys(blocksRef.current).forEach((blockId) => {
+      if (!blocksRef.current[blockId]?.isConnected) {
+        delete blocksRef.current[blockId];
+      }
+    });
+  };
+
   return {
     blocks,
     setBlocks,
@@ -172,6 +186,8 @@ const useControlBlocks = () => {
     getBlocksFromServer,
     focusNextBlock,
     focusPrevBlock,
+    blocksRef,
+    cleanUpInvalidBlocksRef,
   };
 };
 

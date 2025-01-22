@@ -21,6 +21,8 @@ function NoteEditor({ setIsSaving }) {
     focusNextBlock,
     focusPrevBlock,
     getBlocksFromServer,
+    blocksRef,
+    cleanUpInvalidBlocksRef,
   } = useControlBlocks();
   const { updateNoteOnServer } = useControlNotes();
   const prevBlocks = usePrevBlocks(blocks);
@@ -52,8 +54,9 @@ function NoteEditor({ setIsSaving }) {
       focusNextBlock();
     } else if (prevBlocks && prevBlocks.length - 1 === blocks.length) {
       focusPrevBlock();
+      cleanUpInvalidBlocksRef();
     }
-  }, [blocks, prevBlocks, focusNextBlock, focusPrevBlock]);
+  }, [blocks, prevBlocks, focusNextBlock, focusPrevBlock, cleanUpInvalidBlocksRef]);
 
   return (
     <S.NoteEditorLayout>
@@ -67,13 +70,23 @@ function NoteEditor({ setIsSaving }) {
               id={block.id}
               tag={block.tag}
               html={block.html}
-              imageURL={block.imageURL}
+              imageUrl={block.imageUrl}
               onUpdatePage={handleUpdateBlock}
               onAddBlock={handleAddBlock}
               onDeleteBlock={handleDeleteBlock}
               onFocusBlockByArrowKey={handleBlockFocusByArrowKey}
               isSharedPage={isSharedPage}
               blockCount={blocks.length}
+              ref={(refTarget) => {
+                if (!refTarget) return;
+
+                const blockDomNode =
+                  refTarget instanceof HTMLElement ? refTarget : refTarget.props.innerRef.current;
+
+                if (blockDomNode) {
+                  blocksRef.current[block.id] = blockDomNode;
+                }
+              }}
               noteId={noteId}
             />
           );
