@@ -8,12 +8,14 @@ import Loading from "./common/Loading";
 import useControlNotes from "../hooks/useControlNotes";
 import useControlBlocks from "../hooks/useControlBlocks";
 import usePrevBlocks from "../hooks/usePrevBlocks";
+import useDragDrop from "../hooks/useDragDrop";
 
 import * as S from "../styles/NoteEditorStyle";
 
 function NoteEditor({ setIsSaving }) {
   const {
     blocks,
+    setBlocks,
     handleUpdateBlock,
     handleAddBlock,
     handleDeleteBlock,
@@ -26,6 +28,10 @@ function NoteEditor({ setIsSaving }) {
   } = useControlBlocks();
   const { updateNoteOnServer } = useControlNotes();
   const prevBlocks = usePrevBlocks(blocks);
+  const { draggedIndex, handleDragStart, handleDragEnter, handleDragEnd } = useDragDrop(
+    blocks,
+    setBlocks
+  );
   const { noteId } = useParams();
   const { pathname } = useLocation();
 
@@ -59,11 +65,11 @@ function NoteEditor({ setIsSaving }) {
   }, [blocks, prevBlocks, focusNextBlock, focusPrevBlock, cleanUpInvalidBlocksRef]);
 
   return (
-    <S.NoteEditorLayout>
+    <S.NoteEditorLayout onDragOver={(e) => e.preventDefault()}>
       {isLoading ? (
         <Loading />
       ) : (
-        blocks.map((block) => {
+        blocks.map((block, index) => {
           return (
             <NoteBlock
               key={block.id}
@@ -88,6 +94,10 @@ function NoteEditor({ setIsSaving }) {
                 }
               }}
               noteId={noteId}
+              onDragStart={() => handleDragStart(index)}
+              onDragEnter={() => handleDragEnter(index)}
+              onDragEnd={handleDragEnd}
+              isDragging={index === draggedIndex}
             />
           );
         })

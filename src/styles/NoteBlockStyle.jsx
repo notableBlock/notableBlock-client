@@ -13,6 +13,8 @@ const NoteBlockTextItem = styled(ContentEditable)`
   text-align: left;
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.noteBlockColor};
+  box-shadow: ${({ isDragging, theme }) =>
+    isDragging ? `0 0.25rem 0.75rem ${theme.color.shadowColor}` : "none"};
 
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverColor};
@@ -27,6 +29,8 @@ const NoteBlockImageItem = styled.div`
   flex-grow: 1;
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.noteBlockColor};
+  box-shadow: ${({ isDragging, theme }) =>
+    isDragging ? `0 0.25rem 0.75rem ${theme.color.shadowColor}` : "none"};
 
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverColor};
