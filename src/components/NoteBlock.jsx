@@ -42,14 +42,16 @@ function NoteBlock(
   const [selectMenuPosition, setSelectMenuPosition] = useState({ x: null, y: null });
 
   const isSelectMenuOpenRef = useRef(isSelectMenuOpen);
+  const previousKeyRef = useRef(null);
   const blockCountRef = useRef(blockCount);
   const contentEditableRef = useRef(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     isSelectMenuOpenRef.current = isSelectMenuOpen;
+    previousKeyRef.current = previousKey;
     blockCountRef.current = blockCount;
-  }, [isSelectMenuOpen, blockCount]);
+  }, [isSelectMenuOpen, previousKey, blockCount]);
 
   useEffect(() => {
     const isHTMLChanged = propsHtml !== html;
@@ -77,49 +79,67 @@ function NoteBlock(
     }
   }, [html, tag, imageUrl, propsHtml, propsTag, propsImageUrl, id, onUpdatePage]);
 
-  useEffect(() => {
-    if (previousKey === "/") {
-      setHtmlBackup(html);
-    }
-  }, [previousKey]);
-
   const handleChange = (e) => {
     setHtml(e.target.value);
   };
 
-  const handleKeyDown = useCallback(
+  const handleEnterKey = useCallback(
     (e) => {
-      const userText = contentEditableRef.current.innerHTML;
-      if (e.key === "Enter" && previousKey !== "Shift" && !isSelectMenuOpenRef.current) {
-        if (e.nativeEvent.isComposing) return;
+      if (previousKeyRef.current !== "Shift" && !isSelectMenuOpenRef.current) {
         e.preventDefault();
-        onAddBlock({
-          id,
-          ref: contentEditableRef.current,
-        });
-      } else if (
-        e.key === "Backspace" &&
-        (!userText || userText === "<br>") &&
-        blockCountRef.current !== 1
-      ) {
-        e.preventDefault();
-        onDeleteBlock({
-          id,
-          ref: contentEditableRef.current,
-        });
-      } else if (e.key === "ArrowUp" && !isSelectMenuOpenRef.current) {
-        if (e.nativeEvent.isComposing) return;
-        e.preventDefault();
-        onFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, e.key);
-      } else if (e.key === "ArrowDown" && !isSelectMenuOpenRef.current) {
-        if (e.nativeEvent.isComposing) return;
-        e.preventDefault();
-        onFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, e.key);
+
+        onAddBlock({ id, ref: contentEditableRef.current });
       }
-      setPreviousKey(e.key);
     },
-    [id, onAddBlock, onDeleteBlock, onFocusBlockByArrowKey, previousKey]
+    [id, onAddBlock]
   );
+
+  const handleBackspaceKey = useCallback(
+    (e, userText) => {
+      if ((!userText || userText === "<br>") && blockCountRef.current !== 1) {
+        e.preventDefault();
+
+        onDeleteBlock({ id, ref: contentEditableRef.current });
+      }
+    },
+    [id, onDeleteBlock]
+  );
+
+  const handleArrowKey = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      onFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, e.key);
+    },
+    [id, onFocusBlockByArrowKey]
+  );
+
+  const handleKeyDown = (e) => {
+    const userText = contentEditableRef.current.innerHTML;
+
+    if (e.nativeEvent.isComposing && ["Enter", "ArrowUp", "ArrowDown"].includes(e.key)) return;
+    switch (e.key) {
+      case "/":
+        setHtmlBackup(userText);
+        break;
+      case "Enter":
+        handleEnterKey(e);
+        break;
+      case "Backspace":
+        handleBackspaceKey(e, userText);
+        break;
+      case "ArrowUp":
+      case "ArrowDown":
+        if (!isSelectMenuOpenRef.current) {
+          handleArrowKey(e);
+        }
+        break;
+      default:
+        break;
+    }
+
+    setPreviousKey(e.key);
+  };
 
   const handleKeyUp = (e) => {
     if (e.key === "/") {
@@ -130,6 +150,7 @@ function NoteBlock(
   const handleCloseSelectMenu = useCallback(() => {
     setIsSelectMenuOpen(false);
     setSelectMenuPosition({ x: null, y: null });
+
     document.removeEventListener("click", handleCloseSelectMenu);
   }, []);
 
