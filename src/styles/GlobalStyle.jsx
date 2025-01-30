@@ -14,11 +14,12 @@ ${reset}
     }
 
     body {
+        overflow: hidden;
         height: 100%;
-        font-size: 1rem;
-        line-height: 1;
-        font-family: "Noto Sans KR", sans-serif;
         background-color: ${({ theme }) => theme.color.whiteColor};
+        font-size: 1rem;
+        font-family: "Noto Sans KR", sans-serif;
+        line-height: 1;
     }
 
     h1 {

@@ -156,9 +156,11 @@ function NoteBlock(
 
   const handleOpenSelectMenu = useCallback(
     (e) => {
-      const { x, y } = getCaretCoordinates();
+      let { x, y } = getCaretCoordinates();
 
       if (e.type === "click") {
+        x = e.clientX;
+        y = e.clientY;
         setHtmlBackup(html);
       }
 

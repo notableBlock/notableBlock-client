@@ -26,10 +26,14 @@ function NoteViewer({
   kebabMenu,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [kebabMenuPosition, setKebabMenuPosition] = useState({ x: null, y: null });
   const modalRef = useRef(null);
   const textContent = content.filter((block) => block.tag !== "img");
 
-  const handleOpenModal = () => setIsOpen(true);
+  const handleOpenModal = (e) => {
+    setKebabMenuPosition({ x: e.clientX, y: e.clientY });
+    setIsOpen(true);
+  };
   const handleCloseModal = () => setIsOpen(false);
   useOnClickOutside(modalRef, handleCloseModal);
 
@@ -39,7 +43,14 @@ function NoteViewer({
         <p>생성날짜: {createdAt}</p>
         <p>{shared === undefined ? "블록체인으로 보호중" : `공유 여부: ${shared ? "✅" : "❌"}`}</p>
         <div>
-          {isOpen && <SelectMenu ref={modalRef} menu={kebabMenu} onSelect={onSelectMenu} />}
+          {isOpen && (
+            <SelectMenu
+              ref={modalRef}
+              menu={kebabMenu}
+              onSelect={onSelectMenu}
+              position={kebabMenuPosition}
+            />
+          )}
           <Button image={kebabMenuIcon} onClick={handleOpenModal} />
         </div>
       </S.NoteViewerHeader>
