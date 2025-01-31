@@ -78,17 +78,30 @@ const shareNote = async (noteId) => {
 
 const exportNote = async (noteId) => {
   try {
-    const { data } = await axios.get(`/notes/${noteId}/download`, { responseType: "blob" });
+    const { headers, data } = await axios.get(`/notes/${noteId}/download`, {
+      responseType: "blob",
+    });
 
-    const url = URL.createObjectURL(data);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `${noteId}.md`);
-    document.body.appendChild(link);
-    link.click();
+    const contentDisposition = headers["content-disposition"];
+    let filename = "제목이 없는 노트.md";
 
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    if (contentDisposition) {
+      const matchedFilename = contentDisposition.match(/filename\*=(?:UTF-8'')?(.+)/);
+
+      if (matchedFilename) {
+        filename = decodeURIComponent(matchedFilename[1]);
+      }
+    }
+
+    const fileUrl = URL.createObjectURL(data);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = fileUrl;
+    downloadLink.setAttribute("download", filename);
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
+    URL.revokeObjectURL(fileUrl);
   } catch (err) {
     console.log(err);
     throw err;
