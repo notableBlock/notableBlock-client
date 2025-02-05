@@ -10,6 +10,7 @@ const color = {
   activeColor: "#FFFFFF40",
   focusColor: "#F5F6FB",
   hoverColor: "#F8F8F8",
+  dropColor: "#F0F8FF",
   shadowColor: "#0000003F",
   redColor: "#ff0000",
   blackColor: "#000000",

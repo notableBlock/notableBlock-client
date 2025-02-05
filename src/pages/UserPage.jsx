@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Button from "../components/common/Button";
 import SelectMenu from "../components/SelectMenu";
 import NoteViewer from "../components/NoteViewer";
+import UploadDropZone from "../components/UploadDropZone";
 import Loading from "../components/common/Loading";
 
 import useControlNotes from "../hooks/useControlNotes";
@@ -43,37 +44,40 @@ function UserPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        fetchedNotes.map((note) => {
-          const {
-            _id,
-            blocks,
-            creator,
-            creatorPicture,
-            createdAt,
-            updatedAt,
-            editor,
-            editorPicture,
-            shared,
-          } = note;
+        <>
+          <UploadDropZone onImportFromLocal={handleImportFromLocal} />
+          {fetchedNotes.map((note) => {
+            const {
+              _id,
+              blocks,
+              creator,
+              creatorPicture,
+              createdAt,
+              updatedAt,
+              editor,
+              editorPicture,
+              shared,
+            } = note;
 
-          return (
-            <NoteViewer
-              key={_id}
-              path="notes"
-              noteId={_id}
-              content={blocks}
-              creator={creator}
-              creatorPicture={creatorPicture}
-              createdAt={createdAt}
-              editor={editor}
-              editorPicture={editorPicture}
-              updatedAt={updatedAt}
-              shared={shared}
-              kebabMenu={kebabMenu(_id)}
-              onSelectMenu={handleSelectMenu}
-            />
-          );
-        })
+            return (
+              <NoteViewer
+                key={_id}
+                path="notes"
+                noteId={_id}
+                content={blocks}
+                creator={creator}
+                creatorPicture={creatorPicture}
+                createdAt={createdAt}
+                editor={editor}
+                editorPicture={editorPicture}
+                updatedAt={updatedAt}
+                shared={shared}
+                kebabMenu={kebabMenu(_id)}
+                onSelectMenu={handleSelectMenu}
+              />
+            );
+          })}
+        </>
       )}
       <S.UserPageItem $type="option">
         {isOpen && (
