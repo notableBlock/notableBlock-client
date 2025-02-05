@@ -1,8 +1,10 @@
-import { forwardRef, useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { forwardRef, useState, useEffect, useCallback, useMemo } from "react";
 
 import { matchSorter } from "match-sorter";
 
 import useSelectionStore from "../stores/useSelectionStore";
+
+import useDragDrop from "../hooks/useDragDrop";
 
 import { tagsMenu } from "../assets/data/menu";
 import { INITIAL_SELECTION_INDEX } from "../constants";
@@ -11,16 +13,13 @@ import * as S from "../styles/SelectMenuStyle";
 
 function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, ref) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();
+  const { fileInputRef, handleFileInputClick } = useDragDrop();
+
   const positionAttributes = useMemo(() => {
     return position ? { top: position.y, left: position.x } : "auto";
   }, [position]);
 
   const [command, setCommand] = useState("");
-  const fileInputRef = useRef(null);
-
-  const handleInputClick = () => {
-    fileInputRef.current.click();
-  };
 
   useEffect(() => {
     if (command) {
@@ -85,7 +84,7 @@ function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, re
               ref={fileInputRef}
               onChange={(e) => onImportFromLocal(e)}
             />
-            <S.SelectMenuItem onClick={handleInputClick}>{item.label}</S.SelectMenuItem>
+            <S.SelectMenuItem onClick={handleFileInputClick}>{item.label}</S.SelectMenuItem>
           </S.SelectMenuContainer>
         ) : (
           <S.SelectMenuItem

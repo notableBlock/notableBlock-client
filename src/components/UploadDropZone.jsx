@@ -1,47 +1,28 @@
-import { useState, useRef } from "react";
+import useDragDrop from "../hooks/useDragDrop";
 
 import * as S from "../styles/UploadDropZoneStyle";
 
 function UploadDropZone({ onImportFromLocal }) {
-  2;
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef(null);
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    const droppedFiles = [...e.dataTransfer.files];
-    droppedFiles.forEach((file) => {
-      const mockEvent = { target: { files: [file] } };
-
-      onImportFromLocal(mockEvent);
-    });
-  };
-
-  const handleClick = () => {
-    fileInputRef.current.click();
-  };
+  const {
+    isDragging,
+    handleFileDrop,
+    handleFileDragOver,
+    handleFileDragLeave,
+    handleFileInputClick,
+    fileInputRef,
+  } = useDragDrop();
 
   return (
     <S.UploadDropZoneLayout
       $isDragging={isDragging}
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
+      onDrop={(e) => handleFileDrop(e, onImportFromLocal)}
+      onDragOver={handleFileDragOver}
+      onDragLeave={handleFileDragLeave}
     >
       <S.UploadImage />
       <h3>
-        여기로 파일을 드래그하거나 <span onClick={handleClick}>클릭하여 업로드</span>하세요.
+        여기로 파일을 드래그하거나 <span onClick={handleFileInputClick}>클릭하여 업로드</span>
+        하세요.
       </h3>
       <input
         type="file"

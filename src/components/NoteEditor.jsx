@@ -28,10 +28,8 @@ function NoteEditor({ setIsSaving }) {
   } = useControlBlocks();
   const { updateNoteOnServer } = useControlNotes();
   const prevBlocks = usePrevBlocks(blocks);
-  const { draggedIndex, handleDragStart, handleDragEnter, handleDragEnd } = useDragDrop(
-    blocks,
-    setBlocks
-  );
+  const { draggedIndex, handleBlockDragStart, handleBlockDragEnter, handleBlockDragEnd } =
+    useDragDrop(blocks, setBlocks);
   const { noteId } = useParams();
   const { pathname } = useLocation();
 
@@ -94,9 +92,9 @@ function NoteEditor({ setIsSaving }) {
                 }
               }}
               noteId={noteId}
-              onDragStart={() => handleDragStart(index)}
-              onDragEnter={() => handleDragEnter(index)}
-              onDragEnd={handleDragEnd}
+              onDragStart={() => handleBlockDragStart(index)}
+              onDragEnter={() => handleBlockDragEnter(index)}
+              onDragEnd={handleBlockDragEnd}
               isDragging={index === draggedIndex}
             />
           );
