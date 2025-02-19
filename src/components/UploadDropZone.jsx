@@ -21,12 +21,13 @@ function UploadDropZone({ onImportFromLocal }) {
     >
       <S.UploadImage />
       <h3>
-        여기로 파일을 드래그하거나 <span onClick={handleFileInputClick}>클릭하여 업로드</span>
+        여기로 tar 압축파일을 드래그하거나
+        <span onClick={handleFileInputClick}>클릭하여 업로드</span>
         하세요.
       </h3>
       <input
         type="file"
-        accept=".md"
+        accept=".tar"
         onChange={(e) => onImportFromLocal(e)}
         ref={fileInputRef}
         hidden

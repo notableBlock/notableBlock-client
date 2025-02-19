@@ -93,9 +93,8 @@ const useControlNotes = () => {
           const formData = new FormData();
           formData.append("file", localFile);
 
-          const newNote = await importNote(formData);
-
-          setFetchedNotes((prevNotes) => [...prevNotes, newNote]);
+          const newNotes = await importNote(formData);
+          setFetchedNotes((prevNotes) => [...prevNotes, ...newNotes]);
         }
       } catch (err) {
         navigate("/error", { state: { message: "노트를 로컬에서 가져오는데 실패했습니다." } });

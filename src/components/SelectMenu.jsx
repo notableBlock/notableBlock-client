@@ -80,7 +80,7 @@ function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, re
           <S.SelectMenuContainer key={item.id}>
             <S.SelectMenuInput
               type="file"
-              accept=".md"
+              accept=".tar"
               ref={fileInputRef}
               onChange={(e) => onImportFromLocal(e)}
             />

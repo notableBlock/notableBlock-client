@@ -78,32 +78,30 @@ const shareNote = async (noteId) => {
 
 const exportNote = async (noteId) => {
   try {
-    const { headers, data } = await axios.get(`/notes/${noteId}/download`, {
+    const response = await axios.get(`/notes/${noteId}/download`, {
       responseType: "blob",
     });
 
-    const contentDisposition = headers["content-disposition"];
-    let filename = "제목이 없는 노트.md";
+    const contentDisposition = response.headers["content-disposition"];
+    let filename = "노트.tar";
 
     if (contentDisposition) {
-      const matchedFilename = contentDisposition.match(/filename\*=(?:UTF-8'')?(.+)/);
-
-      if (matchedFilename) {
-        filename = decodeURIComponent(matchedFilename[1]);
+      const matchedFile = contentDisposition.match(/filename\*=(?:UTF-8'')?(.+)/);
+      if (matchedFile) {
+        filename = decodeURIComponent(matchedFile[1]);
       }
     }
 
-    const fileUrl = URL.createObjectURL(data);
-    const downloadLink = document.createElement("a");
-    downloadLink.href = fileUrl;
-    downloadLink.setAttribute("download", filename);
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-
-    document.body.removeChild(downloadLink);
+    const fileUrl = URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(fileUrl);
   } catch (err) {
-    console.log(err);
+    console.log("파일 내보내기 실패:", err);
     throw err;
   }
 };
@@ -115,11 +113,12 @@ const importNote = async (formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    const { note } = data;
+    const { notes } = data;
 
-    return note;
+    return notes;
   } catch (err) {
-    console.log(err);
+    console.log("파일 가져오기 실패:", err);
+    throw err;
   }
 };
 
