@@ -234,12 +234,14 @@ function NoteBlock(
           menu={tagsMenu}
         />
       )}
-      <S.NoteBlockDragItem
-        $image={dragHandleIcon}
-        onClick={handleOpenSelectMenu}
-        onDragStart={onDragStart}
-        draggable={true}
-      />
+      {!isSharedPage && (
+        <S.NoteBlockDragItem
+          $image={dragHandleIcon}
+          onClick={handleOpenSelectMenu}
+          onDragStart={onDragStart}
+          draggable={true}
+        />
+      )}
       {tag !== "img" && (
         <S.NoteBlockTextItem
           innerRef={contentEditableRef}
