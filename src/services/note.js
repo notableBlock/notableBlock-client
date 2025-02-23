@@ -76,6 +76,37 @@ const shareNote = async (noteId) => {
   }
 };
 
+const archiveMarkdown = async (formData) => {
+  try {
+    const response = await axios.post("/notes/uploads/archive", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      responseType: "blob",
+    });
+
+    const contentDisposition = response.headers["content-disposition"];
+    const filename = contentDisposition
+      ? decodeURIComponent(
+          contentDisposition.match(/filename\*=(?:UTF-8'')?(.+)/)?.[1] ||
+            contentDisposition.match(/filename="(.+?)"/)?.[1]
+        )
+      : "노트.tar";
+
+    const fileUrl = URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(fileUrl);
+  } catch (err) {
+    console.log("파일 가져오기 실패:", err);
+    throw err;
+  }
+};
+
 const exportNote = async (noteId) => {
   try {
     const response = await axios.get(`/notes/${noteId}/download`, {
@@ -83,14 +114,9 @@ const exportNote = async (noteId) => {
     });
 
     const contentDisposition = response.headers["content-disposition"];
-    let filename = "노트.tar";
-
-    if (contentDisposition) {
-      const matchedFile = contentDisposition.match(/filename\*=(?:UTF-8'')?(.+)/);
-      if (matchedFile) {
-        filename = decodeURIComponent(matchedFile[1]);
-      }
-    }
+    const filename = contentDisposition
+      ? decodeURIComponent(contentDisposition.match(/filename\*=(?:UTF-8'')?(.+)/)?.[1])
+      : "노트.tar";
 
     const fileUrl = URL.createObjectURL(response.data);
     const link = document.createElement("a");
@@ -186,4 +212,5 @@ export {
   copySharedNote,
   uploadNoteImage,
   deleteNoteImage,
+  archiveMarkdown,
 };

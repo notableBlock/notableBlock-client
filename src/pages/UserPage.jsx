@@ -14,8 +14,14 @@ import plusOptionIcon from "../assets/images/plus-option-icon.png";
 import * as S from "../styles/UserPageStyle";
 
 function UserPage() {
-  const { fetchedNotes, getUserNotes, handleImportFromLocal, handleSelectMenu, getMenu } =
-    useControlNotes();
+  const {
+    fetchedNotes,
+    getUserNotes,
+    handleImportFromLocal,
+    handleSelectMenu,
+    handleArchiveMarkdown,
+    getMenu,
+  } = useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +51,10 @@ function UserPage() {
         <Loading />
       ) : (
         <>
-          <UploadDropZone onImportFromLocal={handleImportFromLocal} />
+          <S.UserPageItem>
+            <UploadDropZone onUserUpload={handleArchiveMarkdown} fileTypes="마크다운" />
+            <UploadDropZone onUserUpload={handleImportFromLocal} fileTypes="TAR" />
+          </S.UserPageItem>
           {fetchedNotes.map((note) => {
             const {
               _id,

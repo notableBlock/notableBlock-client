@@ -12,6 +12,7 @@ import {
   importNote,
   getAllSharedNote,
   copySharedNote,
+  archiveMarkdown,
 } from "../services/note";
 
 const useControlNotes = () => {
@@ -103,6 +104,23 @@ const useControlNotes = () => {
     [navigate]
   );
 
+  const handleArchiveMarkdown = useCallback(
+    async (e) => {
+      const localFile = e.target.files[0];
+      try {
+        if (localFile) {
+          const formData = new FormData();
+          formData.append("file", localFile);
+
+          await archiveMarkdown(formData);
+        }
+      } catch (err) {
+        navigate("/error", { state: { message: "마크다운을 압축하는데 실패했습니다." } });
+      }
+    },
+    [navigate]
+  );
+
   const getSharedNotes = useCallback(async () => {
     try {
       const fetchedData = await getAllSharedNote();
@@ -163,6 +181,7 @@ const useControlNotes = () => {
     updateNoteOnServer,
     handleSelectMenu,
     handleImportFromLocal,
+    handleArchiveMarkdown,
     getMenu,
   };
 };
