@@ -12,8 +12,8 @@ import {
   importNote,
   getAllSharedNote,
   copySharedNote,
-} from "../services/note";
-import archiveMarkdown from "../services/archiveMarkdown";
+} from "../services/noteServices";
+import archiveMarkdown from "../services/archiveMarkdownServices";
 
 const useControlNotes = () => {
   const navigate = useNavigate();

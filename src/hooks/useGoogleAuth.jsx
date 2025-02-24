@@ -4,7 +4,7 @@ import axios from "axios";
 
 import useUserStore from "../stores/useUserStore";
 
-import { login, autoLogin, logout } from "../services/googleAuth";
+import { login, autoLogin, logout } from "../services/googleAuthServices";
 
 const useGoogleAuth = () => {
   const navigate = useNavigate();

@@ -3,9 +3,11 @@ import { useNavigate } from "react-router";
 
 import SelectMenu from "./SelectMenu";
 
-import { uploadNoteImage } from "../services/note";
+import { uploadNoteImage } from "../services/noteServices";
+
 import getCaretCoordinates from "../utils/getCaretCoordinates";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
+
 import { tagsMenu } from "../assets/data/menu";
 import dragHandleIcon from "../assets/images/drag-handle-icon.png";
 

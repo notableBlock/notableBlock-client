@@ -7,7 +7,7 @@ import { ThemeProvider } from "styled-components";
 
 import App from "./App.jsx";
 
-import setupAxios from "./services/setupAxios.js";
+import setupAxios from "./services/setupAxiosServices.js";
 
 import GlobalStyle from "./styles/GlobalStyle.jsx";
 import Theme from "./styles/Theme.jsx";

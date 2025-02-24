@@ -8,7 +8,7 @@ import {
   getAllNotification,
   deleteNotification,
   deleteAllNotification,
-} from "../services/notification";
+} from "../services/notificationServices";
 
 const useControlNotifications = () => {
   const navigate = useNavigate();

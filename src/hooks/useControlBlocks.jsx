@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 
 import usePrevBlocks from "./usePrevBlocks";
 
-import { getBlocks } from "../services/note";
-import { deleteNoteImage } from "../services/note";
+import { getBlocks, deleteNoteImage } from "../services/noteServices";
+
 import objectId from "../utils/objectId";
 import moveCaretToEnd from "../utils/moveCaretToEnd";
 
