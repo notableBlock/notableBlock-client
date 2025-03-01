@@ -216,7 +216,7 @@ function NoteBlock(
     if (fileInputRef.current && fileInputRef.current.files[0]) {
       const imageFile = fileInputRef.current.files[0];
       const formData = new FormData();
-      formData.append("file", imageFile);
+      formData.append("image", imageFile);
 
       try {
         const uploadedUrl = await uploadNoteImage(noteId, formData);
