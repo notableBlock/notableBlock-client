@@ -19,7 +19,7 @@ function UserPage() {
     getUserNotes,
     handleImportFromLocal,
     handleSelectMenu,
-    handleArchiveMarkdown,
+    handleArchiveUploadedFiles,
     getMenu,
   } = useControlNotes();
 
@@ -52,7 +52,10 @@ function UserPage() {
       ) : (
         <>
           <S.UserPageItem>
-            <UploadDropZone onUserUpload={handleArchiveMarkdown} fileTypes="마크다운" />
+            <UploadDropZone
+              onUserUpload={handleArchiveUploadedFiles}
+              fileTypes="마크다운 및 이미지"
+            />
             <UploadDropZone onUserUpload={handleImportFromLocal} fileTypes="TAR" />
           </S.UserPageItem>
           {fetchedNotes.map((note) => {

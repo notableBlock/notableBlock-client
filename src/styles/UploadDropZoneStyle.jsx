@@ -50,7 +50,7 @@ const UploadItem = styled.div`
 `;
 
 const UploadImage = styled.img.attrs(({ $isFileTypes }) => ({
-  src: $isFileTypes === "마크다운" ? markdownIcon : tarIcon,
+  src: $isFileTypes === "마크다운 및 이미지" ? markdownIcon : tarIcon,
   alt: "파일 아이콘 이미지",
 }))`
   width: 5rem;

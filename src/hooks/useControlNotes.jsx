@@ -13,7 +13,7 @@ import {
   getAllSharedNote,
   copySharedNote,
 } from "../services/noteServices";
-import archiveMarkdown from "../services/archiveMarkdownServices";
+import archiveUploadedFiles from "../services/archiveServices";
 
 const useControlNotes = () => {
   const navigate = useNavigate();
@@ -104,15 +104,19 @@ const useControlNotes = () => {
     [navigate]
   );
 
-  const handleArchiveMarkdown = useCallback(
+  const handleArchiveUploadedFiles = useCallback(
     async (e) => {
-      const localFile = e.target.files[0];
+      const localFile = e.target.files;
+
       try {
         if (localFile) {
           const formData = new FormData();
-          formData.append("file", localFile);
 
-          await archiveMarkdown(formData);
+          for (const file of localFile) {
+            formData.append("files", file);
+          }
+
+          await archiveUploadedFiles(formData);
         }
       } catch (err) {
         navigate("/error", { state: { message: "마크다운을 압축하는데 실패했습니다." } });
@@ -181,7 +185,7 @@ const useControlNotes = () => {
     updateNoteOnServer,
     handleSelectMenu,
     handleImportFromLocal,
-    handleArchiveMarkdown,
+    handleArchiveUploadedFiles,
     getMenu,
   };
 };

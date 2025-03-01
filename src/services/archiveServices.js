@@ -2,7 +2,7 @@ import axios from "axios";
 
 import downloadTarFile from "../utils/downloadTarFile";
 
-const archiveMarkdown = async (formData) => {
+const archiveUploadedFiles = async (formData) => {
   try {
     const response = await axios.post("/notes/uploads/archive", formData, {
       headers: {
@@ -18,4 +18,4 @@ const archiveMarkdown = async (formData) => {
   }
 };
 
-export default archiveMarkdown;
+export default archiveUploadedFiles;
