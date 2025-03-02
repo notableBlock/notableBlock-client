@@ -87,12 +87,14 @@ const useControlNotes = () => {
 
   const handleImportFromLocal = useCallback(
     async (e) => {
-      const localFile = e.target.files[0];
+      const localFile = e.target.files;
 
       try {
         if (localFile) {
           const formData = new FormData();
-          formData.append("file", localFile);
+          for (const file of localFile) {
+            formData.append("files", file);
+          }
 
           const newNotes = await importNote(formData);
           setFetchedNotes((prevNotes) => [...prevNotes, ...newNotes]);
