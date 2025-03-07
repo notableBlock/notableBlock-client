@@ -5,7 +5,7 @@ const convertToTree = (noteData, username) => {
   noteData.forEach((note) => {
     noteMap.set(note._id, {
       ...note,
-      name: `${note._id}`,
+      name: `${note.title}`,
       children: [],
     });
   });

@@ -12,6 +12,7 @@ import {
   importNote,
   getAllSharedNote,
   copySharedNote,
+  getAllOwnedNote,
 } from "../services/noteServices";
 import archiveUploadedFiles from "../services/archiveServices";
 
@@ -19,6 +20,7 @@ const useControlNotes = () => {
   const navigate = useNavigate();
   const [fetchedNotes, setFetchedNotes] = useState([]);
   const [fetchedSharedNotes, setFetchedSharedNotes] = useState([]);
+  const [fetchedOwnedNotes, setFetchedOwnedNotes] = useState([]);
 
   const handleCreateNewNote = useCallback(async () => {
     try {
@@ -155,6 +157,17 @@ const useControlNotes = () => {
     }
   };
 
+  const getOwnedNotes = useCallback(async () => {
+    try {
+      const ownedNotes = await getAllOwnedNote();
+      setFetchedOwnedNotes(ownedNotes);
+    } catch (err) {
+      navigate("/error", {
+        state: { message: "소유 노트를 불러오는데 실패했습니다F." },
+      });
+    }
+  }, [navigate]);
+
   const getMenu = (menuType) => {
     switch (menuType) {
       case "노트 관리":
@@ -182,6 +195,7 @@ const useControlNotes = () => {
   return {
     fetchedNotes,
     fetchedSharedNotes,
+    fetchedOwnedNotes,
     getUserNotes,
     getSharedNotes,
     updateNoteOnServer,
@@ -189,6 +203,7 @@ const useControlNotes = () => {
     handleImportFromLocal,
     handleArchiveUploadedFiles,
     getMenu,
+    getOwnedNotes,
   };
 };
 

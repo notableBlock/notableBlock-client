@@ -134,6 +134,18 @@ const copySharedNote = async (noteId) => {
   }
 };
 
+const getAllOwnedNote = async () => {
+  try {
+    const { data } = await axios.get("/notes/tree");
+    const { ownedNotes } = data;
+
+    return ownedNotes;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 const uploadNoteImage = async (noteId, formData) => {
   try {
     const { data } = await axios.post(`/notes/${noteId}/images`, formData, {
@@ -171,4 +183,5 @@ export {
   copySharedNote,
   uploadNoteImage,
   deleteNoteImage,
+  getAllOwnedNote,
 };
