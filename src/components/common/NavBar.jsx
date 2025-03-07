@@ -15,9 +15,11 @@ function NavBar() {
         <S.NavBarImage />
       </S.NavBarItem>
       <S.NavBarItem $type="title">Notable Block</S.NavBarItem>
-      <S.NavBarLink to={`/notes`}>내 노트</S.NavBarLink>
+      <S.NavBarLink to="/notes" end>
+        내 노트
+      </S.NavBarLink>
       <S.NavBarLink to="/shared">실시간 공유 노트</S.NavBarLink>
-      <S.NavBarLink to={`/noteTree`}>내 노트 트리</S.NavBarLink>
+      <S.NavBarLink to="/notes/tree">내 노트 트리</S.NavBarLink>
       <S.NavBarUserContainer>
         <S.NavBarItem>
           <S.NavBarImage $picture={picture} />
