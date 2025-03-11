@@ -33,9 +33,11 @@ function NoteEditingPage() {
 
   return (
     <S.NoteEditingPageLayout>
-      <S.SavingStatusItem $isSaving={isSaving}>
-        {isSaving ? "자동저장 성공 ✅" : "자동저장 실패 ⛔️"}
-      </S.SavingStatusItem>
+      {!isSharedPage && (
+        <S.SavingStatusItem $isSaving={isSaving}>
+          {isSaving ? "자동저장 성공 ✅" : "자동저장 실패 ⛔️"}
+        </S.SavingStatusItem>
+      )}
       <NoteEditor setIsSaving={setIsSaving} />
       <S.NoteEditingPageItem>
         {isOpen && <SelectMenu ref={modalRef} menu={plusMenu} onSelect={handleSelectMenu} />}

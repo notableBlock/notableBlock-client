@@ -48,10 +48,10 @@ function NoteEditor({ setIsSaving }) {
   }, [getBlocksFromServer, noteId]);
 
   useEffect(() => {
-    if (prevBlocks && JSON.stringify(prevBlocks) !== JSON.stringify(blocks)) {
+    if (prevBlocks && JSON.stringify(prevBlocks) !== JSON.stringify(blocks) && !isSharedPage) {
       updateNoteOnServer(blocks, setIsSaving, noteId);
     }
-  }, [blocks, noteId, prevBlocks, setIsSaving, updateNoteOnServer]);
+  }, [blocks, noteId, prevBlocks, isSharedPage, setIsSaving, updateNoteOnServer]);
 
   useEffect(() => {
     if (prevBlocks && prevBlocks.length + 1 === blocks.length) {
