@@ -68,26 +68,24 @@ function NoteTreeChart({ noteData }) {
     const tooltip = d3
       .select("body")
       .append("div")
-      .style("position", "absolute")
-      .style("background", "white")
-      .style("border", "1px solid #ddd")
-      .style("padding", "5px")
-      .style("border-radius", "4px")
-      .style("box-shadow", "2px 2px 10px rgba(0,0,0,0.1)")
-      .style("display", "none")
-      .style("pointer-events", "none");
+      .attr(
+        "style",
+        "width: auto; position: absolute; background: #FFFFFF; border: 1px solid #D6D6D6; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 0.25rem 0.75rem #0000003F; text-align: left;"
+      );
 
     node
       .on("mouseover", (event, d) => {
         tooltip
-          .style("display", "block")
+          .style("display", "flex")
           .html(
             d.depth === 0
-              ? `<strong>${d.data.name}</strong>`
-              : `📖 <strong>${d.data.name}</strong><br>👤 원본 소유자: ${d.data.creator}<br>✏️ 수정자: ${d.data.editor}`
+              ? `${d.data.name}`
+              : `📖 ${d.data.name}<br>
+                👤 원본 소유자: ${d.data.creator}<br>
+                ✍️ 수정자: ${d.data.editor}`
           )
-          .style("left", `${event.pageX + 10}px`)
-          .style("top", `${event.pageY + 10}px`);
+          .style("left", `${event.pageX}rem`)
+          .style("top", `${event.pageY}rem`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", `${event.pageX + 10}px`).style("top", `${event.pageY + 10}px`);
