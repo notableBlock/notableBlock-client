@@ -1,5 +1,5 @@
-const convertToTree = (noteData, username) => {
-  const tree = { name: username, children: [] };
+const convertToTree = (noteData, { id, name }) => {
+  const tree = { id, name, children: [] };
   const noteMap = new Map();
 
   noteData.forEach((note) => {

@@ -17,6 +17,10 @@ function NoteTreeChart({ noteData }) {
     const root = d3.hierarchy(noteData);
     tree(root);
 
+    root.each((node) => {
+      node.rootUserId = root.data.id;
+    });
+
     const svg = d3
       .select(svgRef.current)
       .attr("viewBox", [-dy / 2, -dx, width, dx * root.height + dx])
@@ -57,7 +61,17 @@ function NoteTreeChart({ noteData }) {
       .style("cursor", "pointer")
       .on("click", (event, d) => {
         if (d.depth === 0) return;
-        navigate(`/notes/${d.data._id}`);
+
+        tooltip.style("display", "none");
+
+        switch (true) {
+          case d.rootUserId === d.data.editorId:
+            return navigate(`/notes/${d.data._id}`);
+          case d.data.shared:
+            return navigate(`/shared/${d.data._id}`);
+          default:
+            return;
+        }
       });
 
     node
@@ -70,22 +84,35 @@ function NoteTreeChart({ noteData }) {
       .append("div")
       .attr(
         "style",
-        "width: auto; position: absolute; background: #FFFFFF; border: 1px solid #D6D6D6; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 0.25rem 0.75rem #0000003F; text-align: left;"
+        "position: absolute; padding: 1rem; background: #FFFFFF; border-radius: 0.5rem; box-shadow: 0 0.25rem 0.75rem #0000003F; text-align: left;"
       );
 
     node
       .on("mouseover", (event, d) => {
+        const isCreator = d.rootUserId === d.data.creatorId;
+        const isEditor = d.rootUserId === d.data.editorId;
+
         tooltip
-          .style("display", "flex")
+          .style("display", "block")
           .html(
             d.depth === 0
               ? `${d.data.name}`
-              : `📖 ${d.data.name}<br>
-                👤 원본 소유자: ${d.data.creator}<br>
-                ✍️ 수정자: ${d.data.editor}`
+              : `📖 ${d.data.name} <br>
+                  👤 처음 만든 사람: <span class="creator">${d.data.creator}</span> <br>
+                  ✍️ 수정한 사람: <span class="editor">${d.data.editor}</span>`
           )
-          .style("left", `${event.pageX}rem`)
-          .style("top", `${event.pageY}rem`);
+          .style("left", `${event.pageX}px`)
+          .style("top", `${event.pageY}px`);
+
+        tooltip
+          .selectAll(".creator")
+          .style("color", isCreator ? "#0279FC" : "#000")
+          .style("font-weight", isCreator ? "bold" : "normal");
+
+        tooltip
+          .selectAll(".editor")
+          .style("color", isEditor ? "#0279FC" : "#000")
+          .style("font-weight", isEditor ? "bold" : "normal");
       })
       .on("mousemove", (event) => {
         tooltip.style("left", `${event.pageX + 10}px`).style("top", `${event.pageY + 10}px`);
