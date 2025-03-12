@@ -66,9 +66,9 @@ function NoteViewer({
       </S.NoteLink>
       <S.NoteViewerFooter>
         <S.NoteViewerImage $src={creatorPicture} />
-        <p>원본 소유자: {creator}</p>
+        <p>처음 만든 사람: {creator}</p>
         <S.NoteViewerImage $src={editorPicture} />
-        <p>수정자: {editor}</p>
+        <p>수정한 사람: {editor}</p>
         <p>마지막 수정날짜: {updatedAt}</p>
       </S.NoteViewerFooter>
     </S.NoteViewerLayout>
