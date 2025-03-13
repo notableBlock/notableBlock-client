@@ -1,8 +1,7 @@
+import styled from "styled-components";
 import { NavLink } from "react-router";
 
 import notableBlockLogo from "../assets/images/notable-block-logo.png";
-
-import styled from "styled-components";
 
 const NavBarLayout = styled.nav`
   display: flex;
@@ -39,10 +38,10 @@ const NavBarImage = styled.img.attrs(({ $picture }) => ({
 const NavBarLink = styled(NavLink)`
   padding: 1rem;
 
-  &.active {
-    background-color: ${({ theme }) => theme.color.activeColor};
-    font-weight: bold;
-  }
+  background-color: ${({ $isActive, theme }) =>
+    $isActive ? theme.color.activeColor : "transparent"};
+  font-weight: ${({ $isActive, theme }) =>
+    $isActive ? theme.fontWeight.bold : theme.fontWeight.normal};
 
   &:hover {
     background-color: ${({ theme }) => theme.color.activeColor};

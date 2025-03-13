@@ -1,5 +1,5 @@
-import { NavLink } from "react-router";
 import styled from "styled-components";
+import { NavLink } from "react-router";
 
 const NoteViewerLayout = styled.div`
   display: flex;
