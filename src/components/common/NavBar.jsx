@@ -13,7 +13,8 @@ function NavBar() {
   const isSharedPageActive = useMatch("/shared/*");
   const isNoteTreePageActive = useMatch("/notes/tree");
 
-  const { name, picture } = profile;
+  const userPicture = profile?.picture;
+  const userName = profile?.name || "게스트";
 
   return (
     <S.NavBarLayout>
@@ -32,8 +33,7 @@ function NavBar() {
       </S.NavBarLink>
       <S.NavBarUserContainer>
         <S.NavBarItem>
-          <S.NavBarImage $picture={picture} />
-          {name || "게스트"}
+          <S.NavBarImage $picture={userPicture} /> {userName}
         </S.NavBarItem>
         <S.NavBarItem onClick={handleLogout} $type="logout">
           ◀ 로그아웃
