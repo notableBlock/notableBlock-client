@@ -28,6 +28,7 @@ const PageButton = styled.button`
 `;
 
 const PageMessage = styled.p`
+  word-break: keep-all;
   padding: 1rem;
 `;
 

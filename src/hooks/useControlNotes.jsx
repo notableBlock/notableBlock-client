@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
-
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import {
   createNote,
@@ -18,6 +17,7 @@ import archiveUploadedFiles from "../services/archiveServices";
 
 const useControlNotes = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [fetchedNotes, setFetchedNotes] = useState([]);
   const [fetchedSharedNotes, setFetchedSharedNotes] = useState([]);
   const [fetchedOwnedNotes, setFetchedOwnedNotes] = useState([]);
@@ -27,18 +27,23 @@ const useControlNotes = () => {
       const { noteId } = await createNote();
       navigate(`/notes/${noteId}`);
     } catch (err) {
-      navigate("/error", { state: { message: "노트 생성에 실패했습니다." } });
+      navigate("/error", {
+        from: location.pathname,
+        state: { message: "노트 생성에 실패했습니다." },
+      });
     }
-  }, [navigate]);
+  }, [navigate, location]);
 
   const getUserNotes = useCallback(async () => {
     try {
       const fetchedData = await getAllNote();
       setFetchedNotes(fetchedData);
     } catch (err) {
-      navigate("/error", { state: { message: "노트를 불러오는데 실패했습니다." } });
+      navigate("/error", {
+        state: { from: location.pathname, message: "노트를 불러오는데 실패했습니다." },
+      });
     }
-  }, [navigate]);
+  }, [navigate, location]);
 
   const updateNoteOnServer = useCallback(async (blocks, setIsSaving, noteId) => {
     try {
@@ -56,10 +61,12 @@ const useControlNotes = () => {
         setFetchedNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
         navigate("/notes");
       } catch (err) {
-        navigate("/error", { state: { message: "노트를 삭제하는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "노트를 삭제하는데 실패했습니다." },
+        });
       }
     },
-    [navigate]
+    [navigate, location]
   );
 
   const handleShareNote = useCallback(
@@ -70,10 +77,12 @@ const useControlNotes = () => {
           prevNotes.map((note) => (note._id === updatedNote._id ? updatedNote : note))
         );
       } catch (err) {
-        navigate("/error", { state: { message: "노트를 공유하는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "노트를 공유하는데 실패했습니다." },
+        });
       }
     },
-    [navigate]
+    [navigate, location]
   );
 
   const handleExportToLocal = useCallback(
@@ -81,10 +90,12 @@ const useControlNotes = () => {
       try {
         await exportNote(noteId);
       } catch (err) {
-        navigate("/error", { state: { message: "노트를 로컬로 내보내는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "노트를 로컬로 내보내는데 실패했습니다." },
+        });
       }
     },
-    [navigate]
+    [navigate, location]
   );
 
   const handleImportFromLocal = useCallback(
@@ -102,10 +113,12 @@ const useControlNotes = () => {
           setFetchedNotes((prevNotes) => [...prevNotes, ...newNotes]);
         }
       } catch (err) {
-        navigate("/error", { state: { message: "노트를 로컬에서 가져오는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "노트를 로컬에서 가져오는데 실패했습니다." },
+        });
       }
     },
-    [navigate]
+    [navigate, location]
   );
 
   const handleArchiveUploadedFiles = useCallback(
@@ -123,10 +136,12 @@ const useControlNotes = () => {
           await archiveUploadedFiles(formData);
         }
       } catch (err) {
-        navigate("/error", { state: { message: "마크다운을 압축하는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "마크다운을 압축하는데 실패했습니다." },
+        });
       }
     },
-    [navigate]
+    [navigate, location]
   );
 
   const getSharedNotes = useCallback(async () => {
@@ -134,9 +149,11 @@ const useControlNotes = () => {
       const fetchedData = await getAllSharedNote();
       setFetchedSharedNotes(fetchedData);
     } catch (err) {
-      navigate("/error", { state: { message: "공유 노트를 불러오는데 실패했습니다." } });
+      navigate("/error", {
+        state: { from: location.pathname, message: "공유 노트를 불러오는데 실패했습니다." },
+      });
     }
-  }, [navigate]);
+  }, [navigate, location]);
 
   const handleCopySharedNote = useCallback(
     async (noteId) => {
@@ -144,11 +161,14 @@ const useControlNotes = () => {
         await copySharedNote(noteId);
       } catch (err) {
         navigate("/error", {
-          state: { message: "공유 노트를 내 노트로 가져오는데 실패했습니다." },
+          state: {
+            from: location.pathname,
+            message: "공유 노트를 내 노트로 가져오는데 실패했습니다.",
+          },
         });
       }
     },
-    [navigate]
+    [navigate, location]
   );
 
   const handleSelectMenu = (selectedAction) => {
@@ -163,10 +183,10 @@ const useControlNotes = () => {
       setFetchedOwnedNotes(ownedNotes);
     } catch (err) {
       navigate("/error", {
-        state: { message: "소유 노트를 불러오는데 실패했습니다F." },
+        state: { from: location.pathname, message: "소유 노트를 불러오는데 실패했습니다F." },
       });
     }
-  }, [navigate]);
+  }, [navigate, location]);
 
   const getMenu = (menuType) => {
     switch (menuType) {

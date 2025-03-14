@@ -1,6 +1,5 @@
 import { useCallback } from "react";
-
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import useNotificationStore from "../stores/useNotificationStore";
 
@@ -12,6 +11,7 @@ import {
 
 const useControlNotifications = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast, allNotification, setAllNotification, setRemoveNotification } =
     useNotificationStore();
 
@@ -30,10 +30,12 @@ const useControlNotifications = () => {
         await deleteNotification(notificationId);
         setRemoveNotification(notificationId);
       } catch (err) {
-        navigate("/error", { state: { message: "알림을 삭제하는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "알림을 삭제하는데 실패했습니다." },
+        });
       }
     },
-    [setRemoveNotification, navigate]
+    [setRemoveNotification, navigate, location]
   );
 
   const handleDeleteAllNotification = useCallback(async () => {
@@ -41,9 +43,11 @@ const useControlNotifications = () => {
       await deleteAllNotification();
       setAllNotification([]);
     } catch (err) {
-      navigate("/error", { state: { message: "전체 알림을 삭제하는데 실패했습니다." } });
+      navigate("/error", {
+        state: { from: location.pathname, message: "전체 알림을 삭제하는데 실패했습니다." },
+      });
     }
-  }, [setAllNotification, navigate]);
+  }, [setAllNotification, navigate, location]);
 
   return {
     toast,

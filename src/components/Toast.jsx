@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 import useNotificationStore from "../stores/useNotificationStore";
 
@@ -8,6 +7,7 @@ import * as S from "../styles/NotificationStyle";
 
 function Toast() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast, setToast, isToastVisible, setIsToastVisible } = useNotificationStore();
 
   useEffect(() => {
@@ -35,14 +35,16 @@ function Toast() {
     };
 
     eventSource.onerror = () => {
-      navigate("/error", { state: { message: "알림 수신에 실패했습니다." } });
+      navigate("/error", {
+        state: { from: location.pathname, message: "알림 수신에 실패했습니다." },
+      });
       eventSource.close();
     };
 
     return () => {
       eventSource.close();
     };
-  }, [setToast, setIsToastVisible, navigate]);
+  }, [setToast, setIsToastVisible, navigate, location]);
 
   return (
     <>

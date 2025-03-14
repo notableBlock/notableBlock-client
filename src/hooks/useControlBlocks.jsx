@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback, useMemo } from "react";
-
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import usePrevBlocks from "./usePrevBlocks";
 
@@ -11,6 +10,7 @@ import moveCaretToEnd from "../utils/moveCaretToEnd";
 
 const useControlBlocks = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const initialBlock = useMemo(() => ({ id: objectId(), html: "", tag: "h1", imageUrl: "" }), []);
   const [blocks, setBlocks] = useState([initialBlock]);
@@ -97,11 +97,9 @@ const useControlBlocks = () => {
   const handleBlockFocusByArrowKey = useCallback((currentBlock, arrowKey) => {
     setBlocks((prevBlocks) => {
       const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
-
       if (currentBlockIndex === -1) return prevBlocks;
 
       let targetBlockIndex = arrowKey === "ArrowUp" ? currentBlockIndex - 1 : currentBlockIndex + 1;
-
       if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
 
       while (prevBlocks[targetBlockIndex]?.tag === "img") {
@@ -161,10 +159,15 @@ const useControlBlocks = () => {
         const fetchedBlocks = await getBlocks(noteId);
         fetchedBlocks.length ? setBlocks(fetchedBlocks) : setBlocks([initialBlock]);
       } catch (err) {
-        navigate("/error", { state: { message: "해당 노트의 블록을 가져오는데 실패했습니다." } });
+        navigate("/error", {
+          state: {
+            from: location.pathname,
+            message: "해당 노트의 블록을 가져오는데 실패했습니다.",
+          },
+        });
       }
     },
-    [initialBlock, navigate]
+    [initialBlock, navigate, location]
   );
 
   const cleanUpInvalidBlocksRef = () => {

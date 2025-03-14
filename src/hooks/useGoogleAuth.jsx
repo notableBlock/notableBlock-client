@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
@@ -8,7 +8,8 @@ import { login, autoLogin, logout } from "../services/googleAuthServices";
 
 const useGoogleAuth = () => {
   const navigate = useNavigate();
-  const { setProfile, clearProfile } = useUserStore();
+  const location = useLocation;
+  const { profile, setProfile, clearProfile } = useUserStore();
 
   const handleLogin = useGoogleLogin({
     scope: "email profile",
@@ -19,7 +20,7 @@ const useGoogleAuth = () => {
         setProfile(profile);
         navigate("/notes");
       } catch (err) {
-        navigate("/error", { state: { message: err.message } });
+        navigate("/error", { state: { from: location.pathname, message: err.message } });
       }
     },
     onError: async () => {
@@ -34,7 +35,7 @@ const useGoogleAuth = () => {
       clearProfile();
       navigate("/login");
     } catch (err) {
-      navigate("/error", { state: { message: err.message } });
+      navigate("/error", { state: { from: location.pathname, message: err.message } });
     }
   };
 
@@ -42,20 +43,20 @@ const useGoogleAuth = () => {
     (response) => response,
     async (error) => {
       if (error.response && error.response.status === 401) {
-        try {
-          await autoLogin();
-
-          return axios(error.config);
-        } catch {
+        if (profile) {
           try {
+            await autoLogin();
+
+            return axios(error.config);
+          } catch {
             await logout();
             clearProfile();
-            navigate("/login");
-          } catch (err) {
-            navigate("/error", { state: { message: err.message } });
+
+            navigate("/login", { replace: true });
           }
         }
       }
+
       return Promise.reject(error);
     }
   );

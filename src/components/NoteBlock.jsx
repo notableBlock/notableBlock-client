@@ -1,5 +1,5 @@
 import { forwardRef, useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import SelectMenu from "./SelectMenu";
 
@@ -34,6 +34,7 @@ function NoteBlock(
   ref
 ) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [htmlBackup, setHtmlBackup] = useState(null);
   const [html, setHtml] = useState(propsHtml);
@@ -222,10 +223,13 @@ function NoteBlock(
         const uploadedUrl = await uploadNoteImage(noteId, formData);
         setImageUrl(uploadedUrl);
       } catch (err) {
-        navigate("/error", { state: { message: "이미지를 첨부하는데 실패했습니다." } });
+        navigate("/error", {
+          state: { from: location.pathname, message: "이미지를 첨부하는데 실패했습니다." },
+        });
       }
     }
   };
+
   return (
     <S.NoteBlockLayout onDragEnter={onDragEnter} onDragEnd={onDragEnd}>
       {isSelectMenuOpen && (
