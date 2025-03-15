@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import googleLogo from "../assets/images/google-logo.png";
+import googleLogo from "../../assets/images/google-logo.png";
 
 const PageLayout = styled.div`
   display: flex;

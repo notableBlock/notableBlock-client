@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import loadingIcon from "../assets/images/loading-icon.gif";
+import loadingIcon from "../../assets/images/loading-icon.gif";
 
 const LoadingLayout = styled.div`
   display: flex;

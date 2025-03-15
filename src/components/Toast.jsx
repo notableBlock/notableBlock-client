@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 
 import useNotificationStore from "../stores/useNotificationStore";
 
-import * as S from "../styles/NotificationStyle";
+import * as S from "../styles/components/NotificationStyle";
 
 function Toast() {
   const navigate = useNavigate();

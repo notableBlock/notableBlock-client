@@ -2,7 +2,7 @@ import Form from "../components/common/Form";
 
 import useGoogleAuth from "../hooks/useGoogleAuth";
 
-import * as S from "../styles/PageStyle";
+import * as S from "../styles/pages/PageStyle";
 
 function LoginPage() {
   const { handleLogin } = useGoogleAuth();

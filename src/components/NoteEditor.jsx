@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { useParams, useLocation } from "react-router";
 
 import NoteBlock from "./NoteBlock";
@@ -10,7 +9,7 @@ import useControlBlocks from "../hooks/useControlBlocks";
 import usePrevBlocks from "../hooks/usePrevBlocks";
 import useDragDrop from "../hooks/useDragDrop";
 
-import * as S from "../styles/NoteEditorStyle";
+import * as S from "../styles/components/NoteEditorStyle";
 
 function NoteEditor({ setIsSaving }) {
   const {

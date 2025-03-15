@@ -1,4 +1,4 @@
-import * as S from "../../styles/LoadingStyle";
+import * as S from "../../styles/components/LoadingStyle";
 
 function Loading() {
   return (

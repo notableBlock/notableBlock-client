@@ -1,6 +1,6 @@
 import useDragDrop from "../hooks/useDragDrop";
 
-import * as S from "../styles/UploadDropZoneStyle";
+import * as S from "../styles/components/UploadDropZoneStyle";
 
 function UploadDropZone({ onUserUpload, fileTypes }) {
   const {

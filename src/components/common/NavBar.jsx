@@ -4,7 +4,7 @@ import useUserStore from "../../stores/useUserStore";
 
 import useGoogleAuth from "../../hooks/useGoogleAuth";
 
-import * as S from "../../styles/NavBarStyle";
+import * as S from "../../styles/components/NavBarStyle";
 
 function NavBar() {
   const { handleLogout } = useGoogleAuth();

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router";
 
-import notableBlockLogo from "../assets/images/notable-block-logo.png";
+import notableBlockLogo from "../../assets/images/notable-block-logo.png";
 
 const NavBarLayout = styled.nav`
   display: flex;

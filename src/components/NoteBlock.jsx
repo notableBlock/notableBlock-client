@@ -11,7 +11,7 @@ import moveCaretToEnd from "../utils/moveCaretToEnd";
 import { tagsMenu } from "../assets/data/menu";
 import dragHandleIcon from "../assets/images/drag-handle-icon.png";
 
-import * as S from "../styles/NoteBlockStyle";
+import * as S from "../styles/components/NoteBlockStyle";
 
 function NoteBlock(
   {

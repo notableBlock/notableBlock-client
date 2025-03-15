@@ -5,7 +5,7 @@ import Loading from "../components/common/Loading";
 
 import useControlNotes from "../hooks/useControlNotes";
 
-import * as S from "../styles/UserPageStyle";
+import * as S from "../styles/pages/UserPageStyle";
 
 function SharedPage() {
   const { fetchedSharedNotes, handleSelectMenu, getSharedNotes, getMenu } = useControlNotes();

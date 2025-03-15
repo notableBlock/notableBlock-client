@@ -4,7 +4,7 @@ import Form from "../components/common/Form";
 
 import useUserStore from "../stores/useUserStore";
 
-import * as S from "../styles/PageStyle";
+import * as S from "../styles/pages/PageStyle";
 
 function ErrorPage() {
   const location = useLocation();

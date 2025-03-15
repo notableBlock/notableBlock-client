@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import notableBlockLogo from "../assets/images/notable-block-logo.png";
+import notableBlockLogo from "../../assets/images/notable-block-logo.png";
 
 const FormLayout = styled.div`
   display: flex;

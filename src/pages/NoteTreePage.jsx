@@ -9,7 +9,7 @@ import useControlNotes from "../hooks/useControlNotes";
 
 import convertToTree from "../utils/convertToTree";
 
-import * as S from "../styles/NoteTreePageStyle";
+import * as S from "../styles/pages/NoteTreePageStyle";
 
 function NoteTreePage() {
   const { profile } = useUserStore();

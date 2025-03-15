@@ -1,6 +1,6 @@
 import useControlNotifications from "../hooks/useControlNotifications";
 
-import * as S from "../styles/NotificationStyle";
+import * as S from "../styles/components/NotificationStyle";
 
 function NotificationHub() {
   const { allNotification, handleDeleteNotification } = useControlNotifications();

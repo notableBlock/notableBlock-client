@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-
 import DOMPurify from "isomorphic-dompurify";
 
 import Button from "./common/Button";
@@ -9,7 +8,7 @@ import useOnClickOutside from "../hooks/useOnClickOutside";
 
 import kebabMenuIcon from "../assets/images/kebab-menu-icon.png";
 
-import * as S from "../styles/NoteViewerStyle";
+import * as S from "../styles/components/NoteViewerStyle";
 
 function NoteViewer({
   path,

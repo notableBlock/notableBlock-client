@@ -11,7 +11,7 @@ import useOnClickOutside from "../hooks/useOnClickOutside";
 
 import plusOptionIcon from "../assets/images/plus-option-icon.png";
 
-import * as S from "../styles/UserPageStyle";
+import * as S from "../styles/pages/UserPageStyle";
 
 function UserPage() {
   const {

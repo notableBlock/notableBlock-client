@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import * as S from "../../styles/FormStyle";
+import * as S from "../../styles/components/FormStyle";
 
 function Form({ children, title, notification }, ref) {
   return (

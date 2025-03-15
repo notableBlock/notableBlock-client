@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import markdownIcon from "../assets/images/markdown-icon.png";
-import tarIcon from "../assets/images/tar-icon.png";
+import markdownIcon from "../../assets/images/markdown-icon.png";
+import tarIcon from "../../assets/images/tar-icon.png";
 
 const UploadDropZoneLayout = styled.div`
   display: flex;

@@ -1,5 +1,4 @@
 import { forwardRef, useState, useEffect, useCallback, useMemo } from "react";
-
 import { matchSorter } from "match-sorter";
 
 import useSelectionStore from "../stores/useSelectionStore";
@@ -9,7 +8,7 @@ import useDragDrop from "../hooks/useDragDrop";
 import { tagsMenu } from "../assets/data/menu";
 import { INITIAL_SELECTION_INDEX } from "../constants";
 
-import * as S from "../styles/SelectMenuStyle";
+import * as S from "../styles/components/SelectMenuStyle";
 
 function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, ref) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();

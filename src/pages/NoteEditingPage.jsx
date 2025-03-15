@@ -11,7 +11,7 @@ import useOnClickOutside from "../hooks/useOnClickOutside";
 
 import plusOptionIcon from "../assets/images/plus-option-icon.png";
 
-import * as S from "../styles/NoteEditingPageStyle";
+import * as S from "../styles/pages/NoteEditingPageStyle";
 
 function NoteEditingPage() {
   const { handleSelectMenu, getMenu } = useControlNotes();

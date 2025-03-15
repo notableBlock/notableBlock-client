@@ -1,6 +1,6 @@
 import useNotificationStore from "../../stores/useNotificationStore";
 
-import * as S from "../../styles/ButtonStyle";
+import * as S from "../../styles/components/ButtonStyle";
 
 function Button({ image, onClick }) {
   const { allNotification } = useNotificationStore();
