@@ -29,7 +29,7 @@ const useControlNotes = () => {
     } catch (err) {
       navigate("/error", {
         from: location.pathname,
-        state: { message: "노트 생성에 실패했습니다." },
+        state: { message: "노트 생성에 실패했어요." },
       });
     }
   }, [navigate, location]);
@@ -40,7 +40,7 @@ const useControlNotes = () => {
       setFetchedNotes(fetchedData);
     } catch (err) {
       navigate("/error", {
-        state: { from: location.pathname, message: "노트를 불러오는데 실패했습니다." },
+        state: { from: location.pathname, message: "노트를 불러오는데 실패했어요." },
       });
     }
   }, [navigate, location]);
@@ -62,7 +62,7 @@ const useControlNotes = () => {
         navigate("/notes");
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "노트를 삭제하는데 실패했습니다." },
+          state: { from: location.pathname, message: "노트를 삭제하는데 실패했어요." },
         });
       }
     },
@@ -78,7 +78,7 @@ const useControlNotes = () => {
         );
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "노트를 공유하는데 실패했습니다." },
+          state: { from: location.pathname, message: "노트를 공유하는데 실패했어요." },
         });
       }
     },
@@ -91,7 +91,7 @@ const useControlNotes = () => {
         await exportNote(noteId);
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "노트를 로컬로 내보내는데 실패했습니다." },
+          state: { from: location.pathname, message: "노트를 로컬로 내보내는데 실패했어요." },
         });
       }
     },
@@ -114,7 +114,7 @@ const useControlNotes = () => {
         }
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "노트를 로컬에서 가져오는데 실패했습니다." },
+          state: { from: location.pathname, message: "노트를 로컬에서 가져오는데 실패했어요." },
         });
       }
     },
@@ -137,7 +137,7 @@ const useControlNotes = () => {
         }
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "마크다운을 압축하는데 실패했습니다." },
+          state: { from: location.pathname, message: "마크다운을 압축하는데 실패했어요." },
         });
       }
     },
@@ -150,7 +150,7 @@ const useControlNotes = () => {
       setFetchedSharedNotes(fetchedData);
     } catch (err) {
       navigate("/error", {
-        state: { from: location.pathname, message: "공유 노트를 불러오는데 실패했습니다." },
+        state: { from: location.pathname, message: "공유 노트를 불러오는데 실패했어요." },
       });
     }
   }, [navigate, location]);
@@ -163,7 +163,7 @@ const useControlNotes = () => {
         navigate("/error", {
           state: {
             from: location.pathname,
-            message: "공유 노트를 내 노트로 가져오는데 실패했습니다.",
+            message: "공유 노트를 내 노트로 가져오는데 실패했어요.",
           },
         });
       }

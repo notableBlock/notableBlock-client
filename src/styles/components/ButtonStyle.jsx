@@ -3,10 +3,12 @@ import styled from "styled-components";
 const ButtonLayout = styled.button`
   padding: 0.5rem;
   border-radius: 10rem;
-  background-color: ${({ theme }) => theme.color.mainColor};
+  background-color: ${({ theme, $isKebabImage }) =>
+    $isKebabImage ? theme.color.noteColor : theme.color.mainColor};
+  box-shadow: ${({ theme, $isKebabImage }) =>
+    $isKebabImage ? "none" : `0 0.25rem 0.75rem ${theme.color.shadowColor}`};
   color: ${({ theme }) => theme.color.whiteColor};
   font-size: ${({ theme }) => theme.fontSize.large};
-  box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
 const NotiCount = styled.p`

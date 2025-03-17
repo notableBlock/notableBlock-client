@@ -1,6 +1,5 @@
-import ContentEditable from "react-contenteditable";
-
 import styled from "styled-components";
+import ContentEditable from "react-contenteditable";
 
 const NoteBlockLayout = styled.div`
   display: flex;
@@ -10,11 +9,12 @@ const NoteBlockLayout = styled.div`
 
 const NoteBlockTextItem = styled(ContentEditable)`
   flex-grow: 1;
-  text-align: left;
+  width: 1rem;
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.noteBlockColor};
   box-shadow: ${({ isDragging, theme }) =>
     isDragging ? `0 0.25rem 0.75rem ${theme.color.shadowColor}` : "none"};
+  text-align: left;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverColor};
@@ -58,4 +58,14 @@ const NoteBlockDragItem = styled.img.attrs(({ $image }) => ({
   }
 `;
 
-export { NoteBlockLayout, NoteBlockTextItem, NoteBlockImageItem, NoteBlockDragItem };
+const NoteBlockEmptyItem = styled.div`
+  width: 1.5rem;
+`;
+
+export {
+  NoteBlockLayout,
+  NoteBlockTextItem,
+  NoteBlockImageItem,
+  NoteBlockDragItem,
+  NoteBlockEmptyItem,
+};

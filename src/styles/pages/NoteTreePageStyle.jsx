@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const NoteTreePageLayout = styled.div`
   display: flex;
-  width: 80vw;
   height: 100vh;
 `;
 
@@ -24,6 +23,11 @@ const NoteTreePageList = styled.ul`
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.color.mainColor};
   }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 const NoteTreePageContainer = styled.div`
@@ -37,6 +41,15 @@ const NoteTreePageContainer = styled.div`
 
   &:last-child {
     border-right: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    border-right: none;
+    border-bottom: 1px solid ${({ theme }) => theme.color.shadowColor};
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 `;
 

@@ -7,20 +7,28 @@ const Layout = styled.div`
 
 const Item = styled.div`
   overflow: auto;
+  width: 100vw;
 
   ${({ $notification }) =>
     $notification === "notification" &&
     `
-    position: absolute;
-    top: 1rem;
-    right: 3rem;
     overflow: visible;
+    position: absolute;
+    top: 2rem;
+    right: 7rem;
+    width: 0;
   `}
 `;
 
 const NotiContainer = styled.div`
   position: absolute;
-  right: 5rem;
+  right: 3rem;
+  width: 45rem;
+
+  @media screen and (max-width: 768px) {
+    right: 1rem;
+    width: 37.5rem;
+  }
 `;
 
 const Toast = styled.div`

@@ -58,7 +58,7 @@ function NoteTreePage() {
           </li>
         </S.NoteTreePageContainer>
         <S.NoteTreePageContainer>
-          <h3>🔗 공유 상태</h3>
+          <h3>🌐 공유 상태</h3>
           <li>
             🟢 <span>공유된 노트</span> - 다른 사람도 볼 수 있어요.
           </li>

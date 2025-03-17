@@ -3,35 +3,38 @@ import { NavLink } from "react-router";
 
 const NotiLayout = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   overflow-x: hidden;
-  width: 100%;
   scrollbar-gutter: stable both-edges;
   color: ${({ theme }) => theme.color.blackColor};
-`;
-
-const NotiContainer = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-  width: 41.5rem;
 `;
 
 const NotiMessage = styled.div`
   display: flex;
   justify-content: ${({ $notice }) => ($notice === "notice" ? "center" : "space-between")};
   align-items: center;
-  padding: 0.5rem;
-  margin: 1rem;
   height: 3rem;
+  padding: 0.5rem;
+  margin: 0.75rem;
   border-radius: 0.35rem;
   background-color: ${({ theme }) => theme.color.whiteColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
+const NotiMessageClickBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 const NotiLink = styled(NavLink)`
-  padding: 0.5rem;
   border-radius: 0.35rem;
   background-color: ${({ theme }) => theme.color.whiteColor};
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
 `;
 
 const NotiButton = styled.button`
@@ -75,4 +78,4 @@ const SlideOut = styled.div`
   animation: ${slideOutRight} 0.5s ease forwards;
 `;
 
-export { NotiLayout, NotiMessage, SlideIn, SlideOut, NotiLink, NotiButton, NotiContainer };
+export { NotiLayout, NotiMessage, NotiMessageClickBox, SlideIn, SlideOut, NotiLink, NotiButton };

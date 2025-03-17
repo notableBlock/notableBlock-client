@@ -162,7 +162,7 @@ const useControlBlocks = () => {
         navigate("/error", {
           state: {
             from: location.pathname,
-            message: "해당 노트의 블록을 가져오는데 실패했습니다.",
+            message: "해당 노트의 블록을 가져오는데 실패했어요.",
           },
         });
       }

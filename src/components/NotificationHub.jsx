@@ -7,23 +7,23 @@ function NotificationHub() {
 
   return (
     <S.NotiLayout>
-      <S.NotiContainer>
-        {allNotification.length ? (
-          allNotification.map((notification) => {
-            const { _id, receivedAt, message, link } = notification;
+      {allNotification.length ? (
+        allNotification.map((notification) => {
+          const { _id, receivedAt, message, link } = notification;
 
-            return (
-              <S.NotiMessage key={_id}>
-                {receivedAt} 📩 {message}
+          return (
+            <S.NotiMessage key={_id}>
+              {receivedAt} - {message}
+              <S.NotiMessageClickBox>
                 {link && <S.NotiLink to={link}> 👉 보러 가기</S.NotiLink>}
                 <S.NotiButton onClick={() => handleDeleteNotification(_id)}>X</S.NotiButton>
-              </S.NotiMessage>
-            );
-          })
-        ) : (
-          <S.NotiMessage $notice="notice">모든 알림을 확인하셨습니다. 📩</S.NotiMessage>
-        )}
-      </S.NotiContainer>
+              </S.NotiMessageClickBox>
+            </S.NotiMessage>
+          );
+        })
+      ) : (
+        <S.NotiMessage $notice="notice">모든 알림을 확인했어요.</S.NotiMessage>
+      )}
     </S.NotiLayout>
   );
 }

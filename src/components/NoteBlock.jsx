@@ -224,7 +224,7 @@ function NoteBlock(
         setImageUrl(uploadedUrl);
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "이미지를 첨부하는데 실패했습니다." },
+          state: { from: location.pathname, message: "이미지를 첨부하는데 실패했어요." },
         });
       }
     }
@@ -240,13 +240,15 @@ function NoteBlock(
           menu={tagsMenu}
         />
       )}
-      {!isSharedPage && (
+      {!isSharedPage ? (
         <S.NoteBlockDragItem
           $image={dragHandleIcon}
           onClick={handleOpenSelectMenu}
           onDragStart={onDragStart}
           draggable={true}
         />
+      ) : (
+        <S.NoteBlockEmptyItem />
       )}
       {tag !== "img" && (
         <S.NoteBlockTextItem
@@ -273,7 +275,7 @@ function NoteBlock(
             hidden
           />
           {!imageUrl && (
-            <label htmlFor={`${id}_fileInput`}>이미지가 선택되지 않았습니다. 선택해주세요.</label>
+            <label htmlFor={`${id}_fileInput`}>이미지가 선택되지 않았어요. 선택해주세요.</label>
           )}
           {imageUrl && (
             <img

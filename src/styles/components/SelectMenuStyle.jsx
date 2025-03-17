@@ -6,10 +6,15 @@ const SelectMenuLayout = styled.div`
   top: ${({ $position }) => $position.top + "px"};
   left: ${({ $position }) => $position.left + "px"};
   flex-direction: column;
-  width: 7.5rem;
+  width: 5.5rem;
   background-color: ${({ theme }) => theme.color.whiteColor};
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
+  word-break: keep-all;
+
+  @media screen and (max-width: 768px) {
+    width: 5rem;
+  }
 `;
 
 const SelectMenuItem = styled.button`

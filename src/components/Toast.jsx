@@ -36,7 +36,7 @@ function Toast() {
 
     eventSource.onerror = () => {
       navigate("/error", {
-        state: { from: location.pathname, message: "알림 수신에 실패했습니다." },
+        state: { from: location.pathname, message: "알림 수신에 실패했어요." },
       });
       eventSource.close();
     };

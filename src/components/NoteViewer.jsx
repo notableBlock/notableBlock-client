@@ -39,19 +39,17 @@ function NoteViewer({
   return (
     <S.NoteViewerLayout>
       <S.NoteViewerHeader>
-        <p>생성날짜: {createdAt}</p>
-        <p>{shared === undefined ? "블록체인으로 보호중" : `공유 여부: ${shared ? "✅" : "❌"}`}</p>
-        <div>
-          {isOpen && (
-            <SelectMenu
-              ref={modalRef}
-              menu={kebabMenu}
-              onSelect={onSelectMenu}
-              position={kebabMenuPosition}
-            />
-          )}
-          <Button image={kebabMenuIcon} onClick={handleOpenModal} />
-        </div>
+        <p>처음 작성한 날: {createdAt}</p>
+        <p>{path === "shared" ? "공유 중 🌐" : `공유 상태: ${shared ? "🟢" : "🔴"}`}</p>
+        {isOpen && (
+          <SelectMenu
+            ref={modalRef}
+            menu={kebabMenu}
+            onSelect={onSelectMenu}
+            position={kebabMenuPosition}
+          />
+        )}
+        <Button image={kebabMenuIcon} onClick={handleOpenModal} />
       </S.NoteViewerHeader>
       <S.NoteLink to={`/${path}/${noteId}`}>
         <S.NoteViewerContent>
@@ -64,11 +62,18 @@ function NoteViewer({
         </S.NoteViewerContent>
       </S.NoteLink>
       <S.NoteViewerFooter>
-        <S.NoteViewerImage $src={creatorPicture} />
-        <p>처음 만든 사람: {creator}</p>
-        <S.NoteViewerImage $src={editorPicture} />
-        <p>수정한 사람: {editor}</p>
-        <p>마지막 수정날짜: {updatedAt}</p>
+        <S.NoteViewerUserBox>
+          <p>
+            처음 만든 사람: <S.NoteViewerImage $src={creatorPicture} />
+            {creator}님
+          </p>
+        </S.NoteViewerUserBox>
+        <S.NoteViewerUserBox>
+          <p>
+            수정한 사람: <S.NoteViewerImage $src={editorPicture} /> {editor}님
+          </p>
+        </S.NoteViewerUserBox>
+        <p>마지막으로 수정한 날: {updatedAt}</p>
       </S.NoteViewerFooter>
     </S.NoteViewerLayout>
   );

@@ -41,16 +41,23 @@ const UploadDropZoneLayout = styled.div`
     background-color: ${theme.color.dropColor};
     color: ${theme.color.mainColor};
   `}
+
+  @media screen and (max-width : 768px) {
+    width: 15rem;
+    height: 30rem;
+  }
 `;
 
 const UploadItem = styled.div`
   display: flex;
   flex-direction: column;
+  width: 30vw;
+  height: 3rem;
   gap: 1rem;
 `;
 
 const UploadImage = styled.img.attrs(({ $isFileTypes }) => ({
-  src: $isFileTypes === "마크다운 및 이미지" ? markdownIcon : tarIcon,
+  src: $isFileTypes === "마크다운·이미지" ? markdownIcon : tarIcon,
   alt: "파일 아이콘 이미지",
 }))`
   width: 5rem;

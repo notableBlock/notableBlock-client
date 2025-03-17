@@ -21,6 +21,10 @@ const NavBarLayout = styled.nav`
 `;
 
 const NavBarItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
   padding: 1rem;
   font-weight: ${({ $type, theme }) =>
     $type === "title" ? theme.fontWeight.title : theme.fontWeight.normal};
@@ -31,8 +35,8 @@ const NavBarImage = styled.img.attrs(({ $picture }) => ({
   src: $picture || notableBlockLogo,
   alt: $picture ? "사용자 사진" : "notable-block 로고",
 }))`
-  width: 2.5rem;
-  border-radius: 5rem;
+  width: 3rem;
+  border-radius: 1rem;
 `;
 
 const NavBarLink = styled(NavLink)`

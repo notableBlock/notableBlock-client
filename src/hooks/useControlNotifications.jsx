@@ -31,7 +31,7 @@ const useControlNotifications = () => {
         setRemoveNotification(notificationId);
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "알림을 삭제하는데 실패했습니다." },
+          state: { from: location.pathname, message: "알림을 삭제하는데 실패했어요." },
         });
       }
     },
@@ -44,7 +44,7 @@ const useControlNotifications = () => {
       setAllNotification([]);
     } catch (err) {
       navigate("/error", {
-        state: { from: location.pathname, message: "전체 알림을 삭제하는데 실패했습니다." },
+        state: { from: location.pathname, message: "전체 알림을 삭제하는데 실패했어요." },
       });
     }
   }, [setAllNotification, navigate, location]);

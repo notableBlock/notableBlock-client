@@ -10,7 +10,7 @@ function NoteTreeChart({ noteData }) {
   useEffect(() => {
     d3.select(svgRef.current).selectAll("*").remove();
 
-    const width = 700;
+    const width = 800;
     const dx = 20;
     const dy = 200;
     const tree = d3.tree().nodeSize([dx, dy]);

@@ -52,10 +52,7 @@ function UserPage() {
       ) : (
         <>
           <S.UserPageItem>
-            <UploadDropZone
-              onUserUpload={handleArchiveUploadedFiles}
-              fileTypes="마크다운 및 이미지"
-            />
+            <UploadDropZone onUserUpload={handleArchiveUploadedFiles} fileTypes="마크다운·이미지" />
             <UploadDropZone onUserUpload={handleImportFromLocal} fileTypes="TAR" />
           </S.UserPageItem>
           {fetchedNotes.map((note) => {
