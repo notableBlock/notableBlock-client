@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect, useCallback, useMemo } from "react";
+import { forwardRef, useEffect } from "react";
 import { matchSorter } from "match-sorter";
 
 import useSelectionStore from "../stores/useSelectionStore";
@@ -6,19 +6,22 @@ import useSelectionStore from "../stores/useSelectionStore";
 import useDragDrop from "../hooks/useDragDrop";
 
 import { tagsMenu } from "../assets/data/menu";
-import { INITIAL_SELECTION_INDEX } from "../constants";
 
 import * as S from "../styles/components/SelectMenuStyle";
+import useControlMenu from "../hooks/useControlMenu";
 
 function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, ref) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();
+
   const { fileInputRef, handleFileInputClick } = useDragDrop();
-
-  const positionAttributes = useMemo(() => {
-    return position ? { top: position.y, left: position.x } : "auto";
-  }, [position]);
-
-  const [command, setCommand] = useState("");
+  const { command, positionAttributes, handleKeyDown } = useControlMenu({
+    position,
+    onSelect,
+    items,
+    selectionIndex,
+    onClose,
+    setSelectionIndex,
+  });
 
   useEffect(() => {
     if (command) {
@@ -28,39 +31,6 @@ function SelectMenu({ onSelect, onClose, position, menu, onImportFromLocal }, re
       setItems(menu);
     }
   }, [command, menu, setItems]);
-
-  const handleKeyDown = useCallback(
-    (e) => {
-      switch (e.key) {
-        case "Enter":
-          e.preventDefault();
-          onSelect(items[selectionIndex].tag);
-          break;
-        case "Backspace":
-        case "Escape":
-          if (!command) onClose();
-          setCommand((prev) => prev.slice(0, -1));
-          break;
-        case "ArrowUp":
-          e.preventDefault();
-          setSelectionIndex((prev) =>
-            prev === INITIAL_SELECTION_INDEX ? items.length - 1 : prev - 1
-          );
-          break;
-        case "ArrowDown":
-        case "Tab":
-          e.preventDefault();
-          setSelectionIndex((prev) =>
-            prev === items.length - 1 ? INITIAL_SELECTION_INDEX : prev + 1
-          );
-          break;
-        default:
-          setCommand((prev) => prev + e.key);
-          break;
-      }
-    },
-    [onClose, command, items, selectionIndex, onSelect, setSelectionIndex]
-  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
