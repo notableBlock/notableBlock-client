@@ -4,7 +4,7 @@ import Form from "../components/common/Form";
 
 import useUserStore from "../stores/useUserStore";
 
-import * as S from "../styles/pages/PageStyle";
+import * as S from "../styles/pages/FormPageStyle";
 
 function ErrorPage() {
   const location = useLocation();
@@ -24,18 +24,18 @@ function ErrorPage() {
   const buttonMessage = buttonLabels[redirectPath] || "이전 페이지로 돌아가기";
 
   return (
-    <S.PageLayout>
+    <S.FormPageLayout>
       <Form title="Notable Block">
-        <S.PageMessage>{errorMessage}</S.PageMessage>
-        <S.PageButton
+        <S.FormPageMessage>{errorMessage}</S.FormPageMessage>
+        <S.FormPageButton
           onClick={() => {
             navigate(redirectPath);
           }}
         >
           {buttonMessage}
-        </S.PageButton>
+        </S.FormPageButton>
       </Form>
-    </S.PageLayout>
+    </S.FormPageLayout>
   );
 }
 

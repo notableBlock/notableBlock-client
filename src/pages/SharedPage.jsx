@@ -5,7 +5,7 @@ import Loading from "../components/common/Loading";
 
 import useControlNotes from "../hooks/useControlNotes";
 
-import * as S from "../styles/pages/UserPageStyle";
+import * as S from "../styles/pages/CommonNotePageStyle";
 
 function SharedPage() {
   const { fetchedSharedNotes, handleSelectMenu, getSharedNotes, getMenu } = useControlNotes();
@@ -25,7 +25,7 @@ function SharedPage() {
   const kebabMenu = getMenu("노트 가져오기");
 
   return (
-    <S.UserPageLayout>
+    <S.CommonNotePageLayout>
       {isLoading ? (
         <Loading />
       ) : (
@@ -59,7 +59,7 @@ function SharedPage() {
           );
         })
       )}
-    </S.UserPageLayout>
+    </S.CommonNotePageLayout>
   );
 }
 

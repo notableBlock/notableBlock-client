@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const UserPageLayout = styled.div`
+const CommonNotePageLayout = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -14,7 +14,7 @@ const UserPageLayout = styled.div`
   }
 `;
 
-const UserPageItem = styled.div`
+const CommonNotePageItem = styled.div`
   ${({ $type }) =>
     $type === "option"
       ? `
@@ -29,4 +29,4 @@ const UserPageItem = styled.div`
     `}
 `;
 
-export { UserPageLayout, UserPageItem };
+export { CommonNotePageLayout, CommonNotePageItem };

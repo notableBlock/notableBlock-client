@@ -1,6 +1,6 @@
 import { Routes, Route, Outlet } from "react-router";
 
-import UserPage from "./pages/UserPage";
+import MyNotePage from "./pages/MyNotePage";
 import LoginPage from "./pages/LoginPage";
 import SharedPage from "./pages/SharedPage";
 import NoteTreePage from "./pages/NoteTreePage";
@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/notes" element={<Outlet />}>
-          <Route path="" element={<UserPage />} />
+          <Route path="" element={<MyNotePage />} />
           <Route path=":noteId" element={<NoteEditingPage />} />
           <Route path="tree" element={<NoteTreePage />} />
         </Route>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import googleLogo from "../../assets/images/google-logo.png";
 
-const PageLayout = styled.div`
+const FormPageLayout = styled.div`
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -13,7 +13,7 @@ const PageLayout = styled.div`
   );
 `;
 
-const PageButton = styled.button`
+const FormPageButton = styled.button`
   display: flex;
   justify-content: center;
   width: 10rem;
@@ -27,16 +27,16 @@ const PageButton = styled.button`
   cursor: pointer;
 `;
 
-const PageMessage = styled.p`
+const FormPageMessage = styled.p`
   word-break: keep-all;
   padding: 1rem;
 `;
 
-const PageImage = styled.img.attrs({
+const FormPageImage = styled.img.attrs({
   src: googleLogo,
   alt: "구글 로고",
 })`
   width: 1rem;
 `;
 
-export { PageLayout, PageButton, PageMessage, PageImage };
+export { FormPageLayout, FormPageButton, FormPageMessage, FormPageImage };

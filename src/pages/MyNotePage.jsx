@@ -11,7 +11,7 @@ import useOnClickOutside from "../hooks/useOnClickOutside";
 
 import plusOptionIcon from "../assets/images/plus-option-icon.png";
 
-import * as S from "../styles/pages/UserPageStyle";
+import * as S from "../styles/pages/CommonNotePageStyle";
 
 function UserPage() {
   const {
@@ -46,15 +46,15 @@ function UserPage() {
   }, [getUserNotes]);
 
   return (
-    <S.UserPageLayout>
+    <S.CommonNotePageLayout>
       {isLoading ? (
         <Loading />
       ) : (
         <>
-          <S.UserPageItem>
+          <S.CommonNotePageItem>
             <UploadDropZone onUserUpload={handleArchiveUploadedFiles} fileTypes="마크다운·이미지" />
             <UploadDropZone onUserUpload={handleImportFromLocal} fileTypes="TAR" />
-          </S.UserPageItem>
+          </S.CommonNotePageItem>
           {fetchedNotes.map((note) => {
             const {
               _id,
@@ -88,7 +88,7 @@ function UserPage() {
           })}
         </>
       )}
-      <S.UserPageItem $type="option">
+      <S.CommonNotePageItem $type="option">
         {isOpen && (
           <SelectMenu
             ref={modalRef}
@@ -98,8 +98,8 @@ function UserPage() {
           />
         )}
         <Button image={plusOptionIcon} onClick={handleOpenModal} />
-      </S.UserPageItem>
-    </S.UserPageLayout>
+      </S.CommonNotePageItem>
+    </S.CommonNotePageLayout>
   );
 }
 
