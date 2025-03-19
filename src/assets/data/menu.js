@@ -24,11 +24,6 @@ const tagsMenu = [
     tag: "img",
     label: "이미지",
   },
-  {
-    id: "delete",
-    tag: "",
-    label: "삭제",
-  },
 ];
 
 export { tagsMenu };

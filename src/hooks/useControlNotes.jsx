@@ -190,7 +190,7 @@ const useControlNotes = () => {
 
   const getMenu = (menuType) => {
     switch (menuType) {
-      case "노트 관리":
+      case "내 노트 ⋮ 버튼 메뉴":
         return (noteId) => [
           { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
           { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
@@ -200,12 +200,12 @@ const useControlNotes = () => {
             label: "삭제하기",
           },
         ];
-      case "노트 생성 및 가져오기":
+      case "내 노트 + 버튼 메뉴":
         return [
           { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
           { id: 2, label: "로컬에서 가져오기" },
         ];
-      case "노트 가져오기":
+      case "실시간 공유 노트 ⋮ 버튼 메뉴":
         return (noteId) => [
           { id: 1, tag: () => handleCopySharedNote(noteId), label: "내 노트로 가져오기" },
         ];

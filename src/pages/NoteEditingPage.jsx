@@ -24,7 +24,9 @@ function NoteEditingPage() {
 
   const isSharedPage = pathname.indexOf("/shared") !== -1;
 
-  const initialMenu = getMenu(isSharedPage ? "노트 가져오기" : "노트 관리");
+  const initialMenu = getMenu(
+    isSharedPage ? "실시간 공유 노트 ⋮ 버튼 메뉴" : "내 노트 ⋮ 버튼 메뉴"
+  );
   const plusMenu = initialMenu(noteId);
 
   const handleOpenModal = () => setIsOpen(true);
