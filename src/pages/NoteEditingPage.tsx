@@ -25,7 +25,7 @@ function NoteEditingPage() {
   const isSharedPage = pathname.indexOf("/shared") !== -1;
 
   const initialMenu = getMenu(
-    isSharedPage ? "실시간 공유 노트 ⋮ 버튼 메뉴" : "내 노트 ⋮ 버튼 메뉴"
+    isSharedPage ? "실시간 공유 노트 '⋮' 버튼 메뉴" : "내 노트 '⋮' 버튼 메뉴"
   );
   const plusMenu = typeof initialMenu === "function" && noteId ? initialMenu(noteId) : [];
 

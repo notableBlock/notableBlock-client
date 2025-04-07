@@ -28,8 +28,8 @@ function UserPage() {
 
   const modalRef = useRef(null);
 
-  const kebabMenu = getMenu("내 노트 ⋮ 버튼 메뉴");
-  const plusMenu = getMenu("내 노트 + 버튼 메뉴");
+  const kebabMenu = getMenu("내 노트 '⋮' 버튼 메뉴");
+  const plusMenu = getMenu("내 노트 '+' 버튼 메뉴");
 
   const handleOpenModal = () => setIsOpen(true);
   const handleCloseModal = () => setIsOpen(false);

@@ -22,7 +22,7 @@ function SharedPage() {
     fetchShareNotes();
   }, [getSharedNotes]);
 
-  const kebabMenu = getMenu("실시간 공유 노트 ⋮ 버튼 메뉴");
+  const kebabMenu = getMenu("실시간 공유 노트 '⋮' 버튼 메뉴");
 
   return (
     <S.CommonNotePageLayout>

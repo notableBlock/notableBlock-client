@@ -199,7 +199,7 @@ const useControlNotes = () => {
 
   const getMenu = (menuType: string): InitialMenu => {
     switch (menuType) {
-      case "내 노트 ⋮ 버튼 메뉴":
+      case "내 노트 '⋮' 버튼 메뉴":
         return (noteId) => {
           if (!noteId)
             return [{ id: 1, label: "현재 메뉴를 불러올 수 없어요. 새로고침 해주세요." }];
@@ -211,13 +211,13 @@ const useControlNotes = () => {
           ];
         };
 
-      case "내 노트 + 버튼 메뉴":
+      case "내 노트 '+' 버튼 메뉴":
         return () => [
           { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
           { id: 2, label: "로컬에서 가져오기" },
         ];
 
-      case "실시간 공유 노트 ⋮ 버튼 메뉴":
+      case "실시간 공유 노트 '⋮' 버튼 메뉴":
         return (noteId) => {
           if (!noteId)
             return [{ id: 1, label: "현재 메뉴를 불러올 수 없어요. 새로고침 해주세요." }];
