@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 test.describe("로그인 및 로그아웃 플로우", () => {
-  test("사용자는 구글 로그인을 통해 노트 페이지에 접근하고, 이후 로그아웃하면 로그인 페이지로 이동한다.", async ({
+  test("사용자가 로그인에 성공하면 노트 페이지로 이동되고, 이후 로그아웃을 진행하면 로그인 페이지로 이동합니다.", async ({
     page,
   }) => {
     const email = process.env.USER_0_GOOGLE_EMAIL;
@@ -18,10 +18,9 @@ test.describe("로그인 및 로그아웃 플로우", () => {
 
     await page.goto("/login");
 
-    const [popup] = await Promise.all([
-      page.waitForEvent("popup"),
-      page.getByRole("button", { name: "구글 로고 구글 로그인 하기" }).click(),
-    ]);
+    const popupPromise = page.waitForEvent("popup");
+    await page.getByRole("button", { name: "구글 로그인 하기" }).click({ delay: 500 });
+    const popup = await popupPromise;
 
     await popup.fill('input[type="email"]', email);
     await popup.getByRole("button", { name: "Next" }).click();
