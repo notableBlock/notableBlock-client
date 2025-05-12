@@ -4,11 +4,11 @@ import * as S from "styles/components/ButtonStyle";
 
 import type { ButtonProps } from "types/components";
 
-function Button({ image, onClick }: ButtonProps) {
+function Button({ image, onClick, type }: ButtonProps) {
   const { allNotification } = useNotificationStore();
 
-  const isNotificationImage = image.includes("notification");
-  const isKebabImage = image.includes("kebab");
+  const isNotificationImage = type === "notification";
+  const isKebabImage = type === "kebab";
 
   return (
     <S.ButtonLayout onClick={onClick} $isKebabImage={isKebabImage}>

@@ -45,7 +45,7 @@ function NoteEditingPage() {
       <NoteEditor onSaveStatus={handleSaveStatus} />
       <S.NoteEditingPageItem>
         {isOpen && <SelectMenu ref={modalRef} menu={plusMenu} onSelect={handleSelectMenu} />}
-        <Button image={plusOptionIcon} onClick={handleOpenModal} />
+        <Button image={plusOptionIcon} onClick={handleOpenModal} type="plus" />
       </S.NoteEditingPageItem>
     </S.NoteEditingPageLayout>
   );

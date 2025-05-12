@@ -47,7 +47,7 @@ function Layout() {
             </Form>
           </S.NotiContainer>
         )}
-        <Button image={notificationIcon} onClick={handleOpenModal} />
+        <Button image={notificationIcon} onClick={handleOpenModal} type="notification" />
       </S.Item>
     </S.Layout>
   );
