@@ -2,10 +2,10 @@ import * as S from "styles/components/LoadingStyle";
 
 function Loading() {
   return (
-    <S.LoadingLayout>
+    <S.Layout>
       <p>잠시만 기다려주세요.</p>
-      <S.LoadingImage />
-    </S.LoadingLayout>
+      <S.Icon />
+    </S.Layout>
   );
 }
 

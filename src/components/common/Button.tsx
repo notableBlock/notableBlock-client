@@ -11,10 +11,10 @@ function Button({ image, onClick, type }: ButtonProps) {
   const isKebabImage = type === "kebab";
 
   return (
-    <S.ButtonLayout onClick={onClick} $isKebabImage={isKebabImage}>
+    <S.Layout onClick={onClick} $isKebabImage={isKebabImage}>
       {isNotificationImage && <S.NotiCount>{allNotification.length}</S.NotiCount>}
-      <S.ButtonImage $image={image} />
-    </S.ButtonLayout>
+      <S.Icon $image={image} />
+    </S.Layout>
   );
 }
 

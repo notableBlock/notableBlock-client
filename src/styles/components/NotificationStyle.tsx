@@ -5,11 +5,11 @@ interface NotiMessageProps {
   $isReadAllMessage?: boolean;
 }
 
-interface ImageProps {
+interface NotiImageProps {
   $src: string;
 }
 
-const NotiLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column-reverse;
   overflow-x: hidden;
@@ -17,7 +17,7 @@ const NotiLayout = styled.div`
   color: ${({ theme }) => theme.color.blackColor};
 `;
 
-const NotiMessage = styled.div<NotiMessageProps>`
+const MessageBox = styled.div<NotiMessageProps>`
   display: flex;
   justify-content: ${({ $isReadAllMessage }) => ($isReadAllMessage ? "center" : "space-between")};
   align-items: center;
@@ -29,14 +29,14 @@ const NotiMessage = styled.div<NotiMessageProps>`
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
-const NotiMessageClickBox = styled.div`
+const LinkBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
 `;
 
-const NotiLink = styled(NavLink)`
+const Link = styled(NavLink)`
   border-radius: 0.35rem;
   background-color: ${({ theme }) => theme.color.whiteColor};
 
@@ -45,7 +45,7 @@ const NotiLink = styled(NavLink)`
   }
 `;
 
-const NotiButton = styled.button`
+const Button = styled.button`
   font-size: ${({ theme }) => theme.fontSize.medium};
   color: ${({ theme }) => theme.color.mainColor};
 `;
@@ -86,7 +86,7 @@ const SlideOut = styled.div`
   animation: ${slideOutRight} 0.5s ease forwards;
 `;
 
-const Image = styled.img.attrs<ImageProps>(({ $src }) => ({
+const Icon = styled.img.attrs<NotiImageProps>(({ $src }) => ({
   src: $src,
 }))`
   width: 1.75rem;
@@ -94,13 +94,4 @@ const Image = styled.img.attrs<ImageProps>(({ $src }) => ({
   margin: 0 0.5rem 0 1rem;
 `;
 
-export {
-  NotiLayout,
-  NotiMessage,
-  NotiMessageClickBox,
-  SlideIn,
-  SlideOut,
-  NotiLink,
-  NotiButton,
-  Image,
-};
+export { Layout, MessageBox, LinkBox, SlideIn, SlideOut, Link, Button, Icon };

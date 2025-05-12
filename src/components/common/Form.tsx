@@ -10,11 +10,11 @@ function Form(
   ref: ForwardedRef<HTMLDivElement>
 ) {
   return (
-    <S.FormLayout ref={ref} $isNotification={isNotification}>
-      {!isNotification && <S.FormImage />}
-      <S.FormTitle>{title}</S.FormTitle>
+    <S.Layout ref={ref} $isNotification={isNotification}>
+      {!isNotification && <S.Icon />}
+      <S.Heading>{title}</S.Heading>
       {children}
-    </S.FormLayout>
+    </S.Layout>
   );
 }
 const FormRef = forwardRef(Form);

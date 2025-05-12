@@ -72,7 +72,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   }, [blocks, prevBlocks, focusNextBlock, focusPrevBlock, cleanUpInvalidBlocksRef]);
 
   return (
-    <S.NoteEditorLayout onDragOver={(event) => event.preventDefault()}>
+    <S.Layout onDragOver={(event) => event.preventDefault()}>
       {isLoading ? (
         <Loading />
       ) : (
@@ -110,7 +110,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
           );
         })
       )}
-    </S.NoteEditorLayout>
+    </S.Layout>
   );
 }
 

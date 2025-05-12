@@ -8,30 +8,30 @@ function NotificationHub() {
   const { allNotification, handleDeleteNotification } = useControlNotifications();
 
   return (
-    <S.NotiLayout>
+    <S.Layout>
       {allNotification.length ? (
         allNotification.map((notification) => {
           const { _id, receivedAt, message, link } = notification;
 
           return (
-            <S.NotiMessage key={_id}>
+            <S.MessageBox key={_id}>
               {receivedAt} - {message}
-              <S.NotiMessageClickBox>
+              <S.LinkBox>
                 {link && (
-                  <S.NotiLink to={link}>
-                    <S.Image $src={handRightIcon} alt="손가락 아이콘" />
+                  <S.Link to={link}>
+                    <S.Icon $src={handRightIcon} alt="손가락 아이콘" />
                     보러 가기
-                  </S.NotiLink>
+                  </S.Link>
                 )}
-                <S.NotiButton onClick={() => handleDeleteNotification(_id)}>X</S.NotiButton>
-              </S.NotiMessageClickBox>
-            </S.NotiMessage>
+                <S.Button onClick={() => handleDeleteNotification(_id)}>X</S.Button>
+              </S.LinkBox>
+            </S.MessageBox>
           );
         })
       ) : (
-        <S.NotiMessage $isReadAllMessage={true}>모든 알림을 확인했어요.</S.NotiMessage>
+        <S.MessageBox $isReadAllMessage={true}>모든 알림을 확인했어요.</S.MessageBox>
       )}
-    </S.NotiLayout>
+    </S.Layout>
   );
 }
 

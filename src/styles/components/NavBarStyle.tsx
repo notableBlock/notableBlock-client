@@ -15,7 +15,7 @@ interface NavLinkProps {
   $isActive: boolean;
 }
 
-const NavBarLayout = styled.nav`
+const Layout = styled.nav`
   display: flex;
   flex: 0 0 10.5rem;
   flex-direction: column;
@@ -32,7 +32,7 @@ const NavBarLayout = styled.nav`
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
-const NavBarItem = styled.div<NavBarItemProps>`
+const Item = styled.div<NavBarItemProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +43,7 @@ const NavBarItem = styled.div<NavBarItemProps>`
   cursor: ${({ $type }) => ($type === "logout" ? "pointer" : "defaults")};
 `;
 
-const NavBarImage = styled.img.attrs<NavBarImageProps>(({ $picture }) => ({
+const Icon = styled.img.attrs<NavBarImageProps>(({ $picture }) => ({
   src: $picture || notableBlockLogo,
   alt: $picture ? "사용자 사진" : "notable-block 로고",
 }))`
@@ -51,7 +51,7 @@ const NavBarImage = styled.img.attrs<NavBarImageProps>(({ $picture }) => ({
   border-radius: 1rem;
 `;
 
-const NavBarLink = styled(NavLink)<NavLinkProps>`
+const Link = styled(NavLink)<NavLinkProps>`
   padding: 1rem;
 
   background-color: ${({ $isActive, theme }) =>
@@ -64,11 +64,11 @@ const NavBarLink = styled(NavLink)<NavLinkProps>`
   }
 `;
 
-const NavBarUserContainer = styled.div`
+const Section = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: auto;
   color: ${({ theme }) => theme.color.whiteColor};
 `;
 
-export { NavBarLayout, NavBarItem, NavBarImage, NavBarLink, NavBarUserContainer };
+export { Layout, Item, Icon, Link, Section };

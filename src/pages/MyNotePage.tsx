@@ -46,15 +46,15 @@ function UserPage() {
   }, [getUserNotes]);
 
   return (
-    <S.CommonNotePageLayout>
+    <S.Layout>
       {isLoading ? (
         <Loading />
       ) : (
         <>
-          <S.CommonNotePageItem>
+          <S.Item>
             <UploadDropZone onUserUpload={handleArchiveUploadedFiles} fileTypes="마크다운·이미지" />
             <UploadDropZone onUserUpload={handleImportFromLocal} fileTypes="TAR" />
-          </S.CommonNotePageItem>
+          </S.Item>
           {fetchedNotes.map((note) => {
             const {
               _id,
@@ -88,7 +88,7 @@ function UserPage() {
           })}
         </>
       )}
-      <S.CommonNotePageItem $isOption={true}>
+      <S.Item $isOption={true}>
         {isOpen && (
           <SelectMenu
             ref={modalRef}
@@ -98,8 +98,8 @@ function UserPage() {
           />
         )}
         <Button image={plusOptionIcon} onClick={handleOpenModal} type="plus" />
-      </S.CommonNotePageItem>
-    </S.CommonNotePageLayout>
+      </S.Item>
+    </S.Layout>
   );
 }
 

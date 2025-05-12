@@ -36,18 +36,18 @@ function NoteEditingPage() {
   useOnClickOutside(modalRef, handleCloseModal);
 
   return (
-    <S.NoteEditingPageLayout>
+    <S.Layout>
       {!isSharedPage && (
-        <S.SavingStatusItem $isSaving={isSaving}>
+        <S.Status $isSaving={isSaving}>
           {isSaving ? "자동저장 성공 ✅" : "자동저장 실패 ⛔️"}
-        </S.SavingStatusItem>
+        </S.Status>
       )}
       <NoteEditor onSaveStatus={handleSaveStatus} />
-      <S.NoteEditingPageItem>
+      <S.Item>
         {isOpen && <SelectMenu ref={modalRef} menu={plusMenu} onSelect={handleSelectMenu} />}
         <Button image={plusOptionIcon} onClick={handleOpenModal} type="plus" />
-      </S.NoteEditingPageItem>
-    </S.NoteEditingPageLayout>
+      </S.Item>
+    </S.Layout>
   );
 }
 

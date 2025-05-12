@@ -4,7 +4,7 @@ interface CommonNotePageItemProps {
   $isOption?: boolean;
 }
 
-const CommonNotePageLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -18,7 +18,7 @@ const CommonNotePageLayout = styled.div`
   }
 `;
 
-const CommonNotePageItem = styled.div<CommonNotePageItemProps>`
+const Item = styled.div<CommonNotePageItemProps>`
   ${({ $isOption }) =>
     $isOption
       ? `
@@ -33,4 +33,4 @@ const CommonNotePageItem = styled.div<CommonNotePageItemProps>`
     `}
 `;
 
-export { CommonNotePageLayout, CommonNotePageItem };
+export { Layout, Item };

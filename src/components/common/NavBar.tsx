@@ -18,29 +18,29 @@ function NavBar() {
   const userName = profile?.name;
 
   return (
-    <S.NavBarLayout>
-      <S.NavBarItem>
-        <S.NavBarImage />
-      </S.NavBarItem>
-      <S.NavBarItem $type="title">Notable Block</S.NavBarItem>
-      <S.NavBarLink to="/notes" $isActive={isNotePageActive && !isNoteTreePageActive}>
+    <S.Layout>
+      <S.Item>
+        <S.Icon />
+      </S.Item>
+      <S.Item $type="title">Notable Block</S.Item>
+      <S.Link to="/notes" $isActive={isNotePageActive && !isNoteTreePageActive}>
         내 노트
-      </S.NavBarLink>
-      <S.NavBarLink to="/shared" $isActive={isSharedPageActive}>
+      </S.Link>
+      <S.Link to="/shared" $isActive={isSharedPageActive}>
         실시간 공유 노트
-      </S.NavBarLink>
-      <S.NavBarLink to="/notes/tree" $isActive={isNoteTreePageActive}>
+      </S.Link>
+      <S.Link to="/notes/tree" $isActive={isNoteTreePageActive}>
         내 노트 트리
-      </S.NavBarLink>
-      <S.NavBarUserContainer>
-        <S.NavBarItem>
-          <S.NavBarImage $picture={userPicture} /> <p>{`${userName}님`}</p>
-        </S.NavBarItem>
-        <S.NavBarItem onClick={handleLogout} $type="logout">
+      </S.Link>
+      <S.Section>
+        <S.Item>
+          <S.Icon $picture={userPicture} /> <p>{`${userName}님`}</p>
+        </S.Item>
+        <S.Item onClick={handleLogout} $type="logout">
           ◀ 로그아웃
-        </S.NavBarItem>
-      </S.NavBarUserContainer>
-    </S.NavBarLayout>
+        </S.Item>
+      </S.Section>
+    </S.Layout>
   );
 }
 

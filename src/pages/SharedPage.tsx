@@ -25,7 +25,7 @@ function SharedPage() {
   const kebabMenu = getMenu("실시간 공유 노트 '⋮' 버튼 메뉴");
 
   return (
-    <S.CommonNotePageLayout>
+    <S.Layout>
       {isLoading ? (
         <Loading />
       ) : (
@@ -61,7 +61,7 @@ function SharedPage() {
           );
         })
       )}
-    </S.CommonNotePageLayout>
+    </S.Layout>
   );
 }
 

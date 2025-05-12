@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import googleLogo from "assets/images/google-logo.png";
 
-const FormPageLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -13,7 +13,7 @@ const FormPageLayout = styled.div`
   );
 `;
 
-const FormPageButton = styled.button`
+const Button = styled.button`
   display: flex;
   justify-content: center;
   width: 10rem;
@@ -27,16 +27,16 @@ const FormPageButton = styled.button`
   cursor: pointer;
 `;
 
-const FormPageMessage = styled.p`
+const Message = styled.p`
   word-break: keep-all;
   padding: 1rem;
 `;
 
-const FormPageImage = styled.img.attrs({
+const GoogleIcon = styled.img.attrs({
   src: googleLogo,
   alt: "구글 로고",
 })`
   width: 1rem;
 `;
 
-export { FormPageLayout, FormPageButton, FormPageMessage, FormPageImage };
+export { Layout, Button, Message, GoogleIcon };

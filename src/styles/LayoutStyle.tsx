@@ -24,7 +24,7 @@ const Item = styled.div<ItemProps>`
   `}
 `;
 
-const NotiContainer = styled.div`
+const NotiBox = styled.div`
   position: absolute;
   right: 3rem;
   width: 45rem;
@@ -35,7 +35,7 @@ const NotiContainer = styled.div`
   }
 `;
 
-const Toast = styled.div`
+const ToastBox = styled.div`
   position: absolute;
   bottom: 8rem;
   right: 3rem;
@@ -51,4 +51,4 @@ const Button = styled.button`
   }
 `;
 
-export { Layout, Item, NotiContainer, Toast, Button };
+export { Layout, Item, NotiBox, ToastBox, Button };

@@ -56,25 +56,25 @@ function Toast() {
         const { _id, message, link } = notification;
 
         return (
-          <S.NotiLayout key={_id}>
+          <S.Layout key={_id}>
             {isToastVisible ? (
               <S.SlideIn>
-                <S.NotiMessage>
+                <S.MessageBox>
                   {message}
                   {link && (
-                    <S.NotiLink to={link}>
-                      <S.Image $src={handRightIcon} alt="손가락 아이콘" />
+                    <S.Link to={link}>
+                      <S.Icon $src={handRightIcon} alt="손가락 아이콘" />
                       보러가기
-                    </S.NotiLink>
+                    </S.Link>
                   )}
-                </S.NotiMessage>
+                </S.MessageBox>
               </S.SlideIn>
             ) : (
               <S.SlideOut onAnimationEnd={() => setToast([])}>
-                <S.NotiMessage>{message}</S.NotiMessage>
+                <S.MessageBox>{message}</S.MessageBox>
               </S.SlideOut>
             )}
-          </S.NotiLayout>
+          </S.Layout>
         );
       })}
     </>

@@ -11,7 +11,7 @@ interface SelectMenuItemProps {
   $isSelected?: boolean;
 }
 
-const SelectMenuLayout = styled.div<SelectMenuLayoutProps>`
+const Layout = styled.div<SelectMenuLayoutProps>`
   display: flex;
   position: absolute;
   top: ${({ $position }) => $position.top + "px"};
@@ -28,7 +28,11 @@ const SelectMenuLayout = styled.div<SelectMenuLayoutProps>`
   }
 `;
 
-const SelectMenuItem = styled.button<SelectMenuItemProps>`
+const MenuBox = styled.div`
+  padding: 0;
+`;
+
+const MenuItem = styled.button<SelectMenuItemProps>`
   width: 100%;
   padding: 0.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
@@ -50,12 +54,8 @@ const SelectMenuItem = styled.button<SelectMenuItemProps>`
   }
 `;
 
-const SelectMenuContainer = styled.div`
-  padding: 0;
-`;
-
-const SelectMenuInput = styled.input`
+const FileItem = styled.input`
   display: none;
 `;
 
-export { SelectMenuLayout, SelectMenuItem, SelectMenuContainer, SelectMenuInput };
+export { Layout, MenuItem, MenuBox, FileItem };

@@ -28,18 +28,18 @@ function ErrorPage() {
   const buttonMessage = buttonLabels[redirectPath] || "이전 페이지로 돌아가기";
 
   return (
-    <S.FormPageLayout>
+    <S.Layout>
       <Form title="Notable Block">
-        <S.FormPageMessage>{errorMessage}</S.FormPageMessage>
-        <S.FormPageButton
+        <S.Message>{errorMessage}</S.Message>
+        <S.Button
           onClick={() => {
             navigate(redirectPath);
           }}
         >
           {buttonMessage}
-        </S.FormPageButton>
+        </S.Button>
       </Form>
-    </S.FormPageLayout>
+    </S.Layout>
   );
 }
 

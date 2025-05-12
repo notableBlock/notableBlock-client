@@ -8,14 +8,14 @@ function LoginPage() {
   const { handleLogin } = useGoogleAuth();
 
   return (
-    <S.FormPageLayout>
+    <S.Layout>
       <Form title="Notable Block">
-        <S.FormPageButton onClick={handleLogin}>
-          <S.FormPageImage />
+        <S.Button onClick={handleLogin}>
+          <S.GoogleIcon />
           구글 로그인 하기
-        </S.FormPageButton>
+        </S.Button>
       </Form>
-    </S.FormPageLayout>
+    </S.Layout>
   );
 }
 

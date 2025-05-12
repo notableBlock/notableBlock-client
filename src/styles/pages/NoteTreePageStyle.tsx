@@ -4,12 +4,12 @@ interface NoteTreeImageProps {
   $src: string;
 }
 
-const NoteTreePageLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   height: 100vh;
 `;
 
-const NoteTreePageList = styled.ul`
+const UnorderedList = styled.ul`
   display: flex;
   position: absolute;
   top: 3rem;
@@ -35,7 +35,7 @@ const NoteTreePageList = styled.ul`
   }
 `;
 
-const NoteTreePageContainer = styled.div`
+const InfoBox = styled.div`
   padding: 0.5rem;
   min-width: 15rem;
   border-right: 1px solid ${({ theme }) => theme.color.shadowColor};
@@ -58,7 +58,7 @@ const NoteTreePageContainer = styled.div`
   }
 `;
 
-const NoteTreePageInfoHeader = styled.div`
+const InfoHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +68,7 @@ const NoteTreePageInfoHeader = styled.div`
   }
 `;
 
-const NoteTreePageImage = styled.img.attrs<NoteTreeImageProps>(({ $src }) => ({
+const Icon = styled.img.attrs<NoteTreeImageProps>(({ $src }) => ({
   src: $src,
 }))`
   width: 1.75rem;
@@ -76,10 +76,4 @@ const NoteTreePageImage = styled.img.attrs<NoteTreeImageProps>(({ $src }) => ({
   border-radius: 0.5rem;
 `;
 
-export {
-  NoteTreePageLayout,
-  NoteTreePageList,
-  NoteTreePageContainer,
-  NoteTreePageInfoHeader,
-  NoteTreePageImage,
-};
+export { Layout, UnorderedList, InfoBox, InfoHeader, Icon };

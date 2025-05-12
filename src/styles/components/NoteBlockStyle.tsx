@@ -6,13 +6,13 @@ interface NoteBlockItemProps {
   $image?: string;
 }
 
-const NoteBlockLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
 `;
 
-const NoteBlockTextItem = styled(ContentEditable)<NoteBlockItemProps>`
+const TextItem = styled(ContentEditable)<NoteBlockItemProps>`
   flex-grow: 1;
   width: 1rem;
   padding: 1rem;
@@ -30,7 +30,7 @@ const NoteBlockTextItem = styled(ContentEditable)<NoteBlockItemProps>`
   }
 `;
 
-const NoteBlockImageItem = styled.div<NoteBlockItemProps>`
+const ImageItem = styled.div<NoteBlockItemProps>`
   flex-grow: 1;
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.noteBlockColor};
@@ -42,7 +42,7 @@ const NoteBlockImageItem = styled.div<NoteBlockItemProps>`
   }
 `;
 
-const NoteBlockDragItem = styled.img.attrs<NoteBlockItemProps>(({ $image }) => ({
+const DragItem = styled.img.attrs<NoteBlockItemProps>(({ $image }) => ({
   src: $image,
   alt: "드래그 버튼 아이콘",
 }))`
@@ -54,7 +54,7 @@ const NoteBlockDragItem = styled.img.attrs<NoteBlockItemProps>(({ $image }) => (
   height: 1.5rem;
   cursor: pointer;
 
-  ${NoteBlockLayout}:hover & {
+  ${Layout}:hover & {
     opacity: 1;
   }
 
@@ -63,14 +63,8 @@ const NoteBlockDragItem = styled.img.attrs<NoteBlockItemProps>(({ $image }) => (
   }
 `;
 
-const NoteBlockEmptyItem = styled.div`
+const EmptyItem = styled.div`
   width: 1.5rem;
 `;
 
-export {
-  NoteBlockLayout,
-  NoteBlockTextItem,
-  NoteBlockImageItem,
-  NoteBlockDragItem,
-  NoteBlockEmptyItem,
-};
+export { Layout, TextItem, ImageItem, DragItem, EmptyItem };

@@ -102,7 +102,7 @@ function NoteBlock(
   }, [handleCloseSelectMenu]);
 
   return (
-    <S.NoteBlockLayout onDragEnter={onDragEnter} onDragEnd={onDragEnd}>
+    <S.Layout onDragEnter={onDragEnter} onDragEnd={onDragEnd}>
       {isSelectMenuOpen && (
         <SelectMenu
           onSelect={handleSelectTag}
@@ -112,17 +112,17 @@ function NoteBlock(
         />
       )}
       {!isSharedPage ? (
-        <S.NoteBlockDragItem
+        <S.DragItem
           $image={dragHandleIcon}
           onClick={handleOpenSelectMenu}
           onDragStart={onDragStart}
           draggable={true}
         />
       ) : (
-        <S.NoteBlockEmptyItem />
+        <S.EmptyItem />
       )}
       {tag !== "img" && (
-        <S.NoteBlockTextItem
+        <S.TextItem
           innerRef={contentEditableRef}
           ref={ref}
           html={html}
@@ -135,7 +135,7 @@ function NoteBlock(
         />
       )}
       {tag === "img" && (
-        <S.NoteBlockImageItem ref={ref} $isDragging={isDragging}>
+        <S.ImageItem ref={ref} $isDragging={isDragging}>
           <input
             id={`${id}_fileInput`}
             name={tag}
@@ -154,9 +154,9 @@ function NoteBlock(
               alt={/[^\/]+(?=\.[^\/.]*$)/.exec(imageUrl)[0]}
             />
           )}
-        </S.NoteBlockImageItem>
+        </S.ImageItem>
       )}
-    </S.NoteBlockLayout>
+    </S.Layout>
   );
 }
 

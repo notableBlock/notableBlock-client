@@ -4,7 +4,7 @@ interface SavingStatusItemProps {
   $isSaving: boolean;
 }
 
-const NoteEditingPageLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   width: 85vw;
   height: 100%;
@@ -14,12 +14,12 @@ const NoteEditingPageLayout = styled.div`
   }
 `;
 
-const NoteEditingPageItem = styled.div`
+const Item = styled.div`
   position: absolute;
   right: 3rem;
   bottom: 3rem;
 `;
-const SavingStatusItem = styled.p<SavingStatusItemProps>`
+const Status = styled.p<SavingStatusItemProps>`
   position: absolute;
   top: 1rem;
   left: 20rem;
@@ -27,4 +27,4 @@ const SavingStatusItem = styled.p<SavingStatusItemProps>`
     $isSaving ? theme.color.successColor : theme.color.failColor};
 `;
 
-export { NoteEditingPageLayout, NoteEditingPageItem, SavingStatusItem };
+export { Layout, Item, Status };

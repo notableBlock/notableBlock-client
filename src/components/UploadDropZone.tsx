@@ -32,22 +32,22 @@ function UploadDropZone({ onUserUpload, fileTypes }: UploadDropZoneProps) {
     );
 
   return (
-    <S.UploadDropZoneLayout
+    <S.Layout
       $isDragging={isDragging}
       onDrop={(event) => handleFileDrop(event, onUserUpload)}
       onDragOver={handleFileDragOver}
       onDragLeave={handleFileDragLeave}
     >
       <h2>{dropZoneTitle}</h2>
-      <S.UploadDropZoneImage $fileTypes={fileTypes} />
-      <S.UploadDropZoneItem>
+      <S.Icon $fileTypes={fileTypes} />
+      <S.Item>
         <h3>
           여기에 {fileTypes}를 드래그하거나{" "}
           <span onClick={handleFileInputClick}>클릭하여 업로드</span>
           하세요.
         </h3>
         <p>{infoText}</p>
-      </S.UploadDropZoneItem>
+      </S.Item>
       <input
         type="file"
         accept={acceptExtensions}
@@ -56,7 +56,7 @@ function UploadDropZone({ onUserUpload, fileTypes }: UploadDropZoneProps) {
         multiple
         hidden
       />
-    </S.UploadDropZoneLayout>
+    </S.Layout>
   );
 }
 

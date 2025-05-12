@@ -11,7 +11,7 @@ interface UploadDropZoneImageProps {
   $fileTypes: "마크다운·이미지" | "TAR";
 }
 
-const UploadDropZoneLayout = styled.div<UploadDropZoneLayoutProps>`
+const Layout = styled.div<UploadDropZoneLayoutProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,7 +56,7 @@ const UploadDropZoneLayout = styled.div<UploadDropZoneLayoutProps>`
   }
 `;
 
-const UploadDropZoneItem = styled.div`
+const Item = styled.div`
   display: flex;
   flex-direction: column;
   width: 30vw;
@@ -64,7 +64,7 @@ const UploadDropZoneItem = styled.div`
   gap: 1rem;
 `;
 
-const UploadDropZoneImage = styled.img.attrs<UploadDropZoneImageProps>(({ $fileTypes }) => ({
+const Icon = styled.img.attrs<UploadDropZoneImageProps>(({ $fileTypes }) => ({
   src: $fileTypes === "마크다운·이미지" ? markdownIcon : tarIcon,
   alt: "파일 아이콘 이미지",
 }))`
@@ -73,4 +73,4 @@ const UploadDropZoneImage = styled.img.attrs<UploadDropZoneImageProps>(({ $fileT
   margin-bottom: 0.75rem;
 `;
 
-export { UploadDropZoneLayout, UploadDropZoneItem, UploadDropZoneImage };
+export { Layout, Item, Icon };

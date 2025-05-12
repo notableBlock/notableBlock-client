@@ -45,22 +45,22 @@ function SelectMenu(
   }, [handleKeyDown]);
 
   return (
-    <S.SelectMenuLayout ref={ref} $position={positionAttributes ?? { top: 0, left: 0 }}>
+    <S.Layout ref={ref} $position={positionAttributes ?? { top: 0, left: 0 }}>
       {items.map((item, index) => {
         const isFileInput = item.label === "로컬에서 가져오기";
 
         return isFileInput ? (
-          <S.SelectMenuContainer key={item.id}>
-            <S.SelectMenuInput
+          <S.MenuBox key={item.id}>
+            <S.FileItem
               type="file"
               accept=".tar"
               ref={fileInputRef}
               onChange={(event) => onImportFromLocal(event)}
             />
-            <S.SelectMenuItem onClick={handleFileInputClick}>{item.label}</S.SelectMenuItem>
-          </S.SelectMenuContainer>
+            <S.MenuItem onClick={handleFileInputClick}>{item.label}</S.MenuItem>
+          </S.MenuBox>
         ) : (
-          <S.SelectMenuItem
+          <S.MenuItem
             key={item.id}
             $isSelected={index === selectionIndex}
             tabIndex={0}
@@ -71,10 +71,10 @@ function SelectMenu(
             }}
           >
             {item.label}
-          </S.SelectMenuItem>
+          </S.MenuItem>
         );
       })}
-    </S.SelectMenuLayout>
+    </S.Layout>
   );
 }
 

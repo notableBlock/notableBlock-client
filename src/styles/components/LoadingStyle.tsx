@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import loadingIcon from "assets/images/loading-icon.gif";
 
-const LoadingLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
@@ -13,7 +13,7 @@ const LoadingLayout = styled.div`
   margin: auto;
 `;
 
-const LoadingImage = styled.img.attrs({
+const Icon = styled.img.attrs({
   src: loadingIcon,
   alt: "로딩 이미지",
 })`
@@ -21,4 +21,4 @@ const LoadingImage = styled.img.attrs({
   height: 15rem;
 `;
 
-export { LoadingLayout, LoadingImage };
+export { Layout, Icon };

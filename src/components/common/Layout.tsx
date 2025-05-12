@@ -35,17 +35,17 @@ function Layout() {
       <S.Item>
         <Outlet />
       </S.Item>
-      <S.Toast>
+      <S.ToastBox>
         <Toast />
-      </S.Toast>
+      </S.ToastBox>
       <S.Item $notification="notification">
         {isOpen && (
-          <S.NotiContainer>
+          <S.NotiBox>
             <Form ref={modalRef} title="🔔 알림 확인" isNotification={true}>
               <S.Button onClick={handleDeleteAllNotification}>모두 삭제</S.Button>
               <NotificationHub />
             </Form>
-          </S.NotiContainer>
+          </S.NotiBox>
         )}
         <Button image={notificationIcon} onClick={handleOpenModal} type="notification" />
       </S.Item>

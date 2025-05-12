@@ -51,16 +51,16 @@ function NoteViewer({
   useOnClickOutside(modalRef, handleCloseModal);
 
   return (
-    <S.NoteViewerLayout>
-      <S.NoteViewerHeader>
-        <S.NoteViewerUserBox>
-          <S.NoteViewerImage $src={calendarIcon} alt="달력 아이콘" />
+    <S.Layout>
+      <S.Header>
+        <S.Section>
+          <S.Icon $src={calendarIcon} alt="달력 아이콘" />
           <p>생성일: {createdAt}</p>
-        </S.NoteViewerUserBox>
-        <S.NoteViewerUserBox>
-          <S.NoteViewerImage $src={shareStatusIcon} alt="공유 상태 아이콘" />
+        </S.Section>
+        <S.Section>
+          <S.Icon $src={shareStatusIcon} alt="공유 상태 아이콘" />
           {shareStatus}
-        </S.NoteViewerUserBox>
+        </S.Section>
         {isOpen && (
           <SelectMenu
             ref={modalRef}
@@ -70,32 +70,32 @@ function NoteViewer({
           />
         )}
         <Button image={kebabMenuIcon} onClick={handleOpenModal} type="kebab" />
-      </S.NoteViewerHeader>
-      <S.NoteLink to={`/${path}/${noteId}`}>
-        <S.NoteViewerContent>
+      </S.Header>
+      <S.Link to={`/${path}/${noteId}`}>
+        <S.Content>
           {textContent.map((block: Block) => {
             const HTMLTag = block.tag;
             const html = DOMPurify.sanitize(block.html);
 
             return <HTMLTag key={block.id} dangerouslySetInnerHTML={{ __html: html }} />;
           })}
-        </S.NoteViewerContent>
-      </S.NoteLink>
-      <S.NoteViewerFooter>
-        <S.NoteViewerUserBox>
-          <S.NoteViewerImage $src={creatorIcon} alt="생성자 아이콘" />
+        </S.Content>
+      </S.Link>
+      <S.Footer>
+        <S.Section>
+          <S.Icon $src={creatorIcon} alt="생성자 아이콘" />
           <p>생성자: {creator}님</p>
-        </S.NoteViewerUserBox>
-        <S.NoteViewerUserBox>
-          <S.NoteViewerImage $src={editorIcon} alt="수정자 아이콘" />
+        </S.Section>
+        <S.Section>
+          <S.Icon $src={editorIcon} alt="수정자 아이콘" />
           <p>수정자: {editor}님</p>
-        </S.NoteViewerUserBox>
-        <S.NoteViewerUserBox>
-          <S.NoteViewerImage $src={editCalendarIcon} alt="달력 수정 아이콘" />
+        </S.Section>
+        <S.Section>
+          <S.Icon $src={editCalendarIcon} alt="달력 수정 아이콘" />
           <p>마지막 수정일: {updatedAt}</p>
-        </S.NoteViewerUserBox>
-      </S.NoteViewerFooter>
-    </S.NoteViewerLayout>
+        </S.Section>
+      </S.Footer>
+    </S.Layout>
   );
 }
 

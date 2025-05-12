@@ -8,7 +8,7 @@ interface ButtonImageProps {
   $image: string;
 }
 
-const ButtonLayout = styled.button<ButtonLayoutProps>`
+const Layout = styled.button<ButtonLayoutProps>`
   padding: 0.5rem;
   border-radius: 10rem;
   background-color: ${({ theme, $isKebabImage }) =>
@@ -27,11 +27,11 @@ const NotiCount = styled.p`
   background-color: ${({ theme }) => theme.color.redColor};
 `;
 
-const ButtonImage = styled.img.attrs<ButtonImageProps>(({ $image }) => ({
+const Icon = styled.img.attrs<ButtonImageProps>(({ $image }) => ({
   src: $image,
   alt: "버튼 아이콘",
 }))`
   width: 3rem;
 `;
 
-export { ButtonLayout, ButtonImage, NotiCount };
+export { Layout, Icon, NotiCount };
