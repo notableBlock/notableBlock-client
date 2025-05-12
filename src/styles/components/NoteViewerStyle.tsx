@@ -8,21 +8,21 @@ interface NoteViewerImageProps {
 const NoteViewerLayout = styled.div`
   display: flex;
   flex-direction: column;
-  width: 65vw;
+  width: 50vw;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   background-color: ${({ theme }) => theme.color.noteColor};
+  border-radius: 0.75rem;
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
 `;
 
 const NoteViewerHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
+  padding: 0.25rem 0 0 0.75rem;
 
   img {
-    width: 1.5rem;
-    height: 1.25rem;
+    padding: 0rem;
+    width: 1.75rem;
   }
 `;
 
@@ -31,7 +31,8 @@ const NoteViewerContent = styled.div`
   overflow: hidden;
   flex-direction: column;
   align-items: flex-start;
-  max-height: 25rem;
+  height: 15rem;
+  max-height: 15rem;
   padding: 3rem;
   border-top: 1px solid ${({ theme }) => theme.color.borderColor};
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
@@ -42,7 +43,7 @@ const NoteViewerFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem;
 `;
 
 const NoteViewerUserBox = styled.div`
@@ -55,9 +56,8 @@ const NoteLink = styled(NavLink)``;
 
 const NoteViewerImage = styled.img.attrs<NoteViewerImageProps>(({ $src }) => ({
   src: $src,
-  alt: "사용자 사진",
 }))`
-  width: 2rem;
+  width: 1.75rem;
   border-radius: 0.5rem;
 `;
 

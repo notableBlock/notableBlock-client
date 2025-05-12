@@ -3,7 +3,6 @@ import type { User } from "types/models";
 
 const convertToTree = (noteData: Note[], profile: User) => {
   const { id, name } = profile;
-
   const tree: Tree = { id, name, children: [] };
   const noteMap = new Map();
 

@@ -7,6 +7,7 @@ import type { Tree, MockEvent } from "types/note";
 export interface ButtonProps {
   image: string;
   onClick: (event: MouseEvent<HTMLElement>) => void;
+  type: string;
 }
 
 export interface FormProps {
@@ -59,7 +60,7 @@ export interface NoteViewerProps {
   editor: string;
   editorPicture: string;
   updatedAt: string;
-  shared: boolean;
+  isShared: boolean;
   onSelectMenu: (selectedAction: () => Promise<void>) => void;
   kebabMenu: ManageItem[];
 }

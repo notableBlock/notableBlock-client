@@ -7,6 +7,13 @@ import SelectMenu from "components/SelectMenu";
 import useOnClickOutside from "hooks/useOnClickOutside";
 
 import kebabMenuIcon from "assets/images/kebab-menu-icon.png";
+import calendarIcon from "assets/images/calendar-icon.png";
+import editCalendarIcon from "assets/images/edit-calendar-icon.png";
+import creatorIcon from "assets/images/creator-icon.png";
+import editorIcon from "assets/images/editor-icon.png";
+import lockIcon from "assets/images/lock-icon.png";
+import unlockIcon from "assets/images/unlock-icon.png";
+import shareIcon from "assets/images/share-icon.png";
 
 import * as S from "styles/components/NoteViewerStyle";
 
@@ -20,19 +27,21 @@ function NoteViewer({
   noteId,
   content,
   creator,
-  creatorPicture,
   createdAt,
   editor,
-  editorPicture,
   updatedAt,
-  shared,
+  isShared,
   onSelectMenu,
   kebabMenu,
 }: NoteViewerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [kebabMenuPosition, setKebabMenuPosition] = useState<Coordinate>({ x: 0, y: 0 });
   const modalRef = useRef(null);
+
   const textContent = content.filter((block: Block) => block.tag !== "img");
+  const isSharedPage = path === "shared";
+  const shareStatus = isShared ? "공유 상태" : "비공유 상태";
+  const shareStatusIcon = isSharedPage ? shareIcon : isShared ? unlockIcon : lockIcon;
 
   const handleOpenModal = (event: MouseEvent<HTMLElement>) => {
     setKebabMenuPosition({ x: event.clientX, y: event.clientY });
@@ -44,8 +53,14 @@ function NoteViewer({
   return (
     <S.NoteViewerLayout>
       <S.NoteViewerHeader>
-        <p>처음 작성한 날: {createdAt}</p>
-        <p>{path === "shared" ? "공유 중 🌐" : `공유 상태: ${shared ? "🟢" : "🔴"}`}</p>
+        <S.NoteViewerUserBox>
+          <S.NoteViewerImage $src={calendarIcon} alt="달력 아이콘" />
+          <p>생성일: {createdAt}</p>
+        </S.NoteViewerUserBox>
+        <S.NoteViewerUserBox>
+          <S.NoteViewerImage $src={shareStatusIcon} alt="공유 상태 아이콘" />
+          {shareStatus}
+        </S.NoteViewerUserBox>
         {isOpen && (
           <SelectMenu
             ref={modalRef}
@@ -54,7 +69,7 @@ function NoteViewer({
             position={kebabMenuPosition}
           />
         )}
-        <Button image={kebabMenuIcon} onClick={handleOpenModal} />
+        <Button image={kebabMenuIcon} onClick={handleOpenModal} type="kebab" />
       </S.NoteViewerHeader>
       <S.NoteLink to={`/${path}/${noteId}`}>
         <S.NoteViewerContent>
@@ -68,17 +83,17 @@ function NoteViewer({
       </S.NoteLink>
       <S.NoteViewerFooter>
         <S.NoteViewerUserBox>
-          <p>
-            처음 만든 사람: <S.NoteViewerImage $src={creatorPicture} />
-            {creator}님
-          </p>
+          <S.NoteViewerImage $src={creatorIcon} alt="생성자 아이콘" />
+          <p>생성자: {creator}님</p>
         </S.NoteViewerUserBox>
         <S.NoteViewerUserBox>
-          <p>
-            수정한 사람: <S.NoteViewerImage $src={editorPicture} /> {editor}님
-          </p>
+          <S.NoteViewerImage $src={editorIcon} alt="수정자 아이콘" />
+          <p>수정자: {editor}님</p>
         </S.NoteViewerUserBox>
-        <p>마지막으로 수정한 날: {updatedAt}</p>
+        <S.NoteViewerUserBox>
+          <S.NoteViewerImage $src={editCalendarIcon} alt="달력 수정 아이콘" />
+          <p>마지막 수정일: {updatedAt}</p>
+        </S.NoteViewerUserBox>
       </S.NoteViewerFooter>
     </S.NoteViewerLayout>
   );

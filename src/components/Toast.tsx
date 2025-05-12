@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router";
 
 import useNotificationStore from "stores/useNotificationStore";
 
+import handRightIcon from "assets/images/hand-right-icon.png";
+
 import * as S from "styles/components/NotificationStyle";
 
 import type { Notification } from "types/models";
@@ -59,7 +61,12 @@ function Toast() {
               <S.SlideIn>
                 <S.NotiMessage>
                   {message}
-                  {link && <S.NotiLink to={link}> 👉 보러가기</S.NotiLink>}
+                  {link && (
+                    <S.NotiLink to={link}>
+                      <S.Image $src={handRightIcon} alt="손가락 아이콘" />
+                      보러가기
+                    </S.NotiLink>
+                  )}
                 </S.NotiMessage>
               </S.SlideIn>
             ) : (

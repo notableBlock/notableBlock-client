@@ -1,5 +1,7 @@
 import useControlNotifications from "hooks/useControlNotifications";
 
+import handRightIcon from "assets/images/hand-right-icon.png";
+
 import * as S from "styles/components/NotificationStyle";
 
 function NotificationHub() {
@@ -15,7 +17,12 @@ function NotificationHub() {
             <S.NotiMessage key={_id}>
               {receivedAt} - {message}
               <S.NotiMessageClickBox>
-                {link && <S.NotiLink to={link}> 👉 보러 가기</S.NotiLink>}
+                {link && (
+                  <S.NotiLink to={link}>
+                    <S.Image $src={handRightIcon} alt="손가락 아이콘" />
+                    보러 가기
+                  </S.NotiLink>
+                )}
                 <S.NotiButton onClick={() => handleDeleteNotification(_id)}>X</S.NotiButton>
               </S.NotiMessageClickBox>
             </S.NotiMessage>

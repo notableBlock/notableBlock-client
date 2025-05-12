@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface NoteTreeImageProps {
+  $src: string;
+}
+
 const NoteTreePageLayout = styled.div`
   display: flex;
   height: 100vh;
@@ -17,6 +21,7 @@ const NoteTreePageList = styled.ul`
   li {
     margin: 0.5rem;
     text-align: left;
+    align-items: center;
   }
 
   li span {
@@ -53,4 +58,28 @@ const NoteTreePageContainer = styled.div`
   }
 `;
 
-export { NoteTreePageLayout, NoteTreePageList, NoteTreePageContainer };
+const NoteTreePageInfoHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h3 {
+    padding: 0;
+  }
+`;
+
+const NoteTreePageImage = styled.img.attrs<NoteTreeImageProps>(({ $src }) => ({
+  src: $src,
+}))`
+  width: 1.75rem;
+  vertical-align: middle;
+  border-radius: 0.5rem;
+`;
+
+export {
+  NoteTreePageLayout,
+  NoteTreePageList,
+  NoteTreePageContainer,
+  NoteTreePageInfoHeader,
+  NoteTreePageImage,
+};

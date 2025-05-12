@@ -1,6 +1,6 @@
 import { forwardRef, useState, useEffect } from "react";
 
-import SelectMenu from "components//SelectMenu";
+import SelectMenu from "components/SelectMenu";
 
 import useBlockInteraction from "hooks/useBlockInteraction";
 import useControlMenu from "hooks/useControlMenu";

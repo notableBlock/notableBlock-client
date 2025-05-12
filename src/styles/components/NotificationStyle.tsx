@@ -5,6 +5,10 @@ interface NotiMessageProps {
   $isReadAllMessage?: boolean;
 }
 
+interface ImageProps {
+  $src: string;
+}
+
 const NotiLayout = styled.div`
   display: flex;
   flex-direction: column-reverse;
@@ -82,4 +86,21 @@ const SlideOut = styled.div`
   animation: ${slideOutRight} 0.5s ease forwards;
 `;
 
-export { NotiLayout, NotiMessage, NotiMessageClickBox, SlideIn, SlideOut, NotiLink, NotiButton };
+const Image = styled.img.attrs<ImageProps>(({ $src }) => ({
+  src: $src,
+}))`
+  width: 1.75rem;
+  vertical-align: middle;
+  margin: 0 0.5rem 0 1rem;
+`;
+
+export {
+  NotiLayout,
+  NotiMessage,
+  NotiMessageClickBox,
+  SlideIn,
+  SlideOut,
+  NotiLink,
+  NotiButton,
+  Image,
+};

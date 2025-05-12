@@ -12,7 +12,7 @@ export interface Note {
   editor: string;
   editorId: UserId;
   editorPicture: string;
-  shared: boolean;
+  isShared: boolean;
   title: string;
   updatedAt: string;
   __v: number;

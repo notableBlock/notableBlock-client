@@ -39,6 +39,7 @@ function SharedPage() {
             updatedAt,
             editor,
             editorPicture,
+            isShared,
           } = note;
 
           return (
@@ -53,9 +54,9 @@ function SharedPage() {
               editor={editor}
               editorPicture={editorPicture}
               updatedAt={updatedAt}
+              isShared={isShared}
               kebabMenu={kebabMenu(_id)}
               onSelectMenu={handleSelectMenu}
-              shared={true}
             />
           );
         })

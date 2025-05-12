@@ -65,7 +65,7 @@ function UserPage() {
               updatedAt,
               editor,
               editorPicture,
-              shared,
+              isShared,
             } = note;
 
             return (
@@ -80,7 +80,7 @@ function UserPage() {
                 editor={editor}
                 editorPicture={editorPicture}
                 updatedAt={updatedAt}
-                shared={shared}
+                isShared={isShared}
                 kebabMenu={kebabMenu(_id)}
                 onSelectMenu={handleSelectMenu}
               />
@@ -97,7 +97,7 @@ function UserPage() {
             onImportFromLocal={handleImportFromLocal}
           />
         )}
-        <Button image={plusOptionIcon} onClick={handleOpenModal} />
+        <Button image={plusOptionIcon} onClick={handleOpenModal} type="plus" />
       </S.CommonNotePageItem>
     </S.CommonNotePageLayout>
   );
