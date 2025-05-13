@@ -3,10 +3,8 @@ import axios from "axios";
 const login = async (authCode: string) => {
   try {
     const { data } = await axios.post("/users", { authCode });
-    const { profile, access_token } = data;
-    axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
-    return profile;
+    return data.profile;
   } catch (err) {
     const errorMessage = err.response?.data?.message || "로그인에 실패했어요.";
     throw new Error(errorMessage);
