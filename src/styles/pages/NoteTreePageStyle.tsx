@@ -66,12 +66,16 @@ const InfoHeader = styled.div`
   h3 {
     padding: 0;
   }
+
+  img {
+    width: 1.75rem;
+  }
 `;
 
 const Icon = styled.img.attrs<NoteTreeImageProps>(({ $src }) => ({
   src: $src,
 }))`
-  width: 1.75rem;
+  width: 1.5rem;
   vertical-align: middle;
   border-radius: 0.5rem;
 `;

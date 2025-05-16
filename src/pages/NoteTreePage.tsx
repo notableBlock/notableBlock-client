@@ -16,6 +16,9 @@ import leftClickIcon from "assets/images/left-click-icon.png";
 import mouseScrollingIcon from "assets/images/mouse-scrolling-icon.png";
 import pinIcon from "assets/images/pin-icon.png";
 import shareIcon from "assets/images/share-icon.png";
+import checkIcon from "assets/images/check-icon.png";
+import greenCircleIcon from "assets/images/green-circle-icon.png";
+import redCircleIcon from "assets/images/red-circle-icon.png";
 
 import * as S from "styles/pages/NoteTreePageStyle";
 
@@ -70,22 +73,26 @@ function NoteTreePage() {
             <h3>노트 이동 기준</h3>
           </S.InfoHeader>
           <li>
-            ✔ <span>내가 수정한 노트</span> → 에디터 페이지
+            <S.Icon $src={checkIcon} alt="체크박스 아이콘" /> <span>내가 수정한 노트</span> → 에디터
+            페이지
           </li>
           <li>
-            ✔ <span>다른 사람이 수정한 노트</span> → 공유된 경우에만 공유 페이지
+            <S.Icon $src={checkIcon} alt="체크박스 아이콘" /> <span>다른 사람이 수정한 노트</span> →
+            공유된 경우에만 공유 페이지
           </li>
         </S.InfoBox>
         <S.InfoBox>
           <S.InfoHeader>
-            <S.Icon $src={shareIcon} alt="공유 상태 아이콘" />
+            <S.Icon $src={shareIcon} alt="공유 아이콘" />
             <h3>공유 상태</h3>
           </S.InfoHeader>
           <li>
-            🟢 <span>공유된 노트</span> - 다른 사람도 볼 수 있어요.
+            <S.Icon $src={greenCircleIcon} alt="공유 상태 아이콘" />
+            <span>공유된 노트</span> - 다른 사람도 볼 수 있어요.
           </li>
           <li>
-            🔴 <span>비공유 노트</span> - 수정한 사람만 볼 수 있어요.
+            <S.Icon $src={redCircleIcon} alt="비공유 상태 아이콘" />
+            <span>비공유 노트</span> - 수정한 사람만 볼 수 있어요.
           </li>
         </S.InfoBox>
       </S.UnorderedList>

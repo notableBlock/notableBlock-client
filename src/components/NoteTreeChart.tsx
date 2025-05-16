@@ -1,6 +1,10 @@
 import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 
+import noteIcon from "assets/images/note-icon.png";
+import creatorIcon from "assets/images/creator-icon.png";
+import editorIcon from "assets/images/editor-icon.png";
+
 import * as d3 from "d3";
 
 import type { HierarchyPointLink, HierarchyPointNode } from "d3";
@@ -72,7 +76,7 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
         switch (true) {
           case d.data.rootUserId === d.data.editorId:
             return navigate(`/notes/${d.data._id}`);
-          case d.data.shared:
+          case d.data.isShared:
             return navigate(`/shared/${d.data._id}`);
           default:
             return;
@@ -82,7 +86,7 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
     node
       .append("circle")
       .attr("r", 5)
-      .attr("fill", (d) => (d.depth === 0 ? "#555555" : d.data.shared ? "#05B606" : "#DD1C1B"));
+      .attr("fill", (d) => (d.depth === 0 ? "#555555" : d.data.isShared ? "#40BF56" : "#F95252"));
 
     const tooltip = d3
       .select("body")
@@ -102,9 +106,12 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
           .html(
             d.depth === 0
               ? `${d.data.name}`
-              : `📖 ${d.data.name} <br>
-                  👤 처음 만든 사람: <span class="creator">${d.data.creator}</span> <br>
-                  ✍️ 수정한 사람: <span class="editor">${d.data.editor}</span>`
+              : `<img src=${noteIcon} alt="노트 아이콘" class="icon" />
+                  ${d.data.name} <br>
+                  <img src=${creatorIcon} alt="생성자 아이콘" class="icon"/>
+                  생성한 사람: <span class="creator">${d.data.creator}</span> <br>
+                  <img src=${editorIcon} alt="수정자 아이콘" class="icon"/>
+                  수정한 사람: <span class="editor">${d.data.editor}</span>`
           )
           .style("left", `${event.pageX}px`)
           .style("top", `${event.pageY}px`);
@@ -118,6 +125,8 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
           .selectAll(".editor")
           .style("color", isEditor ? "#0279FC" : "#000")
           .style("font-weight", isEditor ? "bold" : "normal");
+
+        tooltip.selectAll(".icon").style("width", "1.75rem").style("vertical-align", "middle");
       })
       .on("mousemove", (event) => {
         tooltip.style("left", `${event.pageX + 10}px`).style("top", `${event.pageY + 10}px`);
