@@ -29,7 +29,7 @@ function NoteTreePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   if (!profile) return;
-  const noteData = convertToTree(fetchedOwnedNotes, profile);
+  const noteTree = convertToTree(fetchedOwnedNotes, profile);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -43,7 +43,7 @@ function NoteTreePage() {
 
   return (
     <S.Layout>
-      {isLoading ? <Loading /> : <NoteTreeChart noteData={noteData} />}
+      {isLoading ? <Loading /> : <NoteTreeChart noteTree={noteTree} />}
       <S.UnorderedList>
         <S.InfoBox>
           <S.InfoHeader>

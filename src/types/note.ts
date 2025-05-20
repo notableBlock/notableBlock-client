@@ -8,10 +8,8 @@ export interface Note {
   createdAt: string;
   creator: string;
   creatorId: UserId;
-  creatorPicture: string;
   editor: string;
   editorId: UserId;
-  editorPicture: string;
   isShared: boolean;
   title: string;
   updatedAt: string;
@@ -25,6 +23,15 @@ export interface MockEvent {
   };
 }
 
-export type Tree = Pick<User, "id" | "name"> & {
-  children: Note[];
+export type TreeNode = Pick<
+  Note,
+  "editorId" | "creatorId" | "isShared" | "title" | "creator" | "editor" | "baseNote"
+> &
+  Pick<User, "userId" | "name"> & {
+    noteId: NoteId;
+    children: TreeNode[];
+  };
+
+export type TreeRoot = Pick<User, "userId" | "name"> & {
+  children: TreeNode[];
 };

@@ -2,7 +2,7 @@ import type { ReactNode, MouseEvent, ChangeEvent } from "react";
 import type { BlockId, NoteId } from "types/ids";
 import type { Block, CurrentBlock, Tag } from "types/block";
 import type { ManageItem, SlashItem, ArrowKey, Coordinate } from "types/menu";
-import type { Tree, MockEvent } from "types/note";
+import type { TreeRoot, MockEvent } from "types/note";
 
 export interface ButtonProps {
   image: string;
@@ -47,7 +47,7 @@ export type SelectMenuProps<T> = {
 };
 
 export interface NoteTreeChartProps {
-  noteData: Tree;
+  noteTree: TreeRoot;
 }
 
 export interface NoteViewerProps {

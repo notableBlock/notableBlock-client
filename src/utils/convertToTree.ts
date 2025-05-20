@@ -1,29 +1,40 @@
-import type { Note, Tree } from "types/note";
+import type { Note, TreeRoot } from "types/note";
 import type { User } from "types/models";
 
 const convertToTree = (noteData: Note[], profile: User) => {
-  const { id, name } = profile;
-  const tree: Tree = { id, name, children: [] };
+  const { userId, name } = profile;
+  const noteTree: TreeRoot = { userId, name, children: [] };
   const noteMap = new Map();
 
-  noteData.forEach((note) => {
-    noteMap.set(note._id, {
-      ...note,
-      name: `${note.title}`,
-      children: [],
-    });
-  });
+  noteData.forEach(
+    ({ _id: noteId, title, baseNote, isShared, creatorId, creator, editorId, editor }) => {
+      const treeNode = {
+        userId,
+        noteId,
+        title,
+        baseNote,
+        isShared,
+        creatorId,
+        creator,
+        editorId,
+        editor,
+        children: [],
+      };
 
-  noteData.forEach((note) => {
-    if (note.baseNote && noteMap.has(note.baseNote)) {
-      const parent = noteMap.get(note.baseNote);
-      parent.children.push(noteMap.get(note._id));
+      noteMap.set(noteId, treeNode);
+    }
+  );
+
+  noteData.forEach(({ _id: noteId, baseNote }) => {
+    if (baseNote && noteMap.has(baseNote)) {
+      const parent = noteMap.get(baseNote);
+      parent.children.push(noteMap.get(noteId));
     } else {
-      tree.children.push(noteMap.get(note._id));
+      noteTree.children.push(noteMap.get(noteId));
     }
   });
 
-  return tree;
+  return noteTree;
 };
 
 export default convertToTree;

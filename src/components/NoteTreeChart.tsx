@@ -9,9 +9,9 @@ import * as d3 from "d3";
 
 import type { HierarchyPointLink, HierarchyPointNode } from "d3";
 import type { NoteTreeChartProps } from "types/components";
-import type { Tree } from "types/note";
+import type { TreeRoot } from "types/note";
 
-function NoteTreeChart({ noteData }: NoteTreeChartProps) {
+function NoteTreeChart({ noteTree }: NoteTreeChartProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const navigate = useNavigate();
 
@@ -21,13 +21,9 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
     const width = 800;
     const dx = 20;
     const dy = 200;
-    const tree = d3.tree<Tree>().nodeSize([dx, dy]);
-    const root = d3.hierarchy(noteData);
+    const tree = d3.tree<TreeRoot>().nodeSize([dx, dy]);
+    const root = d3.hierarchy(noteTree);
     tree(root);
-
-    root.each((node) => {
-      node.data.rootUserId = root.data.id;
-    });
 
     if (!svgRef.current) return;
 
@@ -48,13 +44,13 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
     svg.call(zoom);
 
     const linkPath = d3
-      .linkHorizontal<HierarchyPointLink<Tree>, HierarchyPointNode<Tree>>()
+      .linkHorizontal<HierarchyPointLink<TreeRoot>, HierarchyPointNode<TreeRoot>>()
       .x((d) => d.y)
       .y((d) => d.x);
 
     g.append("g")
       .selectAll("path")
-      .data(root.links() as HierarchyPointLink<Tree>[])
+      .data(root.links() as HierarchyPointLink<TreeRoot>[])
       .join("path")
       .attr("fill", "none")
       .attr("stroke", "#555555")
@@ -74,10 +70,10 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
         tooltip.style("display", "none");
 
         switch (true) {
-          case d.data.rootUserId === d.data.editorId:
-            return navigate(`/notes/${d.data._id}`);
+          case d.data.userId === d.data.editorId:
+            return navigate(`/notes/${d.data.noteId}`);
           case d.data.isShared:
-            return navigate(`/shared/${d.data._id}`);
+            return navigate(`/shared/${d.data.noteId}`);
           default:
             return;
         }
@@ -98,8 +94,8 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
 
     node
       .on("mouseover", (event, d) => {
-        const isCreator = d.data.rootUserId === d.data.creatorId;
-        const isEditor = d.data.rootUserId === d.data.editorId;
+        const isCreator = d.data.userId === d.data.creatorId;
+        const isEditor = d.data.userId === d.data.editorId;
 
         tooltip
           .style("display", "block")
@@ -107,7 +103,7 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
             d.depth === 0
               ? `${d.data.name}`
               : `<img src=${noteIcon} alt="노트 아이콘" class="icon" />
-                  ${d.data.name} <br>
+                  ${d.data.title} <br>
                   <img src=${creatorIcon} alt="생성자 아이콘" class="icon"/>
                   생성한 사람: <span class="creator">${d.data.creator}</span> <br>
                   <img src=${editorIcon} alt="수정자 아이콘" class="icon"/>
@@ -143,8 +139,8 @@ function NoteTreeChart({ noteData }: NoteTreeChartProps) {
       .style("paint-order", "stroke")
       .style("stroke", "#FFFFFF")
       .style("stroke-width", 3)
-      .text((d) => d.data.name);
-  }, [noteData, navigate]);
+      .text((d) => (d.depth === 0 ? d.data.name : d.data.title));
+  }, [noteTree, navigate]);
 
   return <svg ref={svgRef}></svg>;
 }

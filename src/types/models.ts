@@ -1,7 +1,7 @@
 import { UserId } from "types/ids";
 
 export interface User {
-  id: UserId;
+  userId: UserId;
   name: string;
   picture: string;
 }
