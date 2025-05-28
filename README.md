@@ -590,8 +590,8 @@ eventSource.onmessage = (event) => {
 <br>
 
 <div align="center">
-  <img width="600px" src="" />
-  <p><em>복사해간 내 노트를 다른 사용자에 의해 수정되고 다시 공유되었을 때, 실시간 알림을 통해 이를 즉시 인지하고 해당 노트로 이동하는 흐름</em></p>
+  <img width="600px" alt="노트 알림이동 시연" src="https://github.com/user-attachments/assets/138b56c3-6be0-4c1b-8d98-10914a8e69a5" />
+  <p><em>사용자의 노트가 수정 후 재공유 되었다는 알림을 받고 해당 노트로 이동하는 모습</em></p>
 </div>
 
 <br>
