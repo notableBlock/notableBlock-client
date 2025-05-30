@@ -24,9 +24,9 @@ _블록체인 기술을 활용해 작성된 마크다운 문서의 위·변조�
 
 </div>
 
-<div>
-
-</div>
+<br>
+<span id="index"></span>
+<br>
 
 ## 목차
 
@@ -80,7 +80,7 @@ _블록체인 기술을 활용해 작성된 마크다운 문서의 위·변조�
 _“누구든지 문서의 진위와 원본 소유자를 쉽게 확인할 수 있다면 어떨까?”_  
 라는 이 작은 질문에 대한 해답을 찾고자, 본 프로젝트를 시작하게 되었습니다.
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -183,7 +183,7 @@ _“누구든지 문서의 진위와 원본 소유자를 쉽게 확인할 수 �
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -395,7 +395,7 @@ const clearImage = (imageName) => {
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 ## 3-2. 노트 내용을 미리볼 수 있는 노트 뷰어 기능
 
@@ -442,7 +442,7 @@ return <HTMLTag key={block.id} dangerouslySetInnerHTML={{ __html: html }} />;
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -523,7 +523,7 @@ xattr 메타데이터는 마크다운 본문에 영향을 주지 않으면서도
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -590,7 +590,7 @@ await runCommand("tar", [
 
 <br>
 
-### (3) 결과: 클릭 한 번으로 .tar 파일로 아카이브할 수 있습니다
+### (3) 결과: 클릭 한 번으로 .tar 파일로 아카이브할 수 있습니다.
 
 이 기능을 통해 사용자는 별도의 외부 프로그램이나 터미널 명령어 없이도,
 작성한 마크다운과 이미지 파일을 하나의 .tar 파일로 간편하게 아카이브할 수 있게 되었습니다.
@@ -612,7 +612,7 @@ await runCommand("tar", [
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -688,7 +688,7 @@ eventSource.onmessage = (event) => {
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -763,7 +763,7 @@ noteData.forEach(({ _id, baseNote }) => {
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -836,7 +836,7 @@ await User.findByIdAndUpdate(userId, { refresh_token: "" });
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -882,7 +882,7 @@ await User.findByIdAndUpdate(userId, { refresh_token: "" });
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
 
@@ -892,6 +892,6 @@ await User.findByIdAndUpdate(userId, { refresh_token: "" });
 
 <br>
 
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+#### <p align="right"><a href="#index">목차👆🏻</a></p>
 
 <br>
