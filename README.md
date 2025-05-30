@@ -591,6 +591,19 @@ await runCommand("tar", [
 이들을 모두 하나의 .tar 파일로 안정적으로 아카이브할 수 있도록 설계되어 있어
 향후 가져오기 시 여러 노트를 한 번에 업로드하는 데에도 유용하게 활용됩니다.
 
+<br>
+
+<div align="center">
+  <img width="600px" alt=".tar 아카이브 시연" src="https://github.com/user-attachments/assets/9b06eead-de0f-473f-87a5-6febd509da07" />
+  <p><em>사용자가 외부 프로그램 없이 마크다운과 이미지 파일을 .tar 파일로 아카이브하는 모습</em></p>
+</div>
+
+<br>
+
+#### <p align="right"><a href="#top">목차👆🏼</a></p>
+
+<br>
+
 ## 3-5. 라이브러리 없이 구현한 SSE 기반 실시간 알림 시스템
 
 ### (1) 고민: 사용자에게 알림은 언제, 왜 필요할까?
