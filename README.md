@@ -50,7 +50,7 @@ _블록체인 기술을 활용해 작성된 마크다운 문서의 위·변조�
   - [3-4. .tar 아카이브 기능 지원](#3-4-tar-%EC%95%84%EC%B9%B4%EC%9D%B4%EB%B8%8C-%EA%B8%B0%EB%8A%A5-%EC%A7%80%EC%9B%90)
     - [(1) 고민: 외부 프로그램 없이 .tar 파일로 아카이브 할 수 있을까?](#1-%EA%B3%A0%EB%AF%BC-%EC%99%B8%EB%B6%80-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EC%97%86%EC%9D%B4-tar-%ED%8C%8C%EC%9D%BC%EB%A1%9C-%EC%95%84%EC%B9%B4%EC%9D%B4%EB%B8%8C-%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
     - [(2) 구현: 서버에서 .tar 파일을 만들고 바로 다운로드 되도록 구성](#2-%EA%B5%AC%ED%98%84-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-tar-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%A7%8C%EB%93%A4%EA%B3%A0-%EB%B0%94%EB%A1%9C-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%90%98%EB%8F%84%EB%A1%9D-%EA%B5%AC%EC%84%B1)
-    - [(3) 결과: 클릭 한 번으로 .tar 파일로 아카이브할 수 있습니다](#3-%EA%B2%B0%EA%B3%BC-%ED%81%B4%EB%A6%AD-%ED%95%9C-%EB%B2%88%EC%9C%BC%EB%A1%9C-tar-%ED%8C%8C%EC%9D%BC%EB%A1%9C-%EC%95%84%EC%B9%B4%EC%9D%B4%EB%B8%8C%ED%95%A0-%EC%88%98-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4)
+    - [(3) 결과: 클릭 한 번으로 .tar 파일로 아카이브할 수 있습니다.](#3-%EA%B2%B0%EA%B3%BC-%ED%81%B4%EB%A6%AD-%ED%95%9C-%EB%B2%88%EC%9C%BC%EB%A1%9C-tar-%ED%8C%8C%EC%9D%BC%EB%A1%9C-%EC%95%84%EC%B9%B4%EC%9D%B4%EB%B8%8C%ED%95%A0-%EC%88%98-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4)
   - [3-5. 라이브러리 없이 구현한 SSE 기반 실시간 알림 시스템](#3-5-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%97%86%EC%9D%B4-%EA%B5%AC%ED%98%84%ED%95%9C-sse-%EA%B8%B0%EB%B0%98-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%95%8C%EB%A6%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C)
     - [(1) 고민: 사용자에게 알림은 언제, 왜 필요할까?](#1-%EA%B3%A0%EB%AF%BC-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%97%90%EA%B2%8C-%EC%95%8C%EB%A6%BC%EC%9D%80-%EC%96%B8%EC%A0%9C-%EC%99%9C-%ED%95%84%EC%9A%94%ED%95%A0%EA%B9%8C)
     - [(2) 구현: MongoDB Change Stream과 SSE를 활용한 실시간 알림 시스템](#2-%EA%B5%AC%ED%98%84-mongodb-change-stream%EA%B3%BC-sse%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%95%8C%EB%A6%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C)
@@ -58,14 +58,19 @@ _블록체인 기술을 활용해 작성된 마크다운 문서의 위·변조�
   - [3-6. 트리 차트를 활용한 노트 구조 시각화](#3-6-%ED%8A%B8%EB%A6%AC-%EC%B0%A8%ED%8A%B8%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%85%B8%ED%8A%B8-%EA%B5%AC%EC%A1%B0-%EC%8B%9C%EA%B0%81%ED%99%94)
     - [(1) 고민: 사용자에게 어떻게 노트가 파생되었는지 편리하게 보여줄 수 있을까?](#1-%EA%B3%A0%EB%AF%BC-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%97%90%EA%B2%8C-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%85%B8%ED%8A%B8%EA%B0%80-%ED%8C%8C%EC%83%9D%EB%90%98%EC%97%88%EB%8A%94%EC%A7%80-%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%EB%B3%B4%EC%97%AC%EC%A4%84-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
     - [(2) 구현: 노트 데이터를 트리 구조로 변환하고 D3.js를 활용한 시각화](#2-%EA%B5%AC%ED%98%84-%EB%85%B8%ED%8A%B8-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%ED%8A%B8%EB%A6%AC-%EA%B5%AC%EC%A1%B0%EB%A1%9C-%EB%B3%80%ED%99%98%ED%95%98%EA%B3%A0-d3js%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%8B%9C%EA%B0%81%ED%99%94)
-    - [(3) 결과: 노트의 파생과 관계를 한눈에 이해할 수 있어요](#3-%EA%B2%B0%EA%B3%BC-%EB%85%B8%ED%8A%B8%EC%9D%98-%ED%8C%8C%EC%83%9D%EA%B3%BC-%EA%B4%80%EA%B3%84%EB%A5%BC-%ED%95%9C%EB%88%88%EC%97%90-%EC%9D%B4%ED%95%B4%ED%95%A0-%EC%88%98-%EC%9E%88%EC%96%B4%EC%9A%94)
+    - [(3) 결과: 노트의 파생과 관계를 한눈에 이해할 수 있습니다.](#3-%EA%B2%B0%EA%B3%BC-%EB%85%B8%ED%8A%B8%EC%9D%98-%ED%8C%8C%EC%83%9D%EA%B3%BC-%EA%B4%80%EA%B3%84%EB%A5%BC-%ED%95%9C%EB%88%88%EC%97%90-%EC%9D%B4%ED%95%B4%ED%95%A0-%EC%88%98-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4)
   - [3-7. 리프레쉬 토큰, 액세스 토큰을 활용한 로그아웃 없는 로그인 유지](#3-7-%EB%A6%AC%ED%94%84%EB%A0%88%EC%89%AC-%ED%86%A0%ED%81%B0-%EC%95%A1%EC%84%B8%EC%8A%A4-%ED%86%A0%ED%81%B0%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%EC%97%86%EB%8A%94-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%9C%A0%EC%A7%80)
     - [(1) 고민: 로그인 상태를 어떻게 안정적으로 유지할 수 있을까?](#1-%EA%B3%A0%EB%AF%BC-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%83%81%ED%83%9C%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%95%88%EC%A0%95%EC%A0%81%EC%9C%BC%EB%A1%9C-%EC%9C%A0%EC%A7%80%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
     - [(2) 구현: 자동 로그인 흐름과 쿠키 기반 상태 유지](#2-%EA%B5%AC%ED%98%84-%EC%9E%90%EB%8F%99-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%9D%90%EB%A6%84%EA%B3%BC-%EC%BF%A0%ED%82%A4-%EA%B8%B0%EB%B0%98-%EC%83%81%ED%83%9C-%EC%9C%A0%EC%A7%80)
-    - [(3) 결과: 로그인 상태가 유지되어 서비스 흐름이 끊기지 않아요](#3-%EA%B2%B0%EA%B3%BC-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%83%81%ED%83%9C%EA%B0%80-%EC%9C%A0%EC%A7%80%EB%90%98%EC%96%B4-%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%9D%90%EB%A6%84%EC%9D%B4-%EB%81%8A%EA%B8%B0%EC%A7%80-%EC%95%8A%EC%95%84%EC%9A%94)
+    - [(3) 결과: 로그인 상태가 유지되어 서비스 흐름이 끊기지 않습니다.](#3-%EA%B2%B0%EA%B3%BC-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%83%81%ED%83%9C%EA%B0%80-%EC%9C%A0%EC%A7%80%EB%90%98%EC%96%B4-%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%9D%90%EB%A6%84%EC%9D%B4-%EB%81%8A%EA%B8%B0%EC%A7%80-%EC%95%8A%EC%8A%B5%EB%8B%88%EB%8B%A4)
 - [4. 프로젝트의 정보](#4-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%EC%A0%95%EB%B3%B4)
   - [4-1. 기술 스택](#4-1-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)
-  - [4-2. 프로젝트 구조](#4-2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0)
+  - [4-2. 프로젝트의 구조](#4-2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%EA%B5%AC%EC%A1%B0)
+    - [(1) Zustand를 활용한 전역 상태 관리](#1-zustand%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%A0%84%EC%97%AD-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC)
+    - [(2) 코드 효율성을 위한 공통 컴포넌트 설계](#2-%EC%BD%94%EB%93%9C-%ED%9A%A8%EC%9C%A8%EC%84%B1%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B3%B5%ED%86%B5-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%84%A4%EA%B3%84)
+    - [(3) 관심사 분리 원칙(SOC)에 입각한 커스텀 훅 구성](#3-%EA%B4%80%EC%8B%AC%EC%82%AC-%EB%B6%84%EB%A6%AC-%EC%9B%90%EC%B9%99soc%EC%97%90-%EC%9E%85%EA%B0%81%ED%95%9C-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-%EA%B5%AC%EC%84%B1)
+    - [(4) 중복을 줄이기 위한 중첩 라우팅을 활용한 공통 UI 구성](#4-%EC%A4%91%EB%B3%B5%EC%9D%84-%EC%A4%84%EC%9D%B4%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%A4%91%EC%B2%A9-%EB%9D%BC%EC%9A%B0%ED%8C%85%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B3%B5%ED%86%B5-ui-%EA%B5%AC%EC%84%B1)
+    - [(5) 컴포넌트 구조의 가독성을 높이는 S-dot 네이밍 컨벤션 적용](#5-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EA%B5%AC%EC%A1%B0%EC%9D%98-%EA%B0%80%EB%8F%85%EC%84%B1%EC%9D%84-%EB%86%92%EC%9D%B4%EB%8A%94-s-dot-%EB%84%A4%EC%9D%B4%EB%B0%8D-%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%A0%81%EC%9A%A9)
 - [5. 회고](#5-%ED%9A%8C%EA%B3%A0)
 
 <!-- tocstop -->
@@ -751,7 +756,7 @@ noteData.forEach(({ _id, baseNote }) => {
 
 <br>
 
-### (3) 결과: 노트의 파생과 관계를 한눈에 이해할 수 있어요
+### (3) 결과: 노트의 파생과 관계를 한눈에 이해할 수 있습니다.
 
 트리 차트를 도입한 결과, 사용자는 작성한 노트가 누구에 의해 복사되고 어떻게 공유되어 확산되었는지, 한눈에 직관적으로 확인할 수 있게 되었습니다.  
 노트의 흐름을 명확히 보여주는 인터페이스 덕분에 노트 간의 관계를 더욱 쉽게 파악할 수 있고, 이를 통해 사용자는 보다 빠르고 정확하게 노트의 현재 상태와 활용 상황을 이해할 수 있습니다. 사용자 경험이 전반적으로 향상되어 서비스의 사용성 또한 높였습니다.
@@ -828,7 +833,7 @@ await User.findByIdAndUpdate(userId, { refresh_token: "" });
 
 <br>
 
-### (3) 결과: 로그인 상태가 유지되어 서비스 흐름이 끊기지 않아요
+### (3) 결과: 로그인 상태가 유지되어 서비스 흐름이 끊기지 않습니다.
 
 사용자는 한 번 로그인한 이후, 새로고침하거나 브라우저를 닫았다가 다시 열더라도 로그인이 유지되는 것은  
 물론 토큰 만료 시에도 백그라운드에서 **자동으로 액세스 토큰을 갱신해 재로그인 없이 인증 상태를 복원**할 수 있습니다.  
@@ -881,6 +886,169 @@ await User.findByIdAndUpdate(userId, { refresh_token: "" });
 <br>
 
 ## 4-2. 프로젝트의 구조
+
+### (1) Zustand를 활용한 전역 상태 관리
+
+컴포넌트 간의 상태 전달이 반복(Props Drilling)되거나, 여러 컴포넌트에서 동일한 데이터를 참조해야 하는 경우에는 상태 관리가 복잡해지고 컴포넌트간 의존성이 커지기 쉽습니다.  
+이런 구조적 문제를 해결하기 위해, Zustand를 도입하여 일부 상태를 전역으로 분리해 관리했습니다.
+
+```jsx
+  🗂️ stores
+   ㄴ 📁 useNotificationStore.tsx : 토스트 알림, 전체 알림 등 알림 관련 상태 관리
+   ㄴ 📁 useSelectionStore.tsx    : 선택 메뉴 항목과 인덱스 상태 전역 관리
+   ㄴ 📁 useUserStore.tsx         : 로그인된 사용자 정보 및 인증 상태 관리
+```
+
+<p align="center"><em>컴포넌트간 의존성을 줄여준 전역 상태의 디렉토리</em></p>
+
+결과적으로, Zustand 도입을 통해 상태 전달의 복잡성을 줄이고, 각 컴포넌트에서 직접 상태를 제어할 수 있도록 하여 의존도를 낮출 수 있었습니다.
+
+<br>
+
+### (2) 코드 효율성을 위한 공통 컴포넌트 설계
+
+```jsx
+  🗂️ common
+   ㄴ 📁 Button.tsx
+   ㄴ 📁 Form.tsx
+   ㄴ 📁 /* ... */
+```
+
+<p align="center"><em>재사용 가능한 UI 요소들을 분리해 구성한 공통 컴포넌트의 디렉토리</em></p>
+
+UI 전반에서 반복적으로 사용되는 요소들을 컴포넌트 단위로 분리해 추상화함으로써, 중복 코드를 줄이고 더 유연하게 활용할 수 있도록 구성했습니다.
+각 컴포넌트는 props를 전달받아 다양한 상황에 맞게 동작하며, 필요한 경우 내부 state를 통해 사용자 상호작용에 따라 UI가 자연스럽게 반응할 수 있도록 설계했습니다.
+
+<br>
+
+```jsx
+function Button({ image, onClick }) {
+  /* ... */
+  return (
+    <S.Layout onClick={onClick}>
+      <S.Icon $image={image} />
+    </S.Layout>
+  );
+}
+```
+
+<p align="center"><em>알림, 케밥 메뉴, ⊕ 메뉴 등 다양한 UI 요소에 재사용되는 버튼 컴포넌트</em></p>
+
+이처럼 버튼 하나도 재사용 가능한 형태로 분리함으로써, 동일한 UI 패턴을 반복 작성하는 수고를 줄였고,  
+변경이 필요할 경우 하나의 컴포넌트만 수정하면 되기 때문에 유지보수 역시 수월하게 관리할 수 있었습니다.
+
+<br>
+
+### (3) 관심사 분리 원칙(SOC)에 입각한 커스텀 훅 구성
+
+컴포넌트 외부로 로직을 분리해 각 기능의 책임을 명확히 나누고, 재사용성과 가독성을 높이기 위해 커스텀 훅들을 설계했습니다.
+파일명만으로도 역할이 직관적으로 드러나도록 네이밍을 구성했으며, UI 동작과 내부 상태 관리를 각각의 훅에 분리해 독립적으로 처리할 수 있도록 설계했습니다.
+
+```jsx
+  🗂️ hooks
+   ㄴ 📁 useDragDrop.tsx       : 노트의 블록 이동 및 파일 업로드 드래그 앤 드롭 처리
+   ㄴ 📁 useOnClickOutside.tsx : 바깥 영역 클릭 시 모달 닫기 처리
+   ㄴ 📁 usePrevBlocks.tsx     : 노트의 이전 블록 상태를 기억해 변화 여부 감지
+   ㄴ 📁 /* ... */
+```
+
+<p align="center"><em>컴포넌트 외부로 로직을 분리한, 관심사 기반 커스텀 훅 설계</em></p>
+
+<br>
+
+### (4) 중복을 줄이기 위한 중첩 라우팅을 활용한 공통 UI 구성
+
+페이지마다 중복되는 UI 요소를 따로 중복 렌더링하지 않기 위해, React Router의 중첩 라우팅(`Outlet`) 기능을 활용했습니다.  
+공통 UI는 `<Layout />` 컴포넌트에서 한 번만 정의하고, 각 페이지는 `<Outlet />` 위치를 통해 동적으로 전환됩니다.
+
+네비게이션 바, 알림 버튼, 토스트 알림 등은 전역적으로 고정되어 있으며,
+페이지별 세부 UI만 `Outlet`을 통해 교체되도록 구성되어 있습니다.
+
+<br>
+
+```jsx
+<Route path="/" element={<Layout />}>
+  <Route path="/notes" element={<Outlet />}>
+    <Route path="" element={<MyNotePage />} />
+    <Route path=":noteId" element={<NoteEditingPage />} />
+  </Route>
+  /* ... */
+</Route>
+```
+
+<p align="center"><em>Outlet을 통해 개별 페이지 컴포넌트만 변경되는 구조</em></p>
+
+<br>
+
+```jsx
+<S.Layout>
+  <NavBar />
+  <Outlet />
+  <Toast />
+  <Form>
+    <NotificationHub />
+  </Form>
+  <Button />
+</S.Layout>
+```
+
+<p align="center"><em>공통 UI를 한 곳에 모은 Layout 컴포넌트의 구조</em></p>
+
+<br>
+
+이 방식 덕분에, 각 페이지가 중복 없이 공통 UI를 렌더링할 수 있었으며,  
+공통 UI를 반복해서 `import`하거나 별도 렌더링할 필요 없이, 라우팅 구조만으로 관리할 수 있었습니다.
+
+<br>
+
+### (5) 컴포넌트 구조의 가독성을 높이는 S-dot 네이밍 컨벤션 적용
+
+코드의 가독성과 재사용성을 향상시키기 위해, 스타일드 컴포넌트를 S-dot 네이밍 컨벤션에 따라 관리되도록 구현하였습니다.  
+해당 방식은 스타일 컴포넌트들을 `S`라는 단일 객체로 묶어 `import`하고, 내부에서는 `S.이름` 형태로 접근할 수 있도록 구성되어 있습니다.
+
+<br>
+
+```jsx
+import { Layout, Status, Item } from "styles/pages/NoteEditingPageStyle";
+
+<Layout>
+  <Status />
+  <NoteEditor />
+  <Item>
+    <SelectMenu />
+    <Button />
+  </Item>
+</Layout>;
+```
+
+<p align="center"><em>일반적으로 많이 사용되는 네이밍 방식</em></p>
+
+<br>
+
+```jsx
+import * as S from "styles/pages/NoteEditingPageStyle";
+
+<S.Layout>
+  <S.Status />
+  <NoteEditor />
+  <S.Item>
+    <SelectMenu />
+    <Button />
+  </S.Item>
+</S.Layout>;
+```
+
+<p align="center"><em>S-dot 네이밍이 적용된 방식</em></p>
+
+<br>
+
+일반적인 방식에서는 스타일 컴포넌트와 일반 컴포넌트가 동일한 방식으로 사용되기 때문에
+구조 파악에 시간이 걸리고, 이름 충돌 가능성도 존재합니다.
+
+반면, S-dot 방식은 스타일 컴포넌트를 `S.` 접두어로 명확히 구분할 수 있어
+컴포넌트의 구조 파악이 더 쉬워졌고, 자동완성 기능으로 작업 속도도 향상되었습니다.  
+또한 스타일 파일 내 정의가 많아지더라도 한 줄로 정리가 가능해
+유지보수 시 `import` 구문이 복잡해지는 문제도 줄일 수 있었습니다.
 
 <br>
 
