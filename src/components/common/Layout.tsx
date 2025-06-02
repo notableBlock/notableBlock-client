@@ -41,7 +41,7 @@ function Layout() {
       <S.Item $notification="notification">
         {isOpen && (
           <S.NotiBox>
-            <Form ref={modalRef} title="🔔 알림 확인" isNotification={true}>
+            <Form ref={modalRef} title="🔔 알림 허브" isNotification={true}>
               <S.Button onClick={handleDeleteAllNotification}>모두 삭제</S.Button>
               <NotificationHub />
             </Form>

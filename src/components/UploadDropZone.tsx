@@ -19,11 +19,11 @@ function UploadDropZone({ onUserUpload, fileTypes }: UploadDropZoneProps) {
       ? [".md", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".svg"].toString()
       : ".tar";
   const dropZoneTitle =
-    fileTypes === "마크다운·이미지" ? `${fileTypes}를 TAR로 압축하기` : "TAR에서 노트 가져오기";
+    fileTypes === "마크다운·이미지" ? `${fileTypes}를 TAR로 아카이브하기` : "TAR에서 노트 가져오기";
   const infoText =
     fileTypes === "마크다운·이미지" ? (
       <>
-        ✔ <span>압축할 {fileTypes}</span>를 <span>기본 다운로드 폴더</span>로 이동해주세요.
+        ✔ <span>아카이브할 {fileTypes}</span>를 <span>기본 다운로드 폴더</span>로 이동해주세요.
       </>
     ) : (
       <>

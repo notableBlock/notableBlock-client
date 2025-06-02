@@ -147,7 +147,7 @@ const useControlNotes = () => {
         await archiveUploadedFiles(formData);
       } catch (err) {
         navigate("/error", {
-          state: { from: location.pathname, message: "마크다운을 압축하는데 실패했어요." },
+          state: { from: location.pathname, message: "업로드된 파일을 아카이브하는데 실패했어요." },
         });
       }
     },

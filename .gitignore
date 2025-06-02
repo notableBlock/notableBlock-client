@@ -30,4 +30,6 @@ dist-ssr
 /blob-report/
 /playwright/.cache/
 
+temp
+
 playwright/.auth
