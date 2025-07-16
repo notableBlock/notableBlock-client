@@ -96,7 +96,6 @@ function NoteTreePage() {
           </li>
         </S.InfoBox>
       </S.UnorderedList>
-      <S.
     </S.Layout>
   );
 }

@@ -26,7 +26,6 @@ function Toast() {
 
   useEffect(() => {
     const eventSource = new EventSource(`${import.meta.env.VITE_SERVER_URL}/notification/live`, {
-      // const eventSource = new EventSource(`https://events.notable-block.com/notification/live`, {
       withCredentials: true,
     });
 
