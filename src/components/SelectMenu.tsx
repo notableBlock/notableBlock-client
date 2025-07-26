@@ -69,6 +69,9 @@ function SelectMenu(
 
               onSelect(item.tag);
             }}
+            onMouseEnter={() => {
+              setSelectionIndex(index);
+            }}
           >
             {item.label}
           </S.MenuItem>

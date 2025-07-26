@@ -44,11 +44,6 @@ const MenuItem = styled.button<SelectMenuItemProps>`
   font-size: ${({ theme }) => theme.fontSize.small};
   cursor: pointer;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.color.mainColor};
-    color: ${({ theme }) => theme.color.whiteColor};
-  }
-
   &:last-child {
     border-bottom: none;
   }
