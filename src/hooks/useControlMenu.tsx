@@ -4,8 +4,7 @@ import getCaretCoordinates from "utils/getCaretCoordinates";
 
 import { INITIAL_SELECTION_INDEX } from "src/constants";
 
-import type { SyntheticEvent, KeyboardEvent, Dispatch, SetStateAction } from "react";
-import type { Tag } from "types/block";
+import type { PointerEvent, KeyboardEvent, Dispatch, SetStateAction } from "react";
 import type { ManageItem, SlashItem, Coordinate } from "types/menu";
 
 interface UseControlMenu {
@@ -83,13 +82,13 @@ const useControlMenu = ({
   }, []);
 
   const handleOpenSelectMenu = useCallback(
-    (event: SyntheticEvent) => {
+    (event: PointerEvent | KeyboardEvent) => {
       const coordinate = getCaretCoordinates();
       if (!coordinate) return;
 
       let { x, y } = coordinate;
 
-      if (event instanceof MouseEvent) {
+      if ("clientX" in event) {
         x = event.clientX;
         y = event.clientY;
 
