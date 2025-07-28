@@ -13,7 +13,7 @@ import plusOptionIcon from "assets/images/plus-option-icon.png";
 
 import * as S from "styles/pages/CommonNotePageStyle";
 
-function UserPage() {
+function MyNotePage() {
   const {
     fetchedNotes,
     getUserNotes,
@@ -103,4 +103,4 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default MyNotePage;
