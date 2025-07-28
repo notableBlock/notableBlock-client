@@ -23,7 +23,7 @@ function UploadDropZone({ onUserUpload, fileTypes }: UploadDropZoneProps) {
   const infoText =
     fileTypes === "마크다운·이미지" ? (
       <>
-        ✔ <span>아카이브할 {fileTypes}</span>를 <span>기본 다운로드 폴더</span>로 이동해주세요.
+        ✔ <span>1개 이상의 마크다운</span>을 업로드해야 <span>아카이브</span>할 수 있어요.
       </>
     ) : (
       <>
