@@ -18,7 +18,7 @@ const useDragDrop = (blocks?: Block[], setBlocks?: SetBlock) => {
 
   const handleBlockDragEnter = (index: number) => {
     if (!blocks || !setBlocks) return;
-    if (!draggedIndex || draggedIndex === index) return;
+    if (draggedIndex === null || draggedIndex === index) return;
 
     const updatedBlocks = [...blocks];
     const draggedBlock = updatedBlocks.splice(draggedIndex, 1)[0];
