@@ -211,12 +211,6 @@ const useControlNotes = () => {
           ];
         };
 
-      case "내 노트 '+' 버튼 메뉴":
-        return () => [
-          { id: 1, tag: () => handleCreateNewNote(), label: "새 노트 만들기" },
-          { id: 2, label: "로컬에서 가져오기" },
-        ];
-
       case "실시간 공유 노트 '⋮' 버튼 메뉴":
         return (noteId) => {
           if (!noteId)
@@ -233,6 +227,7 @@ const useControlNotes = () => {
     fetchedNotes,
     fetchedSharedNotes,
     fetchedOwnedNotes,
+    handleCreateNewNote,
     getUserNotes,
     getSharedNotes,
     updateNoteOnServer,

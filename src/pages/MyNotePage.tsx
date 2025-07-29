@@ -1,13 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import Button from "components/common/Button";
-import SelectMenu from "components/SelectMenu";
 import NoteViewer from "components/NoteViewer";
 import UploadDropZone from "components/UploadDropZone";
 import Loading from "components/common/Loading";
 
 import useControlNotes from "hooks/useControlNotes";
-import useOnClickOutside from "hooks/useOnClickOutside";
 
 import plusOptionIcon from "assets/images/plus-option-icon.png";
 
@@ -17,6 +15,7 @@ function MyNotePage() {
   const {
     fetchedNotes,
     getUserNotes,
+    handleCreateNewNote,
     handleImportFromLocal,
     handleSelectMenu,
     handleArchiveUploadedFiles,
@@ -24,16 +23,7 @@ function MyNotePage() {
   } = useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const modalRef = useRef(null);
-
   const kebabMenu = getMenu("내 노트 '⋮' 버튼 메뉴");
-  const plusMenu = getMenu("내 노트 '+' 버튼 메뉴");
-
-  const handleOpenModal = () => setIsOpen(true);
-  const handleCloseModal = () => setIsOpen(false);
-  useOnClickOutside(modalRef, handleCloseModal);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -89,15 +79,7 @@ function MyNotePage() {
         </>
       )}
       <S.Item $isOption={true}>
-        {isOpen && (
-          <SelectMenu
-            ref={modalRef}
-            menu={plusMenu()}
-            onSelect={handleSelectMenu}
-            onImportFromLocal={handleImportFromLocal}
-          />
-        )}
-        <Button image={plusOptionIcon} onClick={handleOpenModal} type="plus" />
+        <Button image={plusOptionIcon} onClick={handleCreateNewNote} type="plus" />
       </S.Item>
     </S.Layout>
   );
