@@ -10,29 +10,28 @@ import useControlNotes from "hooks/useControlNotes";
 import useOnClickOutside from "hooks/useOnClickOutside";
 
 import plusOptionIcon from "assets/images/plus-option-icon.png";
+import copyIcon from "assets/images/copy-icon.png";
 
 import * as S from "styles/pages/NoteEditingPageStyle";
 
 function NoteEditingPage() {
-  const { handleSelectMenu, getMenu } = useControlNotes();
+  const { handleSelectMenu, getMenu, handleCopySharedNote } = useControlNotes();
 
   const [isSaving, setIsSaving] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
-
   const { noteId } = useParams();
   const { pathname } = useLocation();
-  const isSharedPage = pathname.indexOf("/shared") !== -1;
 
-  const initialMenu = getMenu(
-    isSharedPage ? "실시간 공유 노트 '⋮' 버튼 메뉴" : "내 노트 '⋮' 버튼 메뉴"
-  );
-  const plusMenu = typeof initialMenu === "function" && noteId ? initialMenu(noteId) : [];
+  const isSharedPage = pathname.indexOf("/shared") !== -1;
+  const buttonImage = isSharedPage ? copyIcon : plusOptionIcon;
+  const plusMenu = getMenu("내 노트 '⋮' 버튼 메뉴");
 
   const handleSaveStatus = (isSuccess: boolean) => setIsSaving(isSuccess);
   const handleOpenModal = () => setIsOpen(true);
   const handleCloseModal = () => setIsOpen(false);
-
+  const handleMenuOrCopy =
+    isSharedPage && noteId ? () => handleCopySharedNote(noteId) : handleOpenModal;
   useOnClickOutside(modalRef, handleCloseModal);
 
   return (
@@ -44,8 +43,10 @@ function NoteEditingPage() {
       )}
       <NoteEditor onSaveStatus={handleSaveStatus} />
       <S.Item>
-        {isOpen && <SelectMenu ref={modalRef} menu={plusMenu} onSelect={handleSelectMenu} />}
-        <Button image={plusOptionIcon} onClick={handleOpenModal} type="plus" />
+        {isOpen && (
+          <SelectMenu ref={modalRef} menu={plusMenu(noteId)} onSelect={handleSelectMenu} />
+        )}
+        <Button image={buttonImage} onClick={handleMenuOrCopy} type="plus" />
       </S.Item>
     </S.Layout>
   );

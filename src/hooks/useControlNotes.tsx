@@ -230,6 +230,7 @@ const useControlNotes = () => {
     handleCreateNewNote,
     getUserNotes,
     getSharedNotes,
+    handleCopySharedNote,
     updateNoteOnServer,
     handleSelectMenu,
     handleImportFromLocal,
