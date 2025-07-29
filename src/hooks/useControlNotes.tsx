@@ -15,7 +15,7 @@ import {
 } from "services/noteServices";
 import archiveUploadedFiles from "services/archiveServices";
 
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import type { Note, MockEvent } from "types/note";
 import type { NoteId } from "types/ids";
 import type { Block } from "types/block";
@@ -23,7 +23,7 @@ import type { ManageItem } from "types/menu";
 
 type InitialMenu = (noteId?: NoteId, isShared?: boolean) => ManageItem[];
 
-const useControlNotes = () => {
+const useControlNotes = (setIsLoading?: Dispatch<SetStateAction<boolean>>) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [fetchedNotes, setFetchedNotes] = useState<Note[]>([]);
@@ -99,11 +99,14 @@ const useControlNotes = () => {
   const handleExportToLocal = useCallback(
     async (noteId: NoteId) => {
       try {
+        setIsLoading?.(true);
         await exportNote(noteId);
       } catch (err) {
         navigate("/error", {
           state: { from: location.pathname, message: "노트를 로컬로 내보내는데 실패했어요." },
         });
+      } finally {
+        setIsLoading?.(false);
       }
     },
     [navigate, location]
@@ -111,6 +114,7 @@ const useControlNotes = () => {
 
   const handleImportFromLocal = useCallback(
     async (event: ChangeEvent<HTMLInputElement> | MockEvent) => {
+      setIsLoading?.(true);
       const localFile = event.target.files;
 
       try {
@@ -127,6 +131,8 @@ const useControlNotes = () => {
         navigate("/error", {
           state: { from: location.pathname, message: "노트를 로컬에서 가져오는데 실패했어요." },
         });
+      } finally {
+        setIsLoading?.(false);
       }
     },
     [navigate, location]
@@ -134,6 +140,7 @@ const useControlNotes = () => {
 
   const handleArchiveUploadedFiles = useCallback(
     async (event: ChangeEvent<HTMLInputElement> | MockEvent) => {
+      setIsLoading?.(true);
       const localFile = event.target.files;
 
       try {
@@ -149,6 +156,8 @@ const useControlNotes = () => {
         navigate("/error", {
           state: { from: location.pathname, message: "업로드된 파일을 아카이브하는데 실패했어요." },
         });
+      } finally {
+        setIsLoading?.(false);
       }
     },
     [navigate, location]

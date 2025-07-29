@@ -12,6 +12,8 @@ import plusOptionIcon from "assets/images/plus-option-icon.png";
 import * as S from "styles/pages/CommonNotePageStyle";
 
 function MyNotePage() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     fetchedNotes,
     getUserNotes,
@@ -20,9 +22,8 @@ function MyNotePage() {
     handleSelectMenu,
     handleArchiveUploadedFiles,
     getMenu,
-  } = useControlNotes();
+  } = useControlNotes(setIsLoading);
 
-  const [isLoading, setIsLoading] = useState(false);
   const kebabMenu = getMenu("내 노트 '⋮' 버튼 메뉴");
 
   useEffect(() => {
