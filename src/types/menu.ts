@@ -2,6 +2,7 @@ import type { Tag } from "types/block";
 
 type ManageLabel =
   | "공유하기"
+  | "공유 취소하기"
   | "로컬로 내보내기"
   | "삭제하기"
   | "새 노트 만들기"

@@ -21,7 +21,7 @@ import type { NoteId } from "types/ids";
 import type { Block } from "types/block";
 import type { ManageItem } from "types/menu";
 
-type InitialMenu = (noteId?: NoteId) => ManageItem[];
+type InitialMenu = (noteId?: NoteId, isShared?: boolean) => ManageItem[];
 
 const useControlNotes = () => {
   const navigate = useNavigate();
@@ -200,12 +200,16 @@ const useControlNotes = () => {
   const getMenu = (menuType: string): InitialMenu => {
     switch (menuType) {
       case "내 노트 '⋮' 버튼 메뉴":
-        return (noteId) => {
+        return (noteId, isShared) => {
           if (!noteId)
             return [{ id: 1, label: "현재 메뉴를 불러올 수 없어요. 새로고침 해주세요." }];
 
           return [
-            { id: 1, tag: () => handleShareNote(noteId), label: "공유하기" },
+            {
+              id: 1,
+              tag: () => handleShareNote(noteId),
+              label: isShared ? "공유 취소하기" : "공유하기",
+            },
             { id: 2, tag: () => handleExportToLocal(noteId), label: "로컬로 내보내기" },
             { id: 3, tag: () => handleDeleteNote(noteId), label: "삭제하기" },
           ];

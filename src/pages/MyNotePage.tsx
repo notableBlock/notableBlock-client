@@ -71,7 +71,7 @@ function MyNotePage() {
                 editorPicture={editorPicture}
                 updatedAt={updatedAt}
                 isShared={isShared}
-                kebabMenu={kebabMenu(_id)}
+                kebabMenu={kebabMenu(_id, isShared)}
                 onSelectMenu={handleSelectMenu}
               />
             );
