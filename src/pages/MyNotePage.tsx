@@ -79,7 +79,7 @@ function MyNotePage() {
         </>
       )}
       <S.Item $isOption={true}>
-        <Button image={plusOptionIcon} onClick={handleCreateNewNote} type="plus" />
+        <Button image={plusOptionIcon} onClick={handleCreateNewNote} />
       </S.Item>
     </S.Layout>
   );

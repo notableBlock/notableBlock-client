@@ -46,7 +46,7 @@ function NoteEditingPage() {
         {isOpen && (
           <SelectMenu ref={modalRef} menu={plusMenu(noteId)} onSelect={handleSelectMenu} />
         )}
-        <Button image={buttonImage} onClick={handleMenuOrCopy} type="plus" />
+        <Button image={buttonImage} onClick={handleMenuOrCopy} />
       </S.Item>
     </S.Layout>
   );

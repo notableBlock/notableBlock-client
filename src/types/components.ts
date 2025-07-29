@@ -7,7 +7,7 @@ import type { TreeRoot, MockEvent } from "types/note";
 export interface ButtonProps {
   image: string;
   onClick: (event: MouseEvent<HTMLElement>) => void;
-  type: string;
+  type?: "kebab" | "notification";
 }
 
 export interface FormProps {
