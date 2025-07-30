@@ -151,7 +151,7 @@ const getAllOwnedNote = async () => {
 
 const uploadNoteImage = async (noteId: NoteId, formData: FormData) => {
   try {
-    const { data } = await axios.post(`/notes/${noteId}/images`, formData, {
+    const { data } = await axios.post(`/notes/${noteId}/images?s3=true`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
