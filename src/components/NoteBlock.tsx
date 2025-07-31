@@ -148,12 +148,7 @@ function NoteBlock(
           {!imageUrl && (
             <label htmlFor={`${id}_fileInput`}>이미지가 선택되지 않았어요. 선택해주세요.</label>
           )}
-          {imageUrl && (
-            <img
-              src={`${import.meta.env.VITE_SERVER_URL}${imageUrl}`}
-              alt={/[^\/]+(?=\.[^\/.]*$)/.exec(imageUrl)[0]}
-            />
-          )}
+          {imageUrl && <img src={imageUrl} alt={/[^\/]+(?=\.[^\/.]*$)/.exec(imageUrl)?.[0]} />}
         </S.ImageItem>
       )}
     </S.Layout>
