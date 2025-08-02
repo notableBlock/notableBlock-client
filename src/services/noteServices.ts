@@ -165,8 +165,10 @@ const uploadNoteImage = async (noteId: NoteId, formData: FormData) => {
 };
 
 const deleteNoteImage = async (imageUrl: string) => {
+  const s3Key = imageUrl.split("/").pop();
+
   try {
-    await axios.delete(`/notes/${imageUrl}`);
+    await axios.delete(`/notes/images/${s3Key}`);
   } catch (err) {
     console.log(err);
     throw err;
