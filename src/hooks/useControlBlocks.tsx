@@ -21,6 +21,7 @@ const useControlBlocks = () => {
   );
   const [blocks, setBlocks] = useState([initialBlock]);
   const [currentBlockId, setCurrentBlockId] = useState("");
+  const [focusedBlockId, setFocusedBlockId] = useState("");
   const blocksRef = useRef<BlockElementsById>({});
 
   const prevBlocks = usePrevBlocks(blocks);
@@ -121,6 +122,7 @@ const useControlBlocks = () => {
         const targetBlock = blocksRef.current[targetBlockId];
 
         if (targetBlock) {
+          setFocusedBlockId(targetBlockId);
           moveCaretToEnd(targetBlock);
           targetBlock.focus();
         }
@@ -137,6 +139,7 @@ const useControlBlocks = () => {
     const nextBlock = blocksRef.current[nextBlockId];
 
     if (nextBlock) {
+      setFocusedBlockId(nextBlockId);
       moveCaretToEnd(nextBlock);
       nextBlock.focus();
     }
@@ -159,6 +162,7 @@ const useControlBlocks = () => {
     const prevBlock = blocksRef.current[prevBlockId];
 
     if (prevBlock) {
+      setFocusedBlockId(prevBlockId);
       moveCaretToEnd(prevBlock);
       prevBlock.focus();
     }
@@ -192,6 +196,8 @@ const useControlBlocks = () => {
   return {
     blocks,
     setBlocks,
+    focusedBlockId,
+    setFocusedBlockId,
     currentBlockId,
     handleUpdateBlock,
     handleAddBlock,

@@ -12,6 +12,7 @@ declare module "styled-components" {
       successColor: string;
       failColor: string;
       activeColor: string;
+      placeholderColor: string;
       focusColor: string;
       hoverColor: string;
       dropColor: string;

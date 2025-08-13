@@ -1,6 +1,7 @@
 import { forwardRef, useState, useEffect } from "react";
 
 import SelectMenu from "components/SelectMenu";
+import Placeholder from "./common/Placeholder";
 
 import useBlockInteraction from "hooks/useBlockInteraction";
 import useControlMenu from "hooks/useControlMenu";
@@ -20,6 +21,7 @@ function NoteBlock(
     tag: propsTag,
     imageUrl: propsImageUrl,
     blockCount,
+    isFocusedBlock,
     noteId,
     isSharedPage,
     isDragging,
@@ -29,6 +31,7 @@ function NoteBlock(
     onDragEnd,
     onDragEnter,
     onDragStart,
+    onClick,
     onFocusBlockByArrowKey,
   }: NoteBlockProps,
   ref: ForwardedRef<HTMLDivElement>
@@ -101,6 +104,8 @@ function NoteBlock(
     };
   }, [handleCloseSelectMenu]);
 
+  const isHTMLEmpty = html === "" || html === "<br>";
+
   return (
     <S.Layout onDragEnter={onDragEnter} onDragEnd={onDragEnd}>
       {isSelectMenuOpen && (
@@ -130,10 +135,12 @@ function NoteBlock(
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onKeyUp={handleKeyUp}
-          disabled={isSharedPage}
+          onClick={isSharedPage ? () => {} : onClick}
           $isDragging={isDragging}
+          disabled={isSharedPage}
         />
       )}
+      {tag !== "img" && isHTMLEmpty && isFocusedBlock && <Placeholder />}
       {tag === "img" && (
         <S.ImageItem ref={ref} $isDragging={isDragging}>
           <input

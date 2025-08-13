@@ -26,6 +26,7 @@ export interface NoteBlockProps {
   tag: Tag;
   imageUrl: string;
   blockCount: number;
+  isFocusedBlock: boolean;
   noteId: NoteId;
   isSharedPage: boolean;
   isDragging: boolean;
@@ -35,6 +36,7 @@ export interface NoteBlockProps {
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;
+  onClick: () => void;
   onFocusBlockByArrowKey: (currentBlock: CurrentBlock, arrowKey: ArrowKey) => void;
 }
 

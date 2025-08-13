@@ -11,6 +11,7 @@ const theme: DefaultTheme = {
     successColor: "#49C54F",
     failColor: "#E32D2D",
     activeColor: "#FFFFFF40",
+    placeholderColor: "#A8A8A8",
     focusColor: "#F5F6FB",
     hoverColor: "#F8F8F8",
     dropColor: "#F0F8FF",

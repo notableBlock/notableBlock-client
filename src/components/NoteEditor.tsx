@@ -17,6 +17,8 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   const {
     blocks,
     setBlocks,
+    focusedBlockId,
+    setFocusedBlockId,
     handleUpdateBlock,
     handleAddBlock,
     handleDeleteBlock,
@@ -82,10 +84,11 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
               <NoteBlock
                 key={block.id}
                 id={block.id}
-                html={block.html}
-                tag={block.tag}
-                imageUrl={block.imageUrl}
+                html={block.html ?? ""}
+                tag={block.tag ?? "p"}
+                imageUrl={block.imageUrl ?? ""}
                 blockCount={blocks.length}
+                isFocusedBlock={block.id === focusedBlockId}
                 noteId={noteId}
                 isSharedPage={isSharedPage}
                 isDragging={index === draggedIndex}
@@ -95,6 +98,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
                 onDragEnd={handleBlockDragEnd}
                 onDragEnter={() => handleBlockDragEnter(index)}
                 onDragStart={() => handleBlockDragStart(index)}
+                onClick={() => setFocusedBlockId(block.id)}
                 onFocusBlockByArrowKey={handleFocusBlockByArrowKey}
                 ref={(refTarget) => {
                   if (!refTarget) return;
