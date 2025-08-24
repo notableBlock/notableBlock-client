@@ -33,3 +33,7 @@ dist-ssr
 temp
 
 playwright/.auth
+
+# Jest
+.jest
+coverage
