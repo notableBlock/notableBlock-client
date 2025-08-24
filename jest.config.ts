@@ -14,7 +14,7 @@ const config: Config = {
   },
   moduleNameMapper: {
     ...(tsconfig.compilerOptions?.paths
-      ? pathsToModuleNameMapper(tsconfig.compilerOptions.paths, { prefix: "<rootDir>/" })
+      ? pathsToModuleNameMapper(tsconfig.compilerOptions.paths, { prefix: "<rootDir>/src/" })
       : {}),
     "\\.(jpg|jpeg|png|gif|webp|svg|ico|bmp|ttf|woff2?)$": "<rootDir>/__mocks__/fileMock.ts",
   },
