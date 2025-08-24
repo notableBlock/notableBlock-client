@@ -1,4 +1,4 @@
-import { test, expect } from "../../playwright/fixtures";
+import { test, expect } from "../../../playwright/fixtures";
 
 test.describe("노트 삭제 기능", () => {
   test.beforeEach(async ({ page }) => {
