@@ -13,6 +13,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.CLIENT_URL || "http://localhost:5173",
+    headless: !!process.env.CI,
     trace: "on-first-retry",
   },
 
@@ -21,11 +22,20 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        headless: false,
         launchOptions: {
           args: ["--disable-blink-features=AutomationControlled", "--disable-popup-blocking"],
         },
       },
     },
   ],
+  webServer: process.env.CI
+    ? {
+        command: "vite preview --port 5173",
+        url: "http://localhost:5173",
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+        stdout: "ignore",
+        stderr: "pipe",
+      }
+    : undefined,
 });

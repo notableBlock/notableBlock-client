@@ -17,17 +17,19 @@ test.describe("로그인 및 로그아웃 플로우", () => {
     }
 
     await page.goto("/login");
+    await page.waitForTimeout(1000);
 
     const popupPromise = page.waitForEvent("popup");
     await page.getByRole("button", { name: "구글 로그인 하기" }).click({ delay: 500 });
     const popup = await popupPromise;
 
-    await popup.fill('input[type="email"]', email);
-    await popup.getByRole("button", { name: "Next" }).click();
-    await popup.fill('input[type="password"]', password);
-    await popup.getByRole("button", { name: "Next" }).click();
+    await popup.getByRole("textbox", { name: /Email or phone|이메일 또는 휴대전화/i }).fill(email);
+    await popup.getByRole("button", { name: /^(Next|다음)$/i }).click();
 
-    await popup.getByRole("button", { name: "계속" }).click();
+    await popup.getByRole("textbox", { name: /Enter your password|비밀번호 입력/i }).fill(password);
+    await popup.getByRole("button", { name: /^(Next|다음)$/i }).click();
+    await popup.getByRole("button", { name: /^(Continue|계속)$/i }).click();
+
     await page.waitForURL("/notes");
     await expect(page).toHaveURL("/notes");
 

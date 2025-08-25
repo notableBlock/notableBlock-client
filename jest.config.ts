@@ -12,6 +12,13 @@ const config: Config = {
   transform: {
     "^.+\\.(ts|tsx)$": ["ts-jest", { tsconfig: "tsconfig.json", diagnostics: false }],
   },
+  testMatch: ["<rootDir>/tests/unit/**/*.(test|spec).ts?(x)"],
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "<rootDir>/tests/e2e/",
+    "<rootDir>/playwright-report/",
+    "<rootDir>/test-results/",
+  ],
   moduleNameMapper: {
     ...(tsconfig.compilerOptions?.paths
       ? pathsToModuleNameMapper(tsconfig.compilerOptions.paths, { prefix: "<rootDir>/src/" })

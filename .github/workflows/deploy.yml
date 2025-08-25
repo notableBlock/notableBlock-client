@@ -1,4 +1,4 @@
-name: AWS S3와 CloudFront에 배포하기
+name: CI/CD 파이프라인 (AWS, S3 CloudFront, E2E, Unit)
 
 on:
   push:
@@ -6,16 +6,64 @@ on:
       - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Create .env for tests
+        run: |
+          echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
+          echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> .env
+          echo "CLIENT_URL=http://localhost:5173" >> .env
+          echo "USER_0_GOOGLE_EMAIL=${{ secrets.USER_0_GOOGLE_EMAIL }}" >> .env
+          echo "USER_0_GOOGLE_PASSWORD=${{ secrets.USER_0_GOOGLE_PASSWORD }}" >> .env
+          echo "USER_1_GOOGLE_EMAIL=${{ secrets.USER_1_GOOGLE_EMAIL }}" >> .env
+          echo "USER_1_GOOGLE_PASSWORD=${{ secrets.USER_1_GOOGLE_PASSWORD }}" >> .env
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (for preview server)
+        run: npm run build
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Unit Tests with Coverage
+        run: npm run test:unit:coverage
+
+      - name: Run E2E Tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/**/*.zip
+          retention-days: 7
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Create .env file
         run: |
           echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
@@ -25,10 +73,13 @@ jobs:
           echo "USER_0_GOOGLE_PASSWORD=${{ secrets.USER_0_GOOGLE_PASSWORD }}" >> .env
           echo "USER_1_GOOGLE_EMAIL=${{ secrets.USER_1_GOOGLE_EMAIL }}" >> .env
           echo "USER_1_GOOGLE_PASSWORD=${{ secrets.USER_1_GOOGLE_PASSWORD }}" >> .env
+
       - name: Install dependencies
         run: npm ci
+
       - name: Build Project
         run: npm run build
+
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -39,6 +90,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "ap-northeast-2"
           SOURCE_DIR: "dist"
+
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
         env:

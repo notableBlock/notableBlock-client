@@ -17,6 +17,7 @@ export const test = baseTest.extend<
   workerStorageState: [
     async ({ browser }, use) => {
       const id = test.info().parallelIndex;
+      const authDir = path.resolve(test.info().project.outputDir, ".auth");
       const fileName = path.resolve(test.info().project.outputDir, `.auth/${id}.json`);
 
       if (fs.existsSync(fileName)) {
@@ -24,20 +25,27 @@ export const test = baseTest.extend<
         return;
       }
 
+      fs.mkdirSync(authDir, { recursive: true });
+
       const page = await browser.newPage({ storageState: undefined });
       const account = acquireAccount(id);
 
       await page.goto(`${process.env.CLIENT_URL}/login`);
 
       const popupPromise = page.waitForEvent("popup");
-      await page.getByRole("button", { name: "구글 로그인 하기" }).click({ delay: 500 });
+      await page.getByRole("button", { name: "구글 로그인 하기" }).click({ delay: 1000 });
       const popup = await popupPromise;
 
-      await popup.fill("input[type='email']", account.email);
-      await popup.getByRole("button", { name: "다음" }).click();
-      await popup.fill("input[type='password']", account.password);
-      await popup.getByRole("button", { name: "다음" }).click();
-      await popup.getByRole("button", { name: "계속" }).click();
+      await popup
+        .getByRole("textbox", { name: /Email or phone|이메일 또는 휴대전화/i })
+        .fill(account.email);
+      await popup.getByRole("button", { name: /^(Next|다음)$/i }).click();
+
+      await popup
+        .getByRole("textbox", { name: /Enter your password|비밀번호 입력/i })
+        .fill(account.password);
+      await popup.getByRole("button", { name: /^(Next|다음)$/i }).click();
+      await popup.getByRole("button", { name: /^(Continue|계속)$/i }).click();
 
       await page.waitForURL(`${process.env.CLIENT_URL}/notes`);
       await expect(page).toHaveURL(`${process.env.CLIENT_URL}/notes`);
@@ -55,7 +63,7 @@ export const test = baseTest.extend<
     await use(links);
   },
   noteCount: async ({ page, noteLinks }, use) => {
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 
     const count = await noteLinks.count();
     await use(count);

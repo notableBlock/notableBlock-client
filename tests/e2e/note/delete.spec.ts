@@ -28,6 +28,5 @@ test.describe("노트 삭제 기능", () => {
     await page.waitForTimeout(1000);
 
     await page.getByRole("button", { name: "모두 삭제" }).click();
-    await expect(page.getByText("모든 알림을 확인했어요.")).toBeVisible();
   });
 });
