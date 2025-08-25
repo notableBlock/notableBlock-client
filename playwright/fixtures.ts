@@ -10,7 +10,7 @@ export * from "@playwright/test";
 dotenv.config();
 
 export const test = baseTest.extend<
-  { noteLinks: Locator; noteCount: number },
+  { noteLinks: Locator; noteCount: number; uniqueText: string },
   { workerStorageState: string }
 >({
   storageState: ({ workerStorageState }, use) => use(workerStorageState),
@@ -54,8 +54,15 @@ export const test = baseTest.extend<
     const links = page.locator("a[href^='/notes/']:not([href^='/notes/tree'])");
     await use(links);
   },
-  noteCount: async ({ noteLinks }, use) => {
+  noteCount: async ({ page, noteLinks }, use) => {
+    await page.waitForTimeout(1000);
+
     const count = await noteLinks.count();
     await use(count);
+  },
+  uniqueText: async ({}, use) => {
+    const uniqueText = `노트 테스트 - ${Date.now()}`;
+
+    await use(uniqueText);
   },
 });

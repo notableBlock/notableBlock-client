@@ -1,4 +1,4 @@
-import { test, expect } from "../../playwright/fixtures";
+import { test, expect } from "../../../playwright/fixtures";
 
 test.describe("노트 생성 기능", () => {
   test.beforeEach(async ({ page }) => {
@@ -14,7 +14,6 @@ test.describe("노트 생성 기능", () => {
     noteCount,
   }) => {
     await page.locator('img[src*="plus-option-icon"]').click();
-    await page.getByRole("button", { name: "새 노트 만들기" }).click();
     await expect(page).toHaveURL(/\/notes\/.*/);
 
     await page.getByRole("link", { name: "내 노트", exact: true }).click();
@@ -29,6 +28,12 @@ test.describe("노트 생성 기능", () => {
     await page.getByRole("button", { name: "삭제하기" }).click();
 
     await expect(page.getByText("잠시만 기다려주세요.")).toHaveCount(0);
-    await expect(page.getByText("삭제되었어요")).toBeVisible();
+    await expect(page.getByText("삭제되었어요.")).toBeVisible();
+
+    await page.locator("img[src*='notification-icon']").click();
+    await page.waitForTimeout(1000);
+
+    await page.getByRole("button", { name: "모두 삭제" }).click();
+    await expect(page.getByText("모든 알림을 확인했어요.")).toBeVisible();
   });
 });
