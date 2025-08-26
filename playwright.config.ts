@@ -3,6 +3,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+const clientUrlObj = new URL(clientUrl);
+const clientHost = clientUrlObj.hostname;
+const clientPort = clientUrlObj.port;
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -12,7 +17,7 @@ export default defineConfig({
   reporter: "html",
 
   use: {
-    baseURL: process.env.CLIENT_URL || "http://localhost:5173",
+    baseURL: clientUrl,
     headless: !!process.env.CI,
     trace: "on-first-retry",
   },
@@ -30,8 +35,8 @@ export default defineConfig({
   ],
   webServer: process.env.CI
     ? {
-        command: "vite preview --port 5173",
-        url: "http://localhost:5173",
+        command: `vite preview --host ${clientHost} --port ${clientPort}`,
+        url: clientUrl,
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,
         stdout: "ignore",

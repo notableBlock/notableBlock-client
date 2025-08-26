@@ -1,9 +1,7 @@
-import { test as baseTest, expect, Locator } from "@playwright/test";
+import { test as baseTest, Locator } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
-
-import acquireAccount from "./utils/acquireAccount";
 
 export * from "@playwright/test";
 
@@ -16,49 +14,31 @@ export const test = baseTest.extend<
   storageState: ({ workerStorageState }, use) => use(workerStorageState),
   workerStorageState: [
     async ({ browser }, use) => {
-      const id = test.info().parallelIndex;
-      const authDir = path.resolve(test.info().project.outputDir, ".auth");
-      const fileName = path.resolve(test.info().project.outputDir, `.auth/${id}.json`);
+      const e2eWorkerIndex = test.info().parallelIndex;
+      const authDirectory = path.resolve(test.info().project.outputDir, ".auth");
+      const statePath = path.resolve(authDirectory, `${e2eWorkerIndex}.json`);
 
-      if (fs.existsSync(fileName)) {
-        await use(fileName);
-        return;
-      }
+      if (!fs.existsSync(authDirectory)) fs.mkdirSync(authDirectory, { recursive: true });
+      if (fs.existsSync(statePath)) return await use(statePath);
 
-      fs.mkdirSync(authDir, { recursive: true });
+      const context = await browser.newContext();
 
-      const page = await browser.newPage({ storageState: undefined });
-      const account = acquireAccount(id);
+      await context.request.post(`${process.env.VITE_SERVER_URL}/users/e2e`, {
+        data: { e2eWorkerIndex },
+        headers: { "e2e-key": process.env.E2E_KEY ?? "" },
+      });
 
-      await page.goto(`${process.env.CLIENT_URL}/login`);
+      await context.storageState({ path: statePath });
+      await context.close();
 
-      const popupPromise = page.waitForEvent("popup");
-      await page.getByRole("button", { name: "구글 로그인 하기" }).click({ delay: 1000 });
-      const popup = await popupPromise;
-
-      await popup
-        .getByRole("textbox", { name: /Email or phone|이메일 또는 휴대전화/i })
-        .fill(account.email);
-      await popup.getByRole("button", { name: /^(Next|다음)$/i }).click();
-
-      await popup
-        .getByRole("textbox", { name: /Enter your password|비밀번호 입력/i })
-        .fill(account.password);
-      await popup.getByRole("button", { name: /^(Next|다음)$/i }).click();
-      await popup.getByRole("button", { name: /^(Continue|계속)$/i }).click();
-
-      await page.waitForURL(`${process.env.CLIENT_URL}/notes`);
-      await expect(page).toHaveURL(`${process.env.CLIENT_URL}/notes`);
-
-      await page.context().storageState({ path: fileName });
-      await page.close();
-      await use(fileName);
+      await use(statePath);
     },
     { scope: "worker" },
   ],
   noteLinks: async ({ page }, use) => {
     await page.goto("/notes");
     await page.locator("a[href^='/notes/']").waitFor();
+
     const links = page.locator("a[href^='/notes/']:not([href^='/notes/tree'])");
     await use(links);
   },
@@ -70,7 +50,6 @@ export const test = baseTest.extend<
   },
   uniqueText: async ({}, use) => {
     const uniqueText = `노트 테스트 - ${Date.now()}`;
-
     await use(uniqueText);
   },
 });

@@ -8,6 +8,7 @@ export interface ButtonProps {
   image: string;
   onClick: (event: MouseEvent<HTMLElement>) => void;
   type?: "kebab" | "notification";
+  dataTestId?: string;
 }
 
 export interface FormProps {

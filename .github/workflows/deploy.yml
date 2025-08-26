@@ -10,29 +10,60 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout CLIENT
         uses: actions/checkout@v4
+
+      - name: Checkout SERVER
+        uses: actions/checkout@v4
+        with:
+          repository: notableBlock/notableBlock-server
+          token: ${{ secrets.SERVER_REPO_TOKEN }}
+          path: server
+          ref: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Create .env for tests
+      - name: Create CLIENT .env
         run: |
-          echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
+          echo "VITE_SERVER_URL=http://localhost:8080" >> .env
           echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> .env
+          echo "E2E_KEY=${{ secrets.E2E_KEY }}" >> .env
           echo "CLIENT_URL=http://localhost:5173" >> .env
-          echo "USER_0_GOOGLE_EMAIL=${{ secrets.USER_0_GOOGLE_EMAIL }}" >> .env
-          echo "USER_0_GOOGLE_PASSWORD=${{ secrets.USER_0_GOOGLE_PASSWORD }}" >> .env
-          echo "USER_1_GOOGLE_EMAIL=${{ secrets.USER_1_GOOGLE_EMAIL }}" >> .env
-          echo "USER_1_GOOGLE_PASSWORD=${{ secrets.USER_1_GOOGLE_PASSWORD }}" >> .env
 
-      - name: Install dependencies
+      - name: Install CLIENT dependencies
         run: npm ci
 
-      - name: Build (for preview server)
+      - name: CLIENT Build
         run: npm run build
+
+      - name: Create SERVER .env
+        working-directory: server
+        run: |
+          echo "PORT=8080" >> .env
+          echo "USE_S3=false" >> .env
+          echo "NODE_ENV=test" >> .env
+          echo "CLIENT_URL=http://localhost:5173" >> .env
+          echo "MONGO_ATLAS_URI=${{ secrets.MONGO_ATLAS_URI }}" >> .env
+          echo "E2E_KEY=${{ secrets.E2E_KEY }}" >> .env
+          echo "E2E_ACCESS_TOKEN=${{ secrets.E2E_ACCESS_TOKEN }}" >> .env
+          echo "E2E_REFRESH_TOKEN=${{ secrets.E2E_REFRESH_TOKEN }}" >> .env
+          echo "AWS_S3_BUCKET=${{ secrets.AWS_S3_BUCKET }}" >> .env
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "AWS_REGION=ap-northeast-2" >> .env
+
+      - name: Install SERVER dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: Start SERVER
+        working-directory: server
+        run: |
+          npm run start:test &
+          npx wait-on tcp:8080
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -68,11 +99,8 @@ jobs:
         run: |
           echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
           echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> .env
+          echo "E2E_KEY=${{ secrets.E2E_KEY }}" >> .env
           echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> .env
-          echo "USER_0_GOOGLE_EMAIL=${{ secrets.USER_0_GOOGLE_EMAIL }}" >> .env
-          echo "USER_0_GOOGLE_PASSWORD=${{ secrets.USER_0_GOOGLE_PASSWORD }}" >> .env
-          echo "USER_1_GOOGLE_EMAIL=${{ secrets.USER_1_GOOGLE_EMAIL }}" >> .env
-          echo "USER_1_GOOGLE_PASSWORD=${{ secrets.USER_1_GOOGLE_PASSWORD }}" >> .env
 
       - name: Install dependencies
         run: npm ci

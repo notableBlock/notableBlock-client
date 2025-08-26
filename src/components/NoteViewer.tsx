@@ -69,7 +69,12 @@ function NoteViewer({
             position={kebabMenuPosition}
           />
         )}
-        <Button image={kebabMenuIcon} onClick={handleOpenModal} type="kebab" />
+        <Button
+          image={kebabMenuIcon}
+          onClick={handleOpenModal}
+          type="kebab"
+          dataTestId="kebab-menu-button"
+        />
       </S.Header>
       <S.Link to={`/${path}/${noteId}`}>
         <S.Content>

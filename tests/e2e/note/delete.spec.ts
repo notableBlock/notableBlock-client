@@ -7,7 +7,7 @@ test.describe("노트 삭제 기능", () => {
     await expect(page).toHaveURL("/notes");
     await expect(page.getByText("잠시만 기다려주세요.")).toHaveCount(0);
 
-    await page.locator('img[src*="plus-option-icon"]').click();
+    await page.getByTestId("add-note-button").click();
     await expect(page).toHaveURL(/\/notes\/.*/);
 
     await page.getByRole("link", { name: "내 노트", exact: true }).click();
@@ -18,13 +18,13 @@ test.describe("노트 삭제 기능", () => {
     noteLinks,
     noteCount,
   }) => {
-    await page.locator("img[src*='kebab-menu-icon']").nth(0).click();
+    await page.getByTestId("kebab-menu-button").nth(0).click();
     await page.getByRole("button", { name: "삭제하기" }).click();
 
     await expect(page.getByText("잠시만 기다려주세요.")).toHaveCount(0);
     await expect(noteLinks).toHaveCount(noteCount);
 
-    await page.locator("img[src*='notification-icon']").click();
+    await page.getByTestId("notification-button").click();
     await page.waitForTimeout(1000);
 
     await page.getByRole("button", { name: "모두 삭제" }).click();
