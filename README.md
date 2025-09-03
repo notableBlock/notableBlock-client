@@ -67,7 +67,7 @@ _디지털 문서는 쉽게 공유되지만, 누가 처음 작성했는지를 �
   - [4-2. 프로젝트의 구조](#4-2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%EA%B5%AC%EC%A1%B0)
     - [(1) Zustand를 활용한 전역 상태 관리](#1-zustand%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%A0%84%EC%97%AD-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC)
     - [(2) 코드 효율성을 위한 공통 컴포넌트 설계](#2-%EC%BD%94%EB%93%9C-%ED%9A%A8%EC%9C%A8%EC%84%B1%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B3%B5%ED%86%B5-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%84%A4%EA%B3%84)
-    - [(3) 관심사 분리 원칙(SOC)에 입각한 커스텀 훅 구성](#3-%EA%B4%80%EC%8B%AC%EC%82%AC-%EB%B6%84%EB%A6%AC-%EC%9B%90%EC%B9%99soc%EC%97%90-%EC%9E%85%EA%B0%81%ED%95%9C-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-%EA%B5%AC%EC%84%B1)
+    - [(3) 관심사 분리 원칙(Separation of Concerns, SoC)에 입각한 커스텀 훅 구성](#3-%EA%B4%80%EC%8B%AC%EC%82%AC-%EB%B6%84%EB%A6%AC-%EC%9B%90%EC%B9%99separation-of-concerns-soc%EC%97%90-%EC%9E%85%EA%B0%81%ED%95%9C-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-%EA%B5%AC%EC%84%B1)
     - [(4) 중복을 줄이기 위한 중첩 라우팅을 활용한 공통 UI 구성](#4-%EC%A4%91%EB%B3%B5%EC%9D%84-%EC%A4%84%EC%9D%B4%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%A4%91%EC%B2%A9-%EB%9D%BC%EC%9A%B0%ED%8C%85%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B3%B5%ED%86%B5-ui-%EA%B5%AC%EC%84%B1)
     - [(5) 컴포넌트 구조의 가독성을 높이는 S-dot 네이밍 컨벤션 적용](#5-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EA%B5%AC%EC%A1%B0%EC%9D%98-%EA%B0%80%EB%8F%85%EC%84%B1%EC%9D%84-%EB%86%92%EC%9D%B4%EB%8A%94-s-dot-%EB%84%A4%EC%9D%B4%EB%B0%8D-%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%A0%81%EC%9A%A9)
 - [5. 회고](#5-%ED%9A%8C%EA%B3%A0)
@@ -870,6 +870,7 @@ await User.findByIdAndUpdate(userId, { refresh_token: "" });
 ### 테스트
 
 ![Playwright](https://img.shields.io/badge/playwright-%23404d59.svg?style=for-the-badge&logo=playwright&logoColor=sd)
+![Jest](https://img.shields.io/badge/jest-%23404d59.svg?style=for-the-badge&logo=jest&logoColor=sd)
 
 <br>
 
