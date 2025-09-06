@@ -240,7 +240,7 @@ _디지털 문서는 쉽게 공유되지만, 누가 처음 작성했는지를 �
 ```jsx
 setBlocks((prevBlocks) => {
   const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
-  const newBlock = { ...initialBlock, id: objectId(), tag: "p" };
+  const newBlock = { ...initialBlock, id: uuidv4(), tag: "p" };
 
   return [
     ...prevBlocks.slice(0, currentBlockIndex + 1),
