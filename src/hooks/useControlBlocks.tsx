@@ -1,11 +1,11 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { v4 as uuidv4 } from "uuid";
 
 import usePrevBlocks from "hooks/usePrevBlocks";
 
 import { getBlocks, deleteNoteImage } from "services/noteServices";
 
-import objectId from "utils/objectId";
 import moveCaretToEnd from "utils/moveCaretToEnd";
 
 import type { Block, BlockElementsById, CurrentBlock } from "types/block";
@@ -16,7 +16,7 @@ const useControlBlocks = () => {
   const location = useLocation();
 
   const initialBlock = useMemo<Block>(
-    () => ({ id: objectId(), html: "", tag: "h1", imageUrl: "" }),
+    () => ({ id: uuidv4(), html: "", tag: "h1", imageUrl: "" }),
     []
   );
   const [blocks, setBlocks] = useState([initialBlock]);
@@ -71,7 +71,7 @@ const useControlBlocks = () => {
     (currentBlock: CurrentBlock) => {
       setBlocks((prevBlocks) => {
         const currentBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlock.id);
-        const newBlock: Block = { ...initialBlock, id: objectId(), tag: "p", imageUrl: "" };
+        const newBlock: Block = { ...initialBlock, id: uuidv4(), tag: "p", imageUrl: "" };
 
         return [
           ...prevBlocks.slice(0, currentBlockIndex + 1),
