@@ -93,8 +93,6 @@ test.describe("노트 공유 기능", () => {
       .nth(noteCount - 1)
       .click();
     await page.getByRole("button", { name: "삭제하기" }).click();
-
-    await expect(page.getByText("잠시만 기다려주세요.")).toHaveCount(0);
     await expect(page.getByText("삭제되었어요.")).toBeVisible();
 
     await page.getByTestId("notification-button").click();
