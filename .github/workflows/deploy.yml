@@ -28,10 +28,10 @@ jobs:
 
       - name: Create CLIENT .env
         run: |
-          echo "VITE_SERVER_URL=http://localhost:8080" >> .env
+          echo "VITE_SERVER_URL=http://127.0.0.1:8080" >> .env
           echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> .env
           echo "E2E_KEY=${{ secrets.E2E_KEY }}" >> .env
-          echo "CLIENT_URL=http://localhost:5173" >> .env
+          echo "CLIENT_URL=http://127.0.0.1:5173" >> .env
 
       - name: Install CLIENT dependencies
         run: npm ci
@@ -45,7 +45,7 @@ jobs:
           echo "PORT=8080" >> .env
           echo "USE_S3=false" >> .env
           echo "NODE_ENV=test" >> .env
-          echo "CLIENT_URL=http://localhost:5173" >> .env
+          echo "CLIENT_URL=http://127.0.0.1:5173" >> .env
           echo "MONGO_ATLAS_URI=${{ secrets.MONGO_ATLAS_URI }}" >> .env
           echo "E2E_KEY=${{ secrets.E2E_KEY }}" >> .env
           echo "E2E_ACCESS_TOKEN=${{ secrets.E2E_ACCESS_TOKEN }}" >> .env
@@ -63,7 +63,7 @@ jobs:
         working-directory: server
         run: |
           npm run start:test &
-          npx wait-on tcp:8080
+          npx wait-on tcp:127.0.0.1:8080
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
