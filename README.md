@@ -34,7 +34,7 @@ _디지털 문서는 쉽게 공유되지만, 누가 처음 작성했는지를 �
 - [1. 프로젝트의 동기](#1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%EB%8F%99%EA%B8%B0)
 - [2. 프로젝트의 핵심 기능 소개](#2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)
 - [3. 핵심 기능 구현 과정](#3-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-%EA%B3%BC%EC%A0%95)
-  - [3-1. 블록 기반 스마트 에디터 구현](#3-1-%EB%B8%94%EB%A1%9D-%EA%B8%B0%EB%B0%98-%EC%8A%A4%EB%A7%88%ED%8A%B8-%EC%97%90%EB%94%94%ED%84%B0-%EA%B5%AC%ED%98%84)
+  - [3-1. 블록 기반 스마트에디터 구현](#3-1-%EB%B8%94%EB%A1%9D-%EA%B8%B0%EB%B0%98-%EC%8A%A4%EB%A7%88%ED%8A%B8-%EC%97%90%EB%94%94%ED%84%B0-%EA%B5%AC%ED%98%84)
     - [(1) 고민: 자유롭게 작성하면서도 구조화된 노트를 만들 수 있을까?](#1-%EA%B3%A0%EB%AF%BC-%EC%9E%90%EC%9C%A0%EB%A1%AD%EA%B2%8C-%EC%9E%91%EC%84%B1%ED%95%98%EB%A9%B4%EC%84%9C%EB%8F%84-%EA%B5%AC%EC%A1%B0%ED%99%94%EB%90%9C-%EB%85%B8%ED%8A%B8%EB%A5%BC-%EB%A7%8C%EB%93%A4-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
     - [(2) 구현: 블록 단위로 구성된 직관적이고 유연한 에디터](#2-%EA%B5%AC%ED%98%84-%EB%B8%94%EB%A1%9D-%EB%8B%A8%EC%9C%84%EB%A1%9C-%EA%B5%AC%EC%84%B1%EB%90%9C-%EC%A7%81%EA%B4%80%EC%A0%81%EC%9D%B4%EA%B3%A0-%EC%9C%A0%EC%97%B0%ED%95%9C-%EC%97%90%EB%94%94%ED%84%B0)
     - [(3) 결과: 단축키로 빠르게, 블록 단위로 유연하게 작성할 수 있습니다.](#3-%EA%B2%B0%EA%B3%BC-%EB%8B%A8%EC%B6%95%ED%82%A4%EB%A1%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B8%94%EB%A1%9D-%EB%8B%A8%EC%9C%84%EB%A1%9C-%EC%9C%A0%EC%97%B0%ED%95%98%EA%B2%8C-%EC%9E%91%EC%84%B1%ED%95%A0-%EC%88%98-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4)
@@ -90,13 +90,14 @@ _디지털 문서는 쉽게 공유되지만, 누가 처음 작성했는지를 �
 
 # 2. 프로젝트의 핵심 기능 소개
 
-## 스마트 에디터 기능
+## 스마트에디터 기능
 
 <div align="center">
-  <img width="600px" alt="스마트 에디터 시연" src="https://github.com/user-attachments/assets/8198e39d-0734-4206-8797-471f81b197bc" />
+  <img width="600px" alt="스마트에디터 시연" src="https://github.com/user-attachments/assets/064a0efd-7191-41cc-a4d9-9d0da256e39c" />
 </div>
 
 <br>
+
 
 - "/" 키 입력 또는 드래그 버튼 클릭으로 슬래시 명령어 메뉴를 열 수 있습니다.
   - /h1, /h2, /h3, /img 명령을 직접 입력해 텍스트 변환 또는 이미지 첨부가 가능하며, 메뉴 클릭으로도 선택할 수 있습니다.
@@ -111,7 +112,7 @@ _디지털 문서는 쉽게 공유되지만, 누가 처음 작성했는지를 �
 ## 노트 뷰어 기능
 
 <div align="center">
-  <img width="600px" alt="노트 뷰어 시연" src="https://github.com/user-attachments/assets/2829917c-95cc-46ed-bb7c-4738947fb6b2" />
+  <img width="600px" alt="노트 뷰어 시연" src="https://github.com/user-attachments/assets/797ebc03-4b74-4e1b-8b29-47d2fae87681" />
 </div>
 
 <br>
