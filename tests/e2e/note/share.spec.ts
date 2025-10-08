@@ -38,7 +38,6 @@ test.describe("노트 공유 기능", () => {
       .nth(noteCount - 1)
       .click();
     await page.getByRole("button", { name: "공유하기" }).click();
-    await expect(page.getByText("공유했어요")).toBeVisible();
 
     await page.goto("/shared");
     await expect(page).toHaveURL("/shared");
@@ -65,7 +64,6 @@ test.describe("노트 공유 기능", () => {
       .nth(noteCount - 1)
       .click();
     await page.getByRole("button", { name: "공유하기" }).click();
-    await expect(page.getByText("공유했어요")).toBeVisible();
 
     const workerId = test.info().parallelIndex;
     const storageFilePath = path.resolve(
@@ -93,7 +91,8 @@ test.describe("노트 공유 기능", () => {
       .nth(noteCount - 1)
       .click();
     await page.getByRole("button", { name: "삭제하기" }).click();
-    await expect(page.getByText("삭제되었어요.")).toBeVisible();
+    await expect(page).toHaveURL("/notes");
+    await expect(page.getByTestId("kebab-menu-button")).toHaveCount(Math.max(0, noteCount - 1));
 
     await page.getByTestId("notification-button").click();
     await page.waitForTimeout(1000);

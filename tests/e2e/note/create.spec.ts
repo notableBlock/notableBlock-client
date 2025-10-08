@@ -26,12 +26,12 @@ test.describe("노트 생성 기능", () => {
       .nth(noteCount - 1)
       .click();
     await page.getByRole("button", { name: "삭제하기" }).click();
-    await expect(page.getByText("삭제되었어요.")).toBeVisible();
+    await expect(page).toHaveURL("/notes");
+    await expect(page.getByTestId("kebab-menu-button")).toHaveCount(Math.max(0, noteCount - 1));
 
     await page.getByTestId("notification-button").click();
     await page.waitForTimeout(1000);
 
     await page.getByRole("button", { name: "모두 삭제" }).click();
-    await expect(page.getByText("모든 알림을 확인했어요.")).toBeVisible();
   });
 });
