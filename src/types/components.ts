@@ -1,7 +1,7 @@
 import type { ReactNode, MouseEvent, ChangeEvent } from "react";
 import type { BlockId, NoteId } from "types/ids";
-import type { Block, CurrentBlock, Tag } from "types/block";
-import type { ManageItem, SlashItem, ArrowKey, Coordinate } from "types/menu";
+import type { Block, Tag } from "types/block";
+import type { ManageItem, SlashItem, Coordinate } from "types/menu";
 import type { TreeRoot, MockEvent } from "types/note";
 
 export interface ButtonProps {
@@ -26,19 +26,14 @@ export interface NoteBlockProps {
   html: string;
   tag: Tag;
   imageUrl: string;
-  blockCount: number;
   isFocusedBlock: boolean;
-  noteId: NoteId;
   isSharedPage: boolean;
   isDragging: boolean;
-  onAddBlock: (currentBlock: CurrentBlock) => void;
-  onDeleteBlock: (currentBlock: CurrentBlock) => void;
   onUpdatePage: (updatedBlock: Block) => void;
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;
   onClick: () => void;
-  onFocusBlockByArrowKey: (currentBlock: CurrentBlock, arrowKey: ArrowKey) => void;
 }
 
 export type SelectMenuProps<T> = {
