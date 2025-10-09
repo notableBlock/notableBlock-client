@@ -4,6 +4,8 @@ import { useParams, useLocation } from "react-router";
 import NoteBlock from "components/NoteBlock";
 import Loading from "components/common/Loading";
 
+import BlockActionsContext from "contexts/BlockActionsContext";
+
 import useControlNotes from "hooks/useControlNotes";
 import useControlBlocks from "hooks/useControlBlocks";
 import usePrevBlocks from "hooks/usePrevBlocks";
@@ -73,48 +75,55 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
     }
   }, [blocks, prevBlocks, focusNextBlock, focusPrevBlock, cleanUpInvalidBlocksRef]);
 
+  const blockActionsValue = {
+    noteId: noteId || "",
+    blockCount: blocks.length,
+    handleAddBlock,
+    handleDeleteBlock,
+    handleFocusBlockByArrowKey,
+  };
+
   return (
-    <S.Layout onDragOver={(event) => event.preventDefault()}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        blocks.map((block, index) => {
-          return (
-            noteId && (
-              <NoteBlock
-                key={block.id}
-                id={block.id}
-                html={block.html ?? ""}
-                tag={block.tag ?? "p"}
-                imageUrl={block.imageUrl ?? ""}
-                blockCount={blocks.length}
-                isFocusedBlock={block.id === focusedBlockId}
-                noteId={noteId}
-                isSharedPage={isSharedPage}
-                isDragging={index === draggedIndex}
-                onAddBlock={handleAddBlock}
-                onDeleteBlock={handleDeleteBlock}
-                onUpdatePage={handleUpdateBlock}
-                onDragEnd={handleBlockDragEnd}
-                onDragEnter={() => handleBlockDragEnter(index)}
-                onDragStart={() => handleBlockDragStart(index)}
-                onClick={() => setFocusedBlockId(block.id)}
-                onFocusBlockByArrowKey={handleFocusBlockByArrowKey}
-                ref={(refTarget) => {
-                  if (!refTarget) return;
+    <BlockActionsContext.Provider value={blockActionsValue}>
+      <S.Layout onDragOver={(event) => event.preventDefault()}>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          blocks.map((block, index) => {
+            return (
+              noteId && (
+                <NoteBlock
+                  key={block.id}
+                  id={block.id}
+                  html={block.html ?? ""}
+                  tag={block.tag ?? "p"}
+                  imageUrl={block.imageUrl ?? ""}
+                  isFocusedBlock={block.id === focusedBlockId}
+                  isSharedPage={isSharedPage}
+                  isDragging={index === draggedIndex}
+                  onUpdatePage={handleUpdateBlock}
+                  onDragEnd={handleBlockDragEnd}
+                  onDragEnter={() => handleBlockDragEnter(index)}
+                  onDragStart={() => handleBlockDragStart(index)}
+                  onClick={() => setFocusedBlockId(block.id)}
+                  ref={(refTarget) => {
+                    if (!refTarget) return;
 
-                  const blockDomNode =
-                    refTarget instanceof HTMLElement ? refTarget : refTarget.props.innerRef.current;
+                    const blockDomNode =
+                      refTarget instanceof HTMLElement
+                        ? refTarget
+                        : refTarget.props.innerRef.current;
 
-                  if (!blockDomNode) return;
-                  blocksRef.current[block.id] = blockDomNode;
-                }}
-              />
-            )
-          );
-        })
-      )}
-    </S.Layout>
+                    if (!blockDomNode) return;
+                    blocksRef.current[block.id] = blockDomNode;
+                  }}
+                />
+              )
+            );
+          })
+        )}
+      </S.Layout>
+    </BlockActionsContext.Provider>
   );
 }
 

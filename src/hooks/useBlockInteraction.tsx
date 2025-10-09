@@ -1,15 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router";
 
+import { useBlockActions } from "contexts/BlockActionsContext";
+
 import { uploadNoteImage } from "services/noteServices";
 
 import moveCaretToEnd from "utils/moveCaretToEnd";
 
 import type { KeyboardEvent, KeyboardEventHandler, Dispatch, SetStateAction } from "react";
 import type { ContentEditableEvent } from "react-contenteditable";
-import type { CurrentBlock, BlockElement, Tag } from "types/block";
-import type { BlockId, NoteId } from "types/ids";
-import type { ArrowKey } from "types/menu";
+import type { BlockElement, Tag } from "types/block";
+import type { BlockId } from "types/ids";
 
 interface UseBlockInteraction {
   id: BlockId;
@@ -19,11 +20,6 @@ interface UseBlockInteraction {
   setHtmlBackup: Dispatch<SetStateAction<string>>;
   propsImageUrl: string;
   propsTag: Tag;
-  noteId: NoteId;
-  blockCount: number;
-  onAddBlock: (currentBlock: CurrentBlock) => void;
-  onDeleteBlock: (currentBlock: CurrentBlock) => void;
-  onFocusBlockByArrowKey: (currentBlock: CurrentBlock, arrowKey: ArrowKey) => void;
   handleOpenSelectMenu: KeyboardEventHandler<HTMLDivElement>;
   handleCloseSelectMenu: () => void;
 }
@@ -36,16 +32,13 @@ const useBlockInteraction = ({
   setHtmlBackup,
   propsImageUrl,
   propsTag,
-  noteId,
-  blockCount,
-  onAddBlock,
-  onDeleteBlock,
-  onFocusBlockByArrowKey,
   handleOpenSelectMenu,
   handleCloseSelectMenu,
 }: UseBlockInteraction) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { noteId, blockCount, handleAddBlock, handleDeleteBlock, handleFocusBlockByArrowKey } =
+    useBlockActions();
 
   const [tag, setTag] = useState(propsTag);
   const [previousKey, setPreviousKey] = useState("");
@@ -72,9 +65,9 @@ const useBlockInteraction = ({
       if (previousKeyRef.current === "Shift" || isSelectMenuOpenRef.current) return;
       event.preventDefault();
 
-      onAddBlock({ id });
+      handleAddBlock({ id });
     },
-    [id, onAddBlock]
+    [id, handleAddBlock]
   );
 
   const handleBackspaceKey = useCallback(
@@ -84,9 +77,9 @@ const useBlockInteraction = ({
       if (blockCountRef.current === 1) return;
       event.preventDefault();
 
-      onDeleteBlock({ id, ref: contentEditableRef.current });
+      handleDeleteBlock({ id, ref: contentEditableRef.current });
     },
-    [id, onDeleteBlock]
+    [id, handleDeleteBlock]
   );
 
   const handleArrowKey = useCallback(
@@ -95,9 +88,9 @@ const useBlockInteraction = ({
       if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
       event.preventDefault();
 
-      onFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, event.key);
+      handleFocusBlockByArrowKey({ id, ref: contentEditableRef.current }, event.key);
     },
-    [id, onFocusBlockByArrowKey]
+    [id, handleFocusBlockByArrowKey]
   );
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
@@ -148,7 +141,7 @@ const useBlockInteraction = ({
         }, 0);
         if (!contentEditableRef.current) return;
 
-        onAddBlock({
+        handleAddBlock({
           id,
           html: "",
           tag: "p",
