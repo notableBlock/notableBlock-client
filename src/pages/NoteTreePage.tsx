@@ -24,9 +24,10 @@ import * as S from "styles/pages/NoteTreePageStyle";
 
 function NoteTreePage() {
   const { profile } = useUserStore();
-  const { notesState, fetchActions } = useControlNotes();
-  const { fetchedOwnedNotes } = notesState;
-  const { getOwnedNotes } = fetchActions;
+  const {
+    notesState: { fetchedOwnedNotes },
+    fetchActions: { getOwnedNotes },
+  } = useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
 

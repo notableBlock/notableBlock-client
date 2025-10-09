@@ -14,14 +14,13 @@ import * as S from "styles/pages/CommonNotePageStyle";
 function MyNotePage() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { notesState, noteActions, fetchActions, fileActions, menuHelpers } =
-    useControlNotes(setIsLoading);
-  const { fetchedNotes } = notesState;
-  const { handleCreateNewNote, handleSelectMenu } = noteActions;
-  const { getUserNotes } = fetchActions;
-  const { handleImportFromLocal, handleArchiveUploadedFiles } = fileActions;
-  const { getMenu } = menuHelpers;
-
+  const {
+    notesState: { fetchedNotes },
+    noteActions: { handleCreateNewNote, handleSelectMenu },
+    fetchActions: { getUserNotes },
+    fileActions: { handleImportFromLocal, handleArchiveUploadedFiles },
+    menuHelpers: { getMenu },
+  } = useControlNotes(setIsLoading);
   const kebabMenu = getMenu("내 노트 '⋮' 버튼 메뉴");
 
   useEffect(() => {

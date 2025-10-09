@@ -16,17 +16,23 @@ import * as S from "styles/components/NoteEditorStyle";
 import type { NoteEditorProps } from "types/components";
 
 function NoteEditor({ onSaveStatus }: NoteEditorProps) {
-  const { blocksState, focusState, blockActions, focusActions, server, refs } = useControlBlocks();
-  const { blocks, setBlocks } = blocksState;
-  const { focusedBlockId, setFocusedBlockId } = focusState;
-  const { handleUpdateBlock, handleAddBlock, handleDeleteBlock, handleFocusBlockByArrowKey } =
-    blockActions;
-  const { focusNextBlock, focusPrevBlock } = focusActions;
-  const { getBlocksFromServer } = server;
-  const { blocksRef, cleanUpInvalidBlocksRef } = refs;
+  const {
+    blocksState: { blocks, setBlocks },
+    focusState: { focusedBlockId, setFocusedBlockId },
+    blockActions: {
+      handleUpdateBlock,
+      handleAddBlock,
+      handleDeleteBlock,
+      handleFocusBlockByArrowKey,
+    },
+    focusActions: { focusNextBlock, focusPrevBlock },
+    server: { getBlocksFromServer },
+    refs: { blocksRef, cleanUpInvalidBlocksRef },
+  } = useControlBlocks();
 
-  const { noteActions } = useControlNotes();
-  const { updateNoteOnServer } = noteActions;
+  const {
+    noteActions: { updateNoteOnServer },
+  } = useControlNotes();
 
   const prevBlocks = usePrevBlocks(blocks);
   const { draggedIndex, handleBlockDragStart, handleBlockDragEnter, handleBlockDragEnd } =

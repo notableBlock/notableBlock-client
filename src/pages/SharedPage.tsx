@@ -8,11 +8,12 @@ import useControlNotes from "hooks/useControlNotes";
 import * as S from "styles/pages/CommonNotePageStyle";
 
 function SharedPage() {
-  const { notesState, noteActions, fetchActions, menuHelpers } = useControlNotes();
-  const { fetchedSharedNotes } = notesState;
-  const { handleSelectMenu } = noteActions;
-  const { getSharedNotes } = fetchActions;
-  const { getMenu } = menuHelpers;
+  const {
+    notesState: { fetchedSharedNotes },
+    noteActions: { handleSelectMenu },
+    fetchActions: { getSharedNotes },
+    menuHelpers: { getMenu },
+  } = useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
 
