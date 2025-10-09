@@ -51,15 +51,21 @@ function NoteBlock(
     handleImageUpload,
     contentEditableRef,
   } = useBlockInteraction({
-    id,
-    propsTag,
-    propsImageUrl,
-    isSelectMenuOpen,
-    htmlBackup,
-    setHtml,
-    setHtmlBackup,
-    handleOpenSelectMenu,
-    handleCloseSelectMenu,
+    block: {
+      id,
+      propsTag,
+      propsImageUrl,
+    },
+    htmlState: {
+      htmlBackup,
+      setHtml,
+      setHtmlBackup,
+    },
+    menuHandlers: {
+      isSelectMenuOpen,
+      handleOpenSelectMenu,
+      handleCloseSelectMenu,
+    },
   });
 
   useEffect(() => {

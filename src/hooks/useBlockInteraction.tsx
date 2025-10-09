@@ -12,29 +12,34 @@ import type { ContentEditableEvent } from "react-contenteditable";
 import type { BlockElement, Tag } from "types/block";
 import type { BlockId } from "types/ids";
 
-interface UseBlockInteraction {
+interface BlockInfo {
   id: BlockId;
-  isSelectMenuOpen: boolean;
+  propsTag: Tag;
+  propsImageUrl: string;
+}
+
+interface HtmlState {
   htmlBackup: string;
   setHtml: Dispatch<SetStateAction<string>>;
   setHtmlBackup: Dispatch<SetStateAction<string>>;
-  propsImageUrl: string;
-  propsTag: Tag;
+}
+
+interface MenuHandlers {
+  isSelectMenuOpen: boolean;
   handleOpenSelectMenu: KeyboardEventHandler<HTMLDivElement>;
   handleCloseSelectMenu: () => void;
 }
 
-const useBlockInteraction = ({
-  id,
-  isSelectMenuOpen,
-  htmlBackup,
-  setHtml,
-  setHtmlBackup,
-  propsImageUrl,
-  propsTag,
-  handleOpenSelectMenu,
-  handleCloseSelectMenu,
-}: UseBlockInteraction) => {
+interface UseBlockInteractionProps {
+  block: BlockInfo;
+  htmlState: HtmlState;
+  menuHandlers: MenuHandlers;
+}
+
+const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInteractionProps) => {
+  const { id, propsTag, propsImageUrl } = block;
+  const { htmlBackup, setHtml, setHtmlBackup } = htmlState;
+  const { isSelectMenuOpen, handleOpenSelectMenu, handleCloseSelectMenu } = menuHandlers;
   const navigate = useNavigate();
   const location = useLocation();
   const { noteId, blockCount, handleAddBlock, handleDeleteBlock, handleFocusBlockByArrowKey } =
