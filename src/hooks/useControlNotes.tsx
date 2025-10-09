@@ -237,19 +237,29 @@ const useControlNotes = (setIsLoading?: Dispatch<SetStateAction<boolean>>) => {
   };
 
   return {
-    fetchedNotes,
-    fetchedSharedNotes,
-    fetchedOwnedNotes,
-    handleCreateNewNote,
-    getUserNotes,
-    getSharedNotes,
-    handleCopySharedNote,
-    updateNoteOnServer,
-    handleSelectMenu,
-    handleImportFromLocal,
-    handleArchiveUploadedFiles,
-    getMenu,
-    getOwnedNotes,
+    notesState: {
+      fetchedNotes,
+      fetchedSharedNotes,
+      fetchedOwnedNotes,
+    },
+    noteActions: {
+      handleCreateNewNote,
+      updateNoteOnServer,
+      handleCopySharedNote,
+      handleSelectMenu,
+    },
+    fetchActions: {
+      getUserNotes,
+      getSharedNotes,
+      getOwnedNotes,
+    },
+    fileActions: {
+      handleImportFromLocal,
+      handleArchiveUploadedFiles,
+    },
+    menuHelpers: {
+      getMenu,
+    },
   };
 };
 

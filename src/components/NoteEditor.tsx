@@ -17,8 +17,6 @@ import type { NoteEditorProps } from "types/components";
 
 function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   const { blocksState, focusState, blockActions, focusActions, server, refs } = useControlBlocks();
-  const { updateNoteOnServer } = useControlNotes();
-
   const { blocks, setBlocks } = blocksState;
   const { focusedBlockId, setFocusedBlockId } = focusState;
   const { handleUpdateBlock, handleAddBlock, handleDeleteBlock, handleFocusBlockByArrowKey } =
@@ -26,6 +24,9 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   const { focusNextBlock, focusPrevBlock } = focusActions;
   const { getBlocksFromServer } = server;
   const { blocksRef, cleanUpInvalidBlocksRef } = refs;
+
+  const { noteActions } = useControlNotes();
+  const { updateNoteOnServer } = noteActions;
 
   const prevBlocks = usePrevBlocks(blocks);
   const { draggedIndex, handleBlockDragStart, handleBlockDragEnter, handleBlockDragEnd } =

@@ -15,7 +15,9 @@ import copyIcon from "assets/images/copy-icon.png";
 import * as S from "styles/pages/NoteEditingPageStyle";
 
 function NoteEditingPage() {
-  const { handleSelectMenu, getMenu, handleCopySharedNote } = useControlNotes();
+  const { noteActions, menuHelpers } = useControlNotes();
+  const { handleSelectMenu, handleCopySharedNote } = noteActions;
+  const { getMenu } = menuHelpers;
 
   const [isSaving, setIsSaving] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
