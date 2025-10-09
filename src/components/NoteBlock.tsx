@@ -41,18 +41,7 @@ function NoteBlock(
         setHtmlBackup,
       },
     });
-  const {
-    tag,
-    imageUrl,
-    setImageUrl,
-    fileInputRef,
-    handleChange,
-    handleSelectTag,
-    handleKeyUp,
-    handleKeyDown,
-    handleImageUpload,
-    contentEditableRef,
-  } = useBlockInteraction({
+  const { blockState, refs, handlers } = useBlockInteraction({
     block: {
       id,
       propsTag,
@@ -69,6 +58,10 @@ function NoteBlock(
       handleCloseSelectMenu,
     },
   });
+
+  const { tag, imageUrl, setImageUrl } = blockState;
+  const { fileInputRef, contentEditableRef } = refs;
+  const { handleChange, handleSelectTag, handleKeyUp, handleKeyDown, handleImageUpload } = handlers;
 
   useEffect(() => {
     const isHTMLChanged = propsHtml !== html;

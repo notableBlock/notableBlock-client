@@ -187,16 +187,22 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
   };
 
   return {
-    tag,
-    imageUrl,
-    setImageUrl,
-    fileInputRef,
-    contentEditableRef,
-    handleChange,
-    handleKeyUp,
-    handleKeyDown,
-    handleSelectTag,
-    handleImageUpload,
+    blockState: {
+      tag,
+      imageUrl,
+      setImageUrl,
+    },
+    refs: {
+      fileInputRef,
+      contentEditableRef,
+    },
+    handlers: {
+      handleChange,
+      handleKeyUp,
+      handleKeyDown,
+      handleSelectTag,
+      handleImageUpload,
+    },
   };
 };
 
