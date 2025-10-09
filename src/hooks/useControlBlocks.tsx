@@ -194,20 +194,32 @@ const useControlBlocks = () => {
   };
 
   return {
-    blocks,
-    setBlocks,
-    focusedBlockId,
-    setFocusedBlockId,
-    currentBlockId,
-    handleUpdateBlock,
-    handleAddBlock,
-    handleDeleteBlock,
-    handleFocusBlockByArrowKey,
-    getBlocksFromServer,
-    focusNextBlock,
-    focusPrevBlock,
-    blocksRef,
-    cleanUpInvalidBlocksRef,
+    blocksState: {
+      blocks,
+      setBlocks,
+    },
+    focusState: {
+      focusedBlockId,
+      setFocusedBlockId,
+      currentBlockId,
+    },
+    blockActions: {
+      handleUpdateBlock,
+      handleAddBlock,
+      handleDeleteBlock,
+      handleFocusBlockByArrowKey,
+    },
+    focusActions: {
+      focusNextBlock,
+      focusPrevBlock,
+    },
+    server: {
+      getBlocksFromServer,
+    },
+    refs: {
+      blocksRef,
+      cleanUpInvalidBlocksRef,
+    },
   };
 };
 
