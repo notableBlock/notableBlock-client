@@ -11,22 +11,27 @@ import { tagsMenu } from "assets/data/menu";
 import * as S from "styles/components/SelectMenuStyle";
 
 import type { ForwardedRef } from "react";
+import type { Tag } from "types/block";
 import type { SelectMenuProps } from "types/components";
 
 function SelectMenu(
-  { onSelect, onClose, position, menu, onImportFromLocal }: SelectMenuProps,
+  { onSelect, onClose, position, menu, onImportFromLocal }: SelectMenuProps<Tag>,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();
 
   const { fileInputRef, handleFileInputClick } = useDragDrop();
   const { command, positionAttributes, handleKeyDown } = useControlMenu({
+    menuState: {
+      items,
+      selectionIndex,
+      setSelectionIndex,
+    },
     position,
-    onSelect,
-    items,
-    selectionIndex,
-    onClose,
-    setSelectionIndex,
+    menuHandlers: {
+      onSelect: onSelect as (item: (() => Promise<void>) | Tag) => void,
+      onClose,
+    },
   });
 
   useEffect(() => {
@@ -37,10 +42,13 @@ function SelectMenu(
   }, [command, menu, setItems]);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    if (!handleKeyDown) return;
+
+    const listener = handleKeyDown as unknown as EventListener;
+    document.addEventListener("keydown", listener);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", listener);
     };
   }, [handleKeyDown]);
 
@@ -55,7 +63,7 @@ function SelectMenu(
               type="file"
               accept=".tar"
               ref={fileInputRef}
-              onChange={(event) => onImportFromLocal(event)}
+              onChange={(event) => onImportFromLocal?.(event)}
             />
             <S.MenuItem onClick={handleFileInputClick}>{item.label}</S.MenuItem>
           </S.MenuBox>

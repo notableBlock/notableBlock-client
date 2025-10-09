@@ -36,8 +36,10 @@ function NoteBlock(
 
   const { handleOpenSelectMenu, handleCloseSelectMenu, isSelectMenuOpen, selectMenuPosition } =
     useControlMenu({
-      html,
-      setHtmlBackup,
+      htmlState: {
+        html,
+        setHtmlBackup,
+      },
     });
   const {
     tag,

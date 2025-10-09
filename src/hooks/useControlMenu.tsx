@@ -6,28 +6,36 @@ import { INITIAL_SELECTION_INDEX } from "src/constants";
 
 import type { PointerEvent, KeyboardEvent, Dispatch, SetStateAction } from "react";
 import type { ManageItem, SlashItem, Coordinate } from "types/menu";
+import type { Tag } from "types/block";
 
-interface UseControlMenu {
+interface HtmlState {
   html?: string;
+  setHtmlBackup?: Dispatch<SetStateAction<string>>;
+}
+
+interface MenuState {
   items?: ManageItem[] | SlashItem[];
   selectionIndex?: number;
-  setHtmlBackup?: Dispatch<SetStateAction<string>>;
   setSelectionIndex?: (index: number | ((index: number) => number)) => void;
-  position?: Coordinate;
+}
+
+interface MenuHandlers {
   onSelect?: (item: (() => Promise<void>) | Tag) => void;
   onClose?: () => void;
 }
 
-const useControlMenu = ({
-  html,
-  items,
-  selectionIndex,
-  setHtmlBackup,
-  setSelectionIndex,
-  position,
-  onClose,
-  onSelect,
-}: UseControlMenu) => {
+interface UseControlMenuProps {
+  htmlState?: HtmlState;
+  menuState?: MenuState;
+  position?: Coordinate;
+  menuHandlers?: MenuHandlers;
+}
+
+const useControlMenu = ({ htmlState, menuState, position, menuHandlers }: UseControlMenuProps) => {
+  const { html, setHtmlBackup } = htmlState || {};
+  const { items, selectionIndex, setSelectionIndex } = menuState || {};
+  const { onSelect, onClose } = menuHandlers || {};
+
   const [command, setCommand] = useState("");
   const [isSelectMenuOpen, setIsSelectMenuOpen] = useState(false);
   const [selectMenuPosition, setSelectMenuPosition] = useState<Coordinate>({ x: 0, y: 0 });
