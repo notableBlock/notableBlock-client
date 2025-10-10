@@ -114,13 +114,17 @@ const useControlMenu = ({ htmlState, menuState, position, menuHandlers }: UseCon
   );
 
   return {
-    command,
-    positionAttributes,
-    handleKeyDown,
-    handleOpenSelectMenu,
-    handleCloseSelectMenu,
-    isSelectMenuOpen,
-    selectMenuPosition,
+    menuState: {
+      command,
+      isSelectMenuOpen,
+      selectMenuPosition,
+      positionAttributes,
+    },
+    menuHandlers: {
+      handleKeyDown,
+      handleOpenSelectMenu,
+      handleCloseSelectMenu,
+    },
   };
 };
 

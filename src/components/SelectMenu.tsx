@@ -20,8 +20,14 @@ function SelectMenu(
 ) {
   const { items, setItems, selectionIndex, setSelectionIndex } = useSelectionStore();
 
-  const { fileInputRef, handleFileInputClick } = useDragDrop();
-  const { command, positionAttributes, handleKeyDown } = useControlMenu({
+  const {
+    refs: { fileInputRef },
+    dragHandlers: { handleFileInputClick },
+  } = useDragDrop();
+  const {
+    menuState: { command, positionAttributes },
+    menuHandlers: { handleKeyDown },
+  } = useControlMenu({
     menuState: {
       items,
       selectionIndex,

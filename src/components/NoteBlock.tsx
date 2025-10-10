@@ -34,17 +34,19 @@ function NoteBlock(
   const [htmlBackup, setHtmlBackup] = useState("");
   const [html, setHtml] = useState(propsHtml);
 
-  const { handleOpenSelectMenu, handleCloseSelectMenu, isSelectMenuOpen, selectMenuPosition } =
-    useControlMenu({
-      htmlState: {
-        html,
-        setHtmlBackup,
-      },
-    });
+  const {
+    menuState: { isSelectMenuOpen, selectMenuPosition },
+    menuHandlers: { handleOpenSelectMenu, handleCloseSelectMenu },
+  } = useControlMenu({
+    htmlState: {
+      html,
+      setHtmlBackup,
+    },
+  });
   const {
     blockState: { tag, imageUrl, setImageUrl },
     refs: { fileInputRef, contentEditableRef },
-    handlers: { handleChange, handleSelectTag, handleKeyUp, handleKeyDown, handleImageUpload },
+    blockHandlers: { handleChange, handleSelectTag, handleKeyUp, handleKeyDown, handleImageUpload },
   } = useBlockInteraction({
     block: {
       id,

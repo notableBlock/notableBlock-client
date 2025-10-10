@@ -196,7 +196,7 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
       fileInputRef,
       contentEditableRef,
     },
-    handlers: {
+    blockHandlers: {
       handleChange,
       handleKeyUp,
       handleKeyDown,
