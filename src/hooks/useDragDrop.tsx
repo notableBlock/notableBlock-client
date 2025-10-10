@@ -60,16 +60,22 @@ const useDragDrop = (blocks?: Block[], setBlocks?: SetBlock) => {
   };
 
   return {
-    draggedIndex,
-    handleBlockDragStart,
-    handleBlockDragEnter,
-    handleBlockDragEnd,
-    handleFileDragOver,
-    handleFileDragLeave,
-    handleFileDrop,
-    handleFileInputClick,
-    fileInputRef,
-    isDragging,
+    dragState: {
+      draggedIndex,
+      isDragging,
+    },
+    refs: {
+      fileInputRef,
+    },
+    dragHandlers: {
+      handleBlockDragStart,
+      handleBlockDragEnter,
+      handleBlockDragEnd,
+      handleFileDragOver,
+      handleFileDragLeave,
+      handleFileDrop,
+      handleFileInputClick,
+    },
   };
 };
 

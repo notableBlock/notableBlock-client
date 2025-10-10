@@ -6,12 +6,9 @@ import type { UploadDropZoneProps } from "types/components";
 
 function UploadDropZone({ onUserUpload, fileTypes }: UploadDropZoneProps) {
   const {
-    isDragging,
-    handleFileDrop,
-    handleFileDragOver,
-    handleFileDragLeave,
-    handleFileInputClick,
-    fileInputRef,
+    dragState: { isDragging },
+    refs: { fileInputRef },
+    dragHandlers: { handleFileDrop, handleFileDragOver, handleFileDragLeave, handleFileInputClick },
   } = useDragDrop();
 
   const acceptExtensions =

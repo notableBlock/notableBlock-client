@@ -35,8 +35,10 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   } = useControlNotes();
 
   const prevBlocks = usePrevBlocks(blocks);
-  const { draggedIndex, handleBlockDragStart, handleBlockDragEnter, handleBlockDragEnd } =
-    useDragDrop(blocks, setBlocks);
+  const {
+    dragState: { draggedIndex },
+    dragHandlers: { handleBlockDragStart, handleBlockDragEnter, handleBlockDragEnd },
+  } = useDragDrop(blocks, setBlocks);
   const { noteId } = useParams();
   const { pathname } = useLocation();
 
