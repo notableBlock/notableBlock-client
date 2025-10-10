@@ -31,7 +31,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   } = useControlBlocks();
 
   const {
-    noteActions: { updateNoteOnServer },
+    noteActions: { updateNoteOnServerDebounced },
   } = useControlNotes();
 
   const prevBlocks = usePrevBlocks(blocks);
@@ -63,8 +63,9 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
     if (JSON.stringify(prevBlocks) === JSON.stringify(blocks)) return;
     if (isSharedPage || !noteId) return;
 
-    updateNoteOnServer(blocks, onSaveStatus, noteId);
-  }, [blocks, noteId, prevBlocks, isSharedPage, updateNoteOnServer]);
+    onSaveStatus(false);
+    updateNoteOnServerDebounced(blocks, onSaveStatus, noteId);
+  }, [blocks, noteId, prevBlocks, isSharedPage, updateNoteOnServerDebounced, onSaveStatus]);
 
   useEffect(() => {
     if (!prevBlocks) return;

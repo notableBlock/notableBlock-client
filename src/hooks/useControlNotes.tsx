@@ -15,6 +15,8 @@ import {
 } from "services/noteServices";
 import archiveUploadedFiles from "services/archiveServices";
 
+import useDebouncedSave from "hooks/useDebouncedSave";
+
 import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import type { Note, MockEvent } from "types/note";
 import type { NoteId } from "types/ids";
@@ -63,6 +65,11 @@ const useControlNotes = (setIsLoading?: Dispatch<SetStateAction<boolean>>) => {
     },
     []
   );
+
+  const updateNoteOnServerDebounced = useDebouncedSave(updateNoteOnServer, {
+    delay: 500,
+    maxWait: 5000,
+  });
 
   const handleDeleteNote = useCallback(
     async (noteId: NoteId) => {
@@ -244,7 +251,7 @@ const useControlNotes = (setIsLoading?: Dispatch<SetStateAction<boolean>>) => {
     },
     noteActions: {
       handleCreateNewNote,
-      updateNoteOnServer,
+      updateNoteOnServerDebounced,
       handleCopySharedNote,
       handleSelectMenu,
     },
