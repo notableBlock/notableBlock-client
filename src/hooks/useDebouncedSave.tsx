@@ -5,10 +5,10 @@ interface UseDebouncedSaveOptions {
   maxWait?: number;
 }
 
-function useDebouncedSave<T extends (...args: any[]) => void>(
+const useDebouncedSave = <T extends (...saveParams: any[]) => void>(
   updateNoteOnServer: T,
   { delay, maxWait }: UseDebouncedSaveOptions
-) {
+) => {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const maxWaitTimeoutRef = useRef<NodeJS.Timeout>();
   const lastCallTimeRef = useRef<number>(0);
@@ -55,6 +55,6 @@ function useDebouncedSave<T extends (...args: any[]) => void>(
   }, [cancelTimer]);
 
   return debouncedSave;
-}
+};
 
 export default useDebouncedSave;
