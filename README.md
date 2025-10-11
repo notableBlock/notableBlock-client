@@ -309,15 +309,15 @@ selection.removeAllRanges();
 selection.addRange(range);
 ```
 
-#### 3. 블록 상태의 자동 저장과 동기화
+#### 3. 블록 상태의 디바운스 기반 자동 저장과 동기화
 
-사용자가 입력하거나 블록을 추가, 삭제, 변경할 때마다 매번 저장 버튼을 누르게 하는 방식은 번거롭고 직관적이지 않다고 판단했습니다.  
-따라서 모든 블록의 상태는 자동으로 저장되고 동기화되는 방식으로 구현했습니다.
+사용자가 입력하거나 블록을 추가, 삭제, 변경할 때마다 매번 저장 버튼을 눌러야 하는 방식은 번거롭고 직관적이지 않다고 판단했습니다.  
+따라서 모든 블록의 상태가 자동으로 저장되고 동기화되는 방식을 구현했습니다.
 
 이를 위해 각 블록의 상태는 `blocks`라는 전역 상태 배열로 관리되며,
 상태가 변할 때마다 `useEffect`를 통해 서버에 저장 요청을 보냅니다.  
-하지만 불필요한 네트워크 요청을 줄이기 위해, 이전 블록 상태(`prevBlocks`)와 현재 상태를 비교한 뒤,
-변경된 경우에만 저장 요청이 전송되도록 최적화했습니다.
+다만 불필요한 네트워크 요청을 줄이기 위해, 이전 블록 상태(`prevBlocks`)와 현재 상태를 비교한 뒤,
+변경이 발생한 경우에만 서버로 요청을 전송하도록 최적화했습니다.
 
 ```jsx
 useEffect(() => {
@@ -325,6 +325,47 @@ useEffect(() => {
   updateNoteOnServer(blocks, onSaveStatus, noteId);
 }, [blocks]);
 ```
+
+<br>
+
+하지만 짧은 시간 동안 변경이 지속적으로 발생할 경우, 과도한 서버 요청이 발생하는 비효율이 남아 있었습니다. 따라서 이를 해결하기 위해 디바운스 기반 자동 저장 방식으로 리팩토링을 진행했습니다.
+
+```jsx
+useEffect(() => {
+  if (prevBlocks.length === 0) return;
+  if (JSON.stringify(prevBlocks) === JSON.stringify(blocks)) return;
+  if (isSharedPage || !noteId) return;
+
+  onSaveStatus(false);
+  updateNoteOnServerDebounced(blocks, onSaveStatus, noteId); // 디바운스 저장
+}, [blocks, noteId, prevBlocks, isSharedPage, updateNoteOnServerDebounced, onSaveStatus]);
+```
+
+<br>
+
+`updateNoteOnServerDebounced`는 디바운스 타이머를 적용한 서버 저장 함수로 500ms 이내에 새로운 변경이 발생하면 이전 요청을 취소하고 마지막 변경만 서버로 전송하도록 개선했습니다. 또한 입력이 5초(5000ms)동안 발생하지 않더라도 자동 저장되도록 하여 안정성을 강화했습니다.
+
+```jsx
+const updateNoteOnServerDebounced = useDebouncedSave(updateNoteOnServer, {
+  delay: 500,
+  maxWait: 5000,
+});
+```
+
+리팩토링 이후에는 짧은 시간 내 연속 입력이 발생하더라도 하나의 요청으로 처리되어,
+불필요한 트래픽이 줄고, 데이터 저장 또한 한층 더 효율적으로 동작하게 되었습니다.
+
+<br>
+
+<p align="center">
+  <img width="45%" alt="디바운스 적용 이전" src="https://github.com/user-attachments/assets/81ae4851-d89f-4ea9-a081-c4ef56a20fa9" />
+  <img width="45%" alt="디바운스 적용 이후" src="https://github.com/user-attachments/assets/5c212d62-2002-4692-bcfb-34cfa36e68e7" />
+</p>
+
+<p align="center">
+  <em>좌: 디바운스 적용 전 – 서버에 과도한 요청이 전송되는 모습 / 우: 디바운스 적용 후 – 필요한 요청만 전송되는 모습</em>
+</p>
+
 
 #### 4. 슬래시 명령과 커서 좌표 기반 UI 제어
 
