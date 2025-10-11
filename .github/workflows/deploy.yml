@@ -4,6 +4,21 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "README.md"
+      - ".cursor/**"
+      - ".husky/**"
+      - ".prettierrc"
+      - ".eslint.json"
+      - "eslint.config.js"
+      - "__mocks__/**"
+      - "jest.config.ts"
+      - "jest.setup.ts"
+      - "playwright/**"
+      - "playwright-report/**"
+      - "playwright.config.ts"
+      - "test-results/**"
+      - "tests/**"
 
 jobs:
   test:
