@@ -6,7 +6,7 @@ interface SavingStatusItemProps {
 
 const Layout = styled.div`
   display: flex;
-  width: 85vw;
+  position: relative;
   height: 100%;
 
   @media (max-width: 768px) {
@@ -22,9 +22,9 @@ const Item = styled.div`
 const Status = styled.p<SavingStatusItemProps>`
   position: absolute;
   top: 1rem;
-  left: 20rem;
+  left: calc(4.5% + 1rem);
   color: ${({ $isSaving, theme }) =>
-    $isSaving ? theme.color.successColor : theme.color.failColor};
+    $isSaving ? theme.color.successColor : theme.color.placeholderColor};
 `;
 
 export { Layout, Item, Status };

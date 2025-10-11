@@ -7,6 +7,7 @@ import useDragDrop from "hooks/useDragDrop";
 import useControlMenu from "hooks/useControlMenu";
 
 import { tagsMenu } from "assets/data/menu";
+import { NOTE_EDITING_SELECT_MENU_POSITION } from "src/constants";
 
 import * as S from "styles/components/SelectMenuStyle";
 
@@ -59,7 +60,7 @@ function SelectMenu(
   }, [handleKeyDown]);
 
   return (
-    <S.Layout ref={ref} $position={positionAttributes ?? { top: 0, left: 0 }}>
+    <S.Layout ref={ref} $position={positionAttributes ?? NOTE_EDITING_SELECT_MENU_POSITION}>
       {items.map((item, index) => {
         const isFileInput = item.label === "로컬에서 가져오기";
 

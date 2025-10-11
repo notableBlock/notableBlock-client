@@ -7,6 +7,7 @@ interface NoteBlockItemProps {
 }
 
 const Layout = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   margin-bottom: 1rem;

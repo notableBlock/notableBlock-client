@@ -1,3 +1,8 @@
 const INITIAL_SELECTION_INDEX = 0;
 
-export { INITIAL_SELECTION_INDEX };
+const NOTE_EDITING_SELECT_MENU_POSITION = {
+  top: "calc(100vh - 10rem)",
+  left: "calc(100vw - 7.5rem)",
+};
+
+export { INITIAL_SELECTION_INDEX, NOTE_EDITING_SELECT_MENU_POSITION };

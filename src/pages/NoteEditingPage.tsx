@@ -40,9 +40,7 @@ function NoteEditingPage() {
   return (
     <S.Layout>
       {!isSharedPage && (
-        <S.Status $isSaving={isSaving}>
-          {isSaving ? "자동저장 성공 ✅" : "자동저장 실패 ⛔️"}
-        </S.Status>
+        <S.Status $isSaving={isSaving}>{isSaving ? "저장 완료 ✅" : "입력 감지 중... 💭"}</S.Status>
       )}
       <NoteEditor onSaveStatus={handleSaveStatus} />
       <S.Item>
