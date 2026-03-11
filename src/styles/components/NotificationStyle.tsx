@@ -12,6 +12,7 @@ interface NotiImageProps {
 const Layout = styled.div`
   display: flex;
   flex-direction: column-reverse;
+  width: 100%;
   overflow-x: hidden;
   scrollbar-gutter: stable both-edges;
   color: ${({ theme }) => theme.color.blackColor};

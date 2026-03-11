@@ -9,10 +9,13 @@ interface FormLayoutProps {
 const Layout = styled.div<FormLayoutProps>`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: ${({ $isNotification }) => ($isNotification ? "1.5rem" : "1.5rem 0")};
   overflow: auto;
   justify-content: ${({ $isNotification }) => ($isNotification ? "flex-start" : "center")};
   width: ${({ $isNotification }) => ($isNotification ? "100%" : "17.5rem")};
-  height: ${({ $isNotification }) => ($isNotification ? "auto" : "22.5rem")};
+  height: ${({ $isNotification }) => ($isNotification ? "auto" : "20rem")};
   max-height: 25rem;
   margin: auto;
   border-radius: 0.5rem;
@@ -26,7 +29,7 @@ const Layout = styled.div<FormLayoutProps>`
 const Heading = styled.h2`
   font-size: ${({ theme }) => theme.fontSize.xxxLarge};
   font-weight: ${({ theme }) => theme.fontWeight.title};
-  padding-top: 1rem;
+  padding-top: 0;
 `;
 
 const Icon = styled.img.attrs({
@@ -34,7 +37,7 @@ const Icon = styled.img.attrs({
   alt: "notable-block 로고",
 })`
   margin: auto;
-  width: 5rem;
+  width: 3.5rem;
 `;
 
 export { Layout, Heading, Icon };
