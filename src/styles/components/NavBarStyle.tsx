@@ -44,8 +44,8 @@ const Item = styled.div<NavBarItemProps>`
 `;
 
 const Icon = styled.img.attrs<NavBarImageProps>(({ $picture }) => ({
-  src: $picture || notableBlockLogo,
-  alt: $picture ? "사용자 사진" : "notable-block 로고",
+  src: $picture && $picture.startsWith("http") ? $picture : notableBlockLogo,
+  alt: $picture && $picture.startsWith("http") ? "사용자 사진" : "notable-block 로고",
 }))`
   width: 3rem;
   border-radius: 1rem;
