@@ -39,4 +39,23 @@ const GoogleIcon = styled.img.attrs({
   width: 1rem;
 `;
 
-export { Layout, Button, Message, GoogleIcon };
+const GuestButton = styled.button`
+  display: flex;
+  justify-content: center;
+  width: 10rem;
+  padding: 0.5rem;
+  margin: 0.5rem auto 0;
+  border: 1px solid ${({ theme }) => theme.color.mainColor};
+  border-radius: 0.25rem;
+  color: ${({ theme }) => theme.color.mainColor};
+  font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+  cursor: pointer;
+  background: transparent;
+
+  &:hover {
+    background: ${({ theme }) => theme.color.mainColor};
+    color: ${({ theme }) => theme.color.whiteColor};
+  }
+`;
+
+export { Layout, Button, Message, GoogleIcon, GuestButton };

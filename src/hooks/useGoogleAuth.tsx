@@ -4,7 +4,7 @@ import axios from "axios";
 
 import useUserStore from "stores/useUserStore";
 
-import { login, autoLogin, logout } from "services/googleAuthServices";
+import { login, autoLogin, logout, guestLogin } from "services/googleAuthServices";
 
 const useGoogleAuth = () => {
   const navigate = useNavigate();
@@ -29,6 +29,16 @@ const useGoogleAuth = () => {
     flow: "auth-code",
   });
 
+  const handleGuestLogin = async () => {
+    try {
+      const profile = await guestLogin();
+      setProfile(profile);
+      navigate("/notes");
+    } catch (err) {
+      navigate("/error", { state: { from: location.pathname, message: err.message } });
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -44,6 +54,12 @@ const useGoogleAuth = () => {
     async (error) => {
       if (error.response && error.response.status === 401) {
         if (profile) {
+          if (profile.isGuest) {
+            clearProfile();
+            navigate("/login", { replace: true });
+            return Promise.reject(error);
+          }
+
           try {
             await autoLogin();
 
@@ -64,6 +80,7 @@ const useGoogleAuth = () => {
   return {
     handleLogin,
     handleLogout,
+    handleGuestLogin,
   };
 };
 

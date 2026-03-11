@@ -4,6 +4,7 @@ export interface User {
   userId: UserId;
   name: string;
   picture: string;
+  isGuest?: boolean;
 }
 
 export interface Notification {

@@ -30,4 +30,14 @@ const logout = async () => {
   }
 };
 
-export { login, autoLogin, logout };
+const guestLogin = async () => {
+  try {
+    const { data } = await axios.post("/users/guest");
+    return data.profile;
+  } catch (err) {
+    const errorMessage = err.response?.data?.message || "게스트 로그인에 실패했어요.";
+    throw new Error(errorMessage);
+  }
+};
+
+export { login, autoLogin, logout, guestLogin };
