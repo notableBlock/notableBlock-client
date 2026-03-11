@@ -16,7 +16,7 @@ const Layout = styled.div`
 const Button = styled.button`
   display: flex;
   justify-content: center;
-  width: 10rem;
+  width: 13rem;
   padding: 0.5rem;
   margin: auto;
   gap: 1rem;
@@ -42,20 +42,14 @@ const GoogleIcon = styled.img.attrs({
 const GuestButton = styled.button`
   display: flex;
   justify-content: center;
-  width: 10rem;
+  width: 13rem;
   padding: 0.5rem;
-  margin: 0.5rem auto 0;
-  border: 1px solid ${({ theme }) => theme.color.mainColor};
+  margin: 0 auto;
+  border: 1px solid ${({ theme }) => theme.color.blackColor};
   border-radius: 0.25rem;
-  color: ${({ theme }) => theme.color.mainColor};
+  box-shadow: 0 4px 12px ${({ theme }) => theme.color.shadowColor};
   font-weight: ${({ theme }) => theme.fontWeight.semiBold};
   cursor: pointer;
-  background: transparent;
-
-  &:hover {
-    background: ${({ theme }) => theme.color.mainColor};
-    color: ${({ theme }) => theme.color.whiteColor};
-  }
 `;
 
 export { Layout, Button, Message, GoogleIcon, GuestButton };
