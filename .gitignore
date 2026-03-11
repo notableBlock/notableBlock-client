@@ -37,3 +37,5 @@ playwright/.auth
 # Jest
 .jest
 coverage
+
+CLAUDE.md
