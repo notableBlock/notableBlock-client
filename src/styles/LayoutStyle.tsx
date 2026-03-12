@@ -7,6 +7,11 @@ interface ItemProps {
 const Layout = styled.div`
   display: flex;
   height: 100vh;
+
+  @media screen and (max-width: 768px) {
+    /* 모바일: NavBar가 fixed로 분리되므로 단일 컬럼으로 전환 */
+    flex-direction: column;
+  }
 `;
 
 const Item = styled.div<ItemProps>`
@@ -21,6 +26,11 @@ const Item = styled.div<ItemProps>`
     top: 2rem;
     right: 7rem;
     width: 0;
+
+    @media screen and (max-width: 768px) {
+      /* 햄버거 버튼(left: 1rem, width: 2.5rem)과 겹치지 않도록 우측 배치 */
+      right: 4rem;
+    }
   `}
 `;
 
