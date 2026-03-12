@@ -26,11 +26,6 @@ const Item = styled.div<ItemProps>`
     top: 2rem;
     right: 7rem;
     width: 0;
-
-    @media screen and (max-width: 768px) {
-      /* 햄버거 버튼(left: 1rem, width: 2.5rem)과 겹치지 않도록 우측 배치 */
-      right: 4rem;
-    }
   `}
 `;
 
