@@ -9,8 +9,7 @@ import SelectMenu from "components/SelectMenu";
 import useControlNotes from "hooks/useControlNotes";
 import useOnClickOutside from "hooks/useOnClickOutside";
 
-import plusOptionIcon from "assets/images/plus-option-icon.png";
-import copyIcon from "assets/images/copy-icon.png";
+import { Plus, Copy } from "lucide-react";
 
 import * as S from "styles/pages/NoteEditingPageStyle";
 
@@ -27,7 +26,7 @@ function NoteEditingPage() {
   const { pathname } = useLocation();
 
   const isSharedPage = pathname.indexOf("/shared") !== -1;
-  const buttonImage = isSharedPage ? copyIcon : plusOptionIcon;
+  const buttonIcon = isSharedPage ? <Copy size={20} /> : <Plus size={20} />;
   const plusMenu = getMenu("내 노트 '⋮' 버튼 메뉴");
 
   const handleSaveStatus = (isSuccess: boolean) => setIsSaving(isSuccess);
@@ -47,7 +46,7 @@ function NoteEditingPage() {
         {isOpen && (
           <SelectMenu ref={modalRef} menu={plusMenu(noteId)} onSelect={handleSelectMenu} />
         )}
-        <Button image={buttonImage} onClick={handleMenuOrCopy} />
+        <Button icon={buttonIcon} onClick={handleMenuOrCopy} />
       </S.Item>
     </S.Layout>
   );

@@ -24,7 +24,12 @@ const Item = styled.div<CommonNotePageItemProps>`
       ? `
     position: absolute;
     right: 3rem;
-    bottom: 3rem;`
+    bottom: 3rem;
+
+    @media screen and (max-width: 768px) {
+      right: 1rem;
+      bottom: 1.5rem;
+    }`
       : `
       display: flex;
       justify-content: center;

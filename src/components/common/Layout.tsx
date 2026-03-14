@@ -10,7 +10,7 @@ import NotificationHub from "components/NotificationHub";
 import useControlNotifications from "hooks/useControlNotifications";
 import useOnClickOutside from "hooks/useOnClickOutside";
 
-import notificationIcon from "assets/images/notification-icon.png";
+import { Bell } from "lucide-react";
 
 import * as S from "styles/LayoutStyle";
 
@@ -48,7 +48,7 @@ function Layout() {
           </S.NotiBox>
         )}
         <Button
-          image={notificationIcon}
+          icon={<Bell size={20} />}
           onClick={handleOpenModal}
           type="notification"
           dataTestId="notification-button"

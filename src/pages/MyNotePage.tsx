@@ -7,7 +7,7 @@ import Loading from "components/common/Loading";
 
 import useControlNotes from "hooks/useControlNotes";
 
-import plusOptionIcon from "assets/images/plus-option-icon.png";
+import { Plus } from "lucide-react";
 
 import * as S from "styles/pages/CommonNotePageStyle";
 
@@ -77,7 +77,7 @@ function MyNotePage() {
         </>
       )}
       <S.Item $isOption={true}>
-        <Button image={plusOptionIcon} onClick={handleCreateNewNote} dataTestId="add-note-button" />
+        <Button icon={<Plus size={20} />} onClick={handleCreateNewNote} dataTestId="add-note-button" />
       </S.Item>
     </S.Layout>
   );

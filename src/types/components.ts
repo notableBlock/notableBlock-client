@@ -5,7 +5,8 @@ import type { ManageItem, SlashItem, Coordinate } from "types/menu";
 import type { TreeRoot, MockEvent } from "types/note";
 
 export interface ButtonProps {
-  image: string;
+  image?: string;
+  icon?: ReactNode;
   onClick: (event: MouseEvent<HTMLElement>) => void;
   type?: "kebab" | "notification";
   dataTestId?: string;

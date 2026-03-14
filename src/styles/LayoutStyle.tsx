@@ -26,6 +26,11 @@ const Item = styled.div<ItemProps>`
     top: 2rem;
     right: 7rem;
     width: 0;
+
+    @media screen and (max-width: 768px) {
+      top: 1rem;
+      right: 3.5rem; /* 1rem(여백) + 2.5rem(버튼 너비) = 버튼 오른쪽 가장자리가 뷰포트 right에서 1rem */
+    }
   `}
 `;
 
