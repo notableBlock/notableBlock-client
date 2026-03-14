@@ -33,6 +33,7 @@ const Status = styled.p<SavingStatusItemProps>`
 
   @media screen and (max-width: 768px) {
     left: 4rem;
+    z-index: 10;
   }
 `;
 
