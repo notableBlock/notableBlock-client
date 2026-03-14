@@ -9,6 +9,14 @@ const Layout = styled.div`
   margin: auto;
   background-color: ${({ theme }) => theme.color.noteColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    padding-left: 0.5rem;
+    box-shadow: none;
+  }
 `;
 
 export { Layout };

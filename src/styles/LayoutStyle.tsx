@@ -16,7 +16,8 @@ const Layout = styled.div`
 
 const Item = styled.div<ItemProps>`
   overflow: auto;
-  width: 100vw;
+  flex: 1;
+  min-width: 0;
 
   ${({ $notification }) =>
     $notification === "notification" &&

@@ -29,6 +29,10 @@ const TextItem = styled(ContentEditable)<NoteBlockItemProps>`
   &:focus {
     background-color: ${({ theme }) => theme.color.focusColor};
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 0.625rem;
+  }
 `;
 
 const ImageItem = styled.div<NoteBlockItemProps>`
@@ -40,6 +44,10 @@ const ImageItem = styled.div<NoteBlockItemProps>`
 
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverColor};
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0.625rem;
   }
 `;
 
