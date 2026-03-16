@@ -17,9 +17,11 @@ import shareIcon from "assets/images/share-icon.png";
 
 import * as S from "styles/components/NoteViewerStyle";
 
+import { ALLOWED_BLOCK_TAGS } from "constants/security";
+
 import type { MouseEvent } from "react";
 import type { NoteViewerProps } from "types/components";
-import type { Block } from "types/block";
+import type { Block, Tag } from "types/block";
 import type { Coordinate } from "types/menu";
 
 function NoteViewer({
@@ -79,7 +81,9 @@ function NoteViewer({
       <S.Link to={`/${path}/${noteId}`}>
         <S.Content>
           {textContent.map((block: Block) => {
-            const HTMLTag = block.tag;
+            // 허용되지 않은 태그("script", "iframe" 등)는 "p"로 대체
+            const HTMLTag =
+              block.tag && ALLOWED_BLOCK_TAGS.has(block.tag) ? block.tag : ("p" as Tag);
             const html = DOMPurify.sanitize(block.html);
 
             return <HTMLTag key={block.id} dangerouslySetInnerHTML={{ __html: html }} />;

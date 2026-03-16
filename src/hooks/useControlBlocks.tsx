@@ -1,12 +1,15 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { v4 as uuidv4 } from "uuid";
+import DOMPurify from "isomorphic-dompurify";
 
 import usePrevBlocks from "hooks/usePrevBlocks";
 
 import { getBlocks, deleteNoteImage } from "services/noteServices";
 
 import moveCaretToEnd from "utils/moveCaretToEnd";
+
+import { ALLOWED_BLOCK_TAGS, EDITOR_DOMPURIFY_CONFIG } from "constants/security";
 
 import type { Block, BlockElementsById, CurrentBlock } from "types/block";
 import type { ArrowKey } from "types/menu";
@@ -172,7 +175,22 @@ const useControlBlocks = () => {
     async (noteId: string) => {
       try {
         const fetchedBlocks = await getBlocks(noteId);
-        fetchedBlocks.length ? setBlocks(fetchedBlocks) : setBlocks([initialBlock]);
+
+        if (!fetchedBlocks.length) {
+          setBlocks([initialBlock]);
+          return;
+        }
+
+        // 서버 데이터 정제: XSS 방어를 위해 렌더링 전 sanitize 및 tag 검증 적용
+        const sanitizedBlocks = fetchedBlocks.map((block: Block) => ({
+          ...block,
+          // ContentEditable에 삽입되는 html을 화이트리스트 태그만 허용하도록 정제
+          html: block.html ? DOMPurify.sanitize(block.html, EDITOR_DOMPURIFY_CONFIG) : block.html,
+          // 서버 DB는 String 타입이므로 허용되지 않은 태그("script" 등)는 "p"로 대체
+          tag: block.tag && ALLOWED_BLOCK_TAGS.has(block.tag) ? block.tag : "p",
+        }));
+
+        setBlocks(sanitizedBlocks);
       } catch (err) {
         navigate("/error", {
           state: {

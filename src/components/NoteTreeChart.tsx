@@ -8,6 +8,8 @@ import editorIcon from "assets/images/editor-icon.png";
 import * as d3 from "d3";
 
 import type { HierarchyPointLink, HierarchyPointNode } from "d3";
+import escapeHtml from "utils/escapeHtml";
+
 import type { NoteTreeChartProps } from "types/components";
 import type { TreeRoot } from "types/note";
 
@@ -101,13 +103,13 @@ function NoteTreeChart({ noteTree }: NoteTreeChartProps) {
           .style("display", "block")
           .html(
             d.depth === 0
-              ? `${d.data.name}`
+              ? escapeHtml(d.data.name)
               : `<img src=${noteIcon} alt="노트 아이콘" class="icon" />
-                  ${d.data.title} <br>
+                  ${escapeHtml(d.data.title)} <br>
                   <img src=${creatorIcon} alt="생성자 아이콘" class="icon"/>
-                  생성한 사람: <span class="creator">${d.data.creator}</span> <br>
+                  생성한 사람: <span class="creator">${escapeHtml(d.data.creator)}</span> <br>
                   <img src=${editorIcon} alt="수정자 아이콘" class="icon"/>
-                  수정한 사람: <span class="editor">${d.data.editor}</span>`
+                  수정한 사람: <span class="editor">${escapeHtml(d.data.editor)}</span>`
           )
           .style("left", `${event.pageX}px`)
           .style("top", `${event.pageY}px`);
