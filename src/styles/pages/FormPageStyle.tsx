@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import googleLogo from "assets/images/google-logo.png";
+import notableBlockLogo from "assets/images/notable-block-logo.png";
 
 const Layout = styled.div`
   display: flex;
@@ -39,12 +40,23 @@ const GoogleIcon = styled.img.attrs({
   width: 1rem;
 `;
 
+const NotableBlockIcon = styled.img.attrs({
+  src: notableBlockLogo,
+  alt: "Notable Block 로고",
+})`
+  width: 1rem;
+  height: 1rem;
+  object-fit: contain;
+  transform: scale(1.5);
+`;
+
 const GuestButton = styled.button`
   display: flex;
   justify-content: center;
   width: 13rem;
   padding: 0.5rem;
   margin: 0 auto;
+  gap: 1rem;
   border: 1px solid ${({ theme }) => theme.color.blackColor};
   border-radius: 0.25rem;
   box-shadow: 0 4px 12px ${({ theme }) => theme.color.shadowColor};
@@ -52,4 +64,4 @@ const GuestButton = styled.button`
   cursor: pointer;
 `;
 
-export { Layout, Button, Message, GoogleIcon, GuestButton };
+export { Layout, Button, Message, GoogleIcon, NotableBlockIcon, GuestButton };

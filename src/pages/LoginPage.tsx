@@ -14,7 +14,10 @@ function LoginPage() {
           <S.GoogleIcon />
           구글 로그인 하기
         </S.Button>
-        <S.GuestButton onClick={handleGuestLogin}>게스트로 시작하기</S.GuestButton>
+        <S.GuestButton onClick={handleGuestLogin}>
+          <S.NotableBlockIcon />
+          게스트로 시작하기
+        </S.GuestButton>
       </Form>
     </S.Layout>
   );
