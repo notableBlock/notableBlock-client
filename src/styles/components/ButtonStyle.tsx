@@ -11,6 +11,9 @@ interface ButtonImageProps {
 const Layout = styled.button<ButtonLayoutProps>`
   padding: 0.5rem;
   border-radius: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${({ theme, $isKebabImage }) =>
     $isKebabImage ? theme.color.noteColor : theme.color.mainColor};
   box-shadow: ${({ theme, $isKebabImage }) =>
