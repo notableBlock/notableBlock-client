@@ -24,6 +24,19 @@ const Layout = styled.button<ButtonLayoutProps>`
     height: 3rem;
   }
 
+  ${({ $isKebabImage }) =>
+    $isKebabImage &&
+    `
+    padding: 0;
+    background-color: transparent;
+    color: #000000;
+
+    svg {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  `}
+
   /* 모바일: 알림 버튼을 햄버거 버튼과 동일한 크기로 통일 */
   @media screen and (max-width: 768px) {
     ${({ $isKebabImage }) =>

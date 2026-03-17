@@ -6,7 +6,8 @@ import SelectMenu from "components/SelectMenu";
 
 import useOnClickOutside from "hooks/useOnClickOutside";
 
-import kebabMenuIcon from "assets/images/kebab-menu-icon.png";
+import { EllipsisVertical } from "lucide-react";
+
 import calendarIcon from "assets/images/calendar-icon.png";
 import editCalendarIcon from "assets/images/edit-calendar-icon.png";
 import creatorIcon from "assets/images/creator-icon.png";
@@ -72,7 +73,7 @@ function NoteViewer({
           />
         )}
         <Button
-          image={kebabMenuIcon}
+          icon={<EllipsisVertical />}
           onClick={handleOpenModal}
           type="kebab"
           dataTestId="kebab-menu-button"

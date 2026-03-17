@@ -21,6 +21,9 @@ declare module "styled-components" {
       redColor: string;
       blackColor: string;
       whiteColor: string;
+      cardBgColor: string;
+      metaTextColor: string;
+      contentTextColor: string;
     };
 
     fontSize: {

@@ -20,6 +20,9 @@ const theme: DefaultTheme = {
     redColor: "#ff0000",
     blackColor: "#000000",
     whiteColor: "#FFFFFF",
+    cardBgColor: "#FAFAFA",
+    metaTextColor: "#6B7280",
+    contentTextColor: "#1F2937",
   },
 
   fontSize: {
