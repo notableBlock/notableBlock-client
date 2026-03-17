@@ -14,13 +14,10 @@ const Layout = styled.div`
     0 1px 2px rgba(0, 0, 0, 0.06);
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: calc(100% - 2rem);
     height: 100%;
     padding: 1rem 1.25rem 1rem 0.5rem;
     padding-top: 2.5rem;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
   }
 `;
 

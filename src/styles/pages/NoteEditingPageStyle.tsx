@@ -32,7 +32,7 @@ const Status = styled.p<SavingStatusItemProps>`
     $isSaving ? theme.color.successColor : theme.color.placeholderColor};
 
   @media screen and (max-width: 768px) {
-    left: 2.25rem;
+    left: calc(1rem + 0.5rem);
     z-index: 10;
   }
 `;
