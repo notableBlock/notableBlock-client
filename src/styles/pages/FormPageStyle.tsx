@@ -17,8 +17,9 @@ const Layout = styled.div`
 const Button = styled.button`
   display: flex;
   justify-content: center;
-  width: 13rem;
-  padding: 0.5rem;
+  min-width: 13rem;
+  width: fit-content;
+  padding: 0.5rem 1.5rem;
   margin: auto;
   gap: 1rem;
   border: 1px solid ${({ theme }) => theme.color.blackColor};
