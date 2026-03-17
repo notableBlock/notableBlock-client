@@ -9,6 +9,7 @@ interface NavBarItemProps {
 
 interface NavBarImageProps {
   $picture?: string;
+  $size?: string;
 }
 
 interface NavLinkProps {
@@ -67,6 +68,12 @@ const Item = styled.div<NavBarItemProps>`
     $type === "title" ? theme.fontWeight.title : theme.fontWeight.normal};
   cursor: ${({ $type }) => ($type === "logout" ? "pointer" : "default")};
 
+  & > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   &:hover {
     background-color: ${({ $type, theme }) =>
       $type === "logout" ? theme.color.activeColor : "transparent"};
@@ -77,7 +84,8 @@ const Icon = styled.img.attrs<NavBarImageProps>(({ $picture }) => ({
   src: $picture && $picture.startsWith("http") ? $picture : notableBlockLogo,
   alt: $picture && $picture.startsWith("http") ? "사용자 사진" : "notable-block 로고",
 }))`
-  width: 3rem;
+  width: ${({ $size }) => $size || "3rem"};
+  flex-shrink: 0;
   border-radius: 1rem;
 `;
 

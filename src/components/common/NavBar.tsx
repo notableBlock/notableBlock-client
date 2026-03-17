@@ -75,7 +75,7 @@ function NavBar() {
         </S.Link>
         <S.Section>
           <S.Item>
-            <S.Icon $picture={userPicture} /> <p>{`${userName}님`}</p>
+            <S.Icon $picture={userPicture} $size="2rem" /> <p>{`${userName}님`}</p>
           </S.Item>
           <S.Item onClick={handleLogout} $type="logout">
             ◀ 로그아웃
