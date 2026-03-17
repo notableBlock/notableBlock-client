@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
 
 import useNotificationStore from "stores/useNotificationStore";
 
@@ -10,8 +9,6 @@ import * as S from "styles/components/NotificationStyle";
 import type { Notification } from "types/models";
 
 function Toast() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { toast, setToast, isToastVisible, setIsToastVisible } = useNotificationStore();
 
   useEffect(() => {
@@ -25,6 +22,9 @@ function Toast() {
   }, [isToastVisible, setIsToastVisible]);
 
   useEffect(() => {
+    const MAX_RETRY = 3;
+    let retryCount = 0;
+
     const eventSource = new EventSource(`${import.meta.env.VITE_SERVER_URL}/notification/live`, {
       withCredentials: true,
     });
@@ -36,19 +36,22 @@ function Toast() {
         setToast([fullDocument]);
       }
       setIsToastVisible(true);
+      retryCount = 0;
     };
 
     eventSource.onerror = () => {
-      navigate("/error", {
-        state: { from: location.pathname, message: "알림 수신에 실패했어요." },
-      });
-      eventSource.close();
+      retryCount += 1;
+
+      if (retryCount >= MAX_RETRY) {
+        console.warn(`SSE 연결이 ${MAX_RETRY}회 실패하여 알림 수신을 중단합니다.`);
+        eventSource.close();
+      }
     };
 
     return () => {
       eventSource.close();
     };
-  }, [setToast, setIsToastVisible, navigate, location]);
+  }, [setToast, setIsToastVisible]);
 
   return (
     <>
