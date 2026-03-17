@@ -28,6 +28,17 @@ const MessageBox = styled.div<NotiMessageProps>`
   border-radius: 0.35rem;
   background-color: ${({ theme }) => theme.color.whiteColor};
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
+
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0.375rem 0.5rem;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    text-align: left;
+  }
 `;
 
 const LinkBox = styled.div`
@@ -35,6 +46,10 @@ const LinkBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
+  @media screen and (max-width: 768px) {
+    gap: 0.75rem;
+  }
 `;
 
 const Link = styled(NavLink)`
@@ -49,6 +64,10 @@ const Link = styled(NavLink)`
 const Button = styled.button`
   font-size: ${({ theme }) => theme.fontSize.medium};
   color: ${({ theme }) => theme.color.mainColor};
+
+  @media screen and (max-width: 768px) {
+    padding: 0.5rem 0.75rem;
+  }
 `;
 
 const slideInRight = keyframes`
