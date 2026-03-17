@@ -27,12 +27,12 @@ const Item = styled.div`
 const Status = styled.p<SavingStatusItemProps>`
   position: absolute;
   top: 1rem;
-  left: calc(4.5% + 1rem);
+  left: calc(5% + 2rem);
   color: ${({ $isSaving, theme }) =>
     $isSaving ? theme.color.successColor : theme.color.placeholderColor};
 
   @media screen and (max-width: 768px) {
-    left: 4rem;
+    left: 2.25rem;
     z-index: 10;
   }
 `;
