@@ -38,6 +38,8 @@ const MessageBox = styled.div<NotiMessageProps>`
     gap: 0.25rem;
     font-size: 0.875rem;
     text-align: left;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 `;
 
@@ -112,6 +114,11 @@ const Icon = styled.img.attrs<NotiImageProps>(({ $src }) => ({
   width: 1.75rem;
   vertical-align: middle;
   margin: 0 0.5rem 0 1rem;
+
+  @media screen and (max-width: 768px) {
+    width: 1.25rem;
+    margin: 0 0.25rem 0 0.5rem;
+  }
 `;
 
 export { Layout, MessageBox, LinkBox, SlideIn, SlideOut, Link, Button, Icon };

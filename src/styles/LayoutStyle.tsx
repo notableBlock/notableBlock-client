@@ -41,8 +41,12 @@ const NotiBox = styled.div`
   width: 45rem;
 
   @media screen and (max-width: 768px) {
+    position: fixed;
+    top: 3.5rem;
+    left: 1rem;
     right: 1rem;
-    width: 37.5rem;
+    width: auto;
+    z-index: 100;
   }
 `;
 
