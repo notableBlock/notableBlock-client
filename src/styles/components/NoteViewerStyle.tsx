@@ -138,4 +138,16 @@ const Icon = styled.img.attrs<NoteViewerImageProps>(({ $src }) => ({
   }
 `;
 
-export { Layout, Header, Content, Footer, Section, Icon, Link };
+const PreviewImage = styled.img`
+  max-width: 100%;
+  max-height: 6rem;
+  object-fit: contain;
+  border-radius: 0.25rem;
+  margin-bottom: 0.375rem;
+
+  @media screen and (max-width: 768px) {
+    max-height: 4rem;
+  }
+`;
+
+export { Layout, Header, Content, Footer, Section, Icon, Link, PreviewImage };

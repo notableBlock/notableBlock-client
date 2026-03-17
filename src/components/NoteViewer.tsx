@@ -41,7 +41,6 @@ function NoteViewer({
   const [kebabMenuPosition, setKebabMenuPosition] = useState<Coordinate>({ x: 0, y: 0 });
   const modalRef = useRef(null);
 
-  const textContent = content.filter((block: Block) => block.tag !== "img");
   const isSharedPage = path === "shared";
   const shareStatus = isShared ? "공유 상태" : "비공유 상태";
   const shareStatusIcon = isSharedPage ? shareIcon : isShared ? unlockIcon : lockIcon;
@@ -81,11 +80,27 @@ function NoteViewer({
       </S.Header>
       <S.Link to={`/${path}/${noteId}`}>
         <S.Content>
-          {textContent.map((block: Block) => {
-            // 허용되지 않은 태그("script", "iframe" 등)는 "p"로 대체
+          {content.map((block: Block) => {
+            // 이미지 블록: imageUrl이 있으면 img 태그로 렌더링
+            if (block.tag === "img") {
+              if (!block.imageUrl) return null;
+              return (
+                <S.PreviewImage
+                  key={block.id}
+                  src={block.imageUrl}
+                  alt="노트 이미지"
+                  loading="lazy"
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              );
+            }
+
+            // 텍스트 블록: 허용되지 않은 태그("script", "iframe" 등)는 "p"로 대체
             const HTMLTag =
               block.tag && ALLOWED_BLOCK_TAGS.has(block.tag) ? block.tag : ("p" as Tag);
-            const html = DOMPurify.sanitize(block.html);
+            const html = DOMPurify.sanitize(block.html ?? "");
 
             return <HTMLTag key={block.id} dangerouslySetInnerHTML={{ __html: html }} />;
           })}
