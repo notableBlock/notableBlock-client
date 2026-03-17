@@ -69,14 +69,21 @@ const NotiCount = styled.p`
   position: absolute;
   left: 2rem;
   width: 1.5rem;
-  border-radius: 5rem;
+  height: 1.5rem;
+  border-radius: 50%;
   background-color: ${({ theme }) => theme.color.redColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  line-height: 1;
 
   /* 모바일: 축소된 버튼에 맞게 뱃지 위치·크기 조정 */
   @media screen and (max-width: 768px) {
     left: 1.25rem;
     width: 1.25rem;
-    font-size: 0.7rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
   }
 `;
 
