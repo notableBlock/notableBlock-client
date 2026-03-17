@@ -5,7 +5,7 @@ import DOMPurify from "isomorphic-dompurify";
 
 import usePrevBlocks from "hooks/usePrevBlocks";
 
-import { getBlocks, deleteNoteImage } from "services/noteServices";
+import { getBlocks, getSharedBlocks, deleteNoteImage } from "services/noteServices";
 
 import moveCaretToEnd from "utils/moveCaretToEnd";
 
@@ -172,9 +172,11 @@ const useControlBlocks = () => {
   }, [blocks, currentBlockId, prevBlocks]);
 
   const getBlocksFromServer = useCallback(
-    async (noteId: string) => {
+    async (noteId: string, isShared: boolean = false) => {
       try {
-        const fetchedBlocks = await getBlocks(noteId);
+        const fetchedBlocks = isShared
+          ? await getSharedBlocks(noteId)
+          : await getBlocks(noteId);
 
         if (!fetchedBlocks.length) {
           setBlocks([initialBlock]);

@@ -46,6 +46,18 @@ const getBlocks = async (noteId: NoteId) => {
   }
 };
 
+const getSharedBlocks = async (noteId: NoteId) => {
+  try {
+    const { data } = await axios.get(`/shared/${noteId}`);
+    const { blocks } = data;
+
+    return blocks;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 const updateNote = async (blocks: Block[], noteId: NoteId) => {
   try {
     await axios.put("/notes", {
@@ -180,6 +192,7 @@ export {
   createNote,
   getAllNote,
   getBlocks,
+  getSharedBlocks,
   deleteNote,
   shareNote,
   exportNote,

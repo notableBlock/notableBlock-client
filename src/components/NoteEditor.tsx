@@ -51,7 +51,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
       if (!noteId) return;
 
       setIsLoading(true);
-      await getBlocksFromServer(noteId);
+      await getBlocksFromServer(noteId, isSharedPage);
       setIsLoading(false);
     };
 
