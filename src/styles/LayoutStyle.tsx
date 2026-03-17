@@ -27,6 +27,7 @@ const Item = styled.div<ItemProps>`
     top: 2rem;
     right: 7rem;
     width: 0;
+    z-index: 20;
 
     @media screen and (max-width: 768px) {
       top: 1rem;

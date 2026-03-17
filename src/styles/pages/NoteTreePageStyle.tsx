@@ -18,6 +18,7 @@ const UnorderedList = styled.ul<UnorderedListProps>`
   position: absolute;
   top: 3rem;
   left: 15rem;
+  right: 8rem;
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 0.25rem 0.75rem ${({ theme }) => theme.color.shadowColor};
@@ -36,6 +37,11 @@ const UnorderedList = styled.ul<UnorderedListProps>`
   li span {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.color.mainColor};
+  }
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    gap: 1rem;
   }
 
   @media screen and (max-width: 768px) {
@@ -82,6 +88,16 @@ const InfoBox = styled.div`
 
   &:last-child {
     border-right: none;
+  }
+
+  @media screen and (max-width: 1024px) {
+    min-width: 0;
+    border-right: none;
+    border-bottom: 1px solid ${({ theme }) => theme.color.shadowColor};
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
   @media screen and (max-width: 768px) {
