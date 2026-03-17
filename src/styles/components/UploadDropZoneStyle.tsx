@@ -50,9 +50,10 @@ const Layout = styled.div<UploadDropZoneLayoutProps>`
     color: ${theme.color.mainColor};
   `}
 
-  @media screen and (max-width : 768px) {
-    width: 15rem;
-    height: 30rem;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 1.5rem 1rem;
+    gap: 1rem;
   }
 `;
 
@@ -60,8 +61,12 @@ const Item = styled.div`
   display: flex;
   flex-direction: column;
   width: 30vw;
-  height: 3rem;
   gap: 1rem;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    gap: 0.5rem;
+  }
 `;
 
 const Icon = styled.img.attrs<UploadDropZoneImageProps>(({ $fileTypes }) => ({
@@ -71,6 +76,12 @@ const Icon = styled.img.attrs<UploadDropZoneImageProps>(({ $fileTypes }) => ({
   width: 5rem;
   height: 5rem;
   margin-bottom: 0.75rem;
+
+  @media screen and (max-width: 768px) {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 export { Layout, Item, Icon };

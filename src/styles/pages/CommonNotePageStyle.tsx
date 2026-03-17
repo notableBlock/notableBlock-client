@@ -33,8 +33,16 @@ const Item = styled.div<CommonNotePageItemProps>`
       : `
       display: flex;
       justify-content: center;
-      align-items: center;;
+      align-items: stretch;
       gap: 1.5rem;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        padding: 0 1rem;
+      }
     `}
 `;
 
