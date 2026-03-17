@@ -15,6 +15,7 @@ const Layout = styled.div`
 
   @media screen and (max-width: 768px) {
     margin: 3rem 0 3rem 0;
+    gap: 1.5rem;
   }
 `;
 
