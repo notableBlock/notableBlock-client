@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { CONTENT_MAX_WIDTH } from "styles/layoutConstants";
+
 interface CommonNotePageItemProps {
   $isOption?: boolean;
 }
@@ -36,12 +38,15 @@ const Item = styled.div<CommonNotePageItemProps>`
       justify-content: center;
       align-items: stretch;
       gap: 1.5rem;
+      width: 100%;
+      max-width: ${CONTENT_MAX_WIDTH};
 
       @media screen and (max-width: 768px) {
         flex-direction: column;
         align-items: center;
         gap: 1rem;
         width: 100%;
+        max-width: none;
         padding: 0 1rem;
       }
     `}

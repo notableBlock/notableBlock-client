@@ -60,11 +60,13 @@ const Layout = styled.div<UploadDropZoneLayoutProps>`
 const Item = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  flex: 1;
+  min-width: 0;
   gap: 1rem;
 
   @media screen and (max-width: 768px) {
     width: 100%;
+    flex: none;
     gap: 0.5rem;
   }
 `;

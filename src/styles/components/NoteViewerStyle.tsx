@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { NavLink } from "react-router";
 
+import { CONTENT_MAX_WIDTH } from "styles/layoutConstants";
+
 interface NoteViewerImageProps {
   $src: string;
 }
@@ -8,7 +10,8 @@ interface NoteViewerImageProps {
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 100%;
+  max-width: ${CONTENT_MAX_WIDTH};
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   background-color: ${({ theme }) => theme.color.cardBgColor};
   border-radius: 0.75rem;
@@ -21,6 +24,7 @@ const Layout = styled.div`
 
   @media screen and (max-width: 768px) {
     width: 100%;
+    max-width: none;
     border-radius: 0;
   }
 `;
