@@ -21,6 +21,7 @@ const Layout = styled.div<UploadDropZoneLayoutProps>`
   border: 2px dashed ${({ theme }) => theme.color.borderColor};
   border-radius: 0.75rem;
   text-align: center;
+  word-break: keep-all;
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
