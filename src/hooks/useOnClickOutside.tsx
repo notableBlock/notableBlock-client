@@ -11,10 +11,10 @@ const useOnClickOutside = (ref: RefObject<HTMLDivElement>, handler: Handler) => 
       handler();
     };
 
-    document.addEventListener("mousedown", listener);
+    document.addEventListener("mousedown", listener, true);
 
     return () => {
-      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("mousedown", listener, true);
     };
   }, [ref, handler]);
 };
