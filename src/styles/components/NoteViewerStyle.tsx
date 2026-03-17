@@ -65,9 +65,8 @@ const Footer = styled.div`
   padding: 0.75rem;
 
   @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
   }
 `;
 
@@ -78,6 +77,7 @@ const Section = styled.div`
 
   @media screen and (max-width: 768px) {
     font-size: 0.875rem;
+    min-width: 40%;
   }
 `;
 
