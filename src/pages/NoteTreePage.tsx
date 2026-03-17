@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+import { Info, X } from "lucide-react";
 
 import Loading from "components/common/Loading";
 import NoteTreeChart from "components/NoteTreeChart";
@@ -6,6 +8,7 @@ import NoteTreeChart from "components/NoteTreeChart";
 import useUserStore from "stores/useUserStore";
 
 import useControlNotes from "hooks/useControlNotes";
+import useOnClickOutside from "hooks/useOnClickOutside";
 
 import convertToTree from "utils/convertToTree";
 
@@ -30,9 +33,23 @@ function NoteTreePage() {
   } = useControlNotes();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const infoRef = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(infoRef, () => setIsInfoOpen(false));
 
   if (!profile) return;
   const noteTree = convertToTree(fetchedOwnedNotes, profile);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsInfoOpen(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -47,7 +64,16 @@ function NoteTreePage() {
   return (
     <S.Layout>
       {isLoading ? <Loading /> : <NoteTreeChart noteTree={noteTree} />}
-      <S.UnorderedList>
+      <div ref={infoRef}>
+        <S.InfoToggleButton
+          onClick={() => setIsInfoOpen((prev) => !prev)}
+          aria-label={isInfoOpen ? "정보 패널 닫기" : "정보 패널 열기"}
+          aria-expanded={isInfoOpen}
+          aria-controls="info-panel"
+        >
+          {isInfoOpen ? <X size={20} /> : <Info size={20} />}
+        </S.InfoToggleButton>
+        <S.UnorderedList id="info-panel" $isInfoOpen={isInfoOpen}>
         <S.InfoBox>
           <S.InfoHeader>
             <S.Icon $src={toolIcon} alt="도구 아이콘" />
@@ -98,7 +124,8 @@ function NoteTreePage() {
             <span>비공유 노트</span> - 수정한 사람만 볼 수 있어요.
           </li>
         </S.InfoBox>
-      </S.UnorderedList>
+        </S.UnorderedList>
+      </div>
     </S.Layout>
   );
 }
