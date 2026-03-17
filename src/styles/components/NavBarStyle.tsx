@@ -65,7 +65,12 @@ const Item = styled.div<NavBarItemProps>`
   padding: 1rem;
   font-weight: ${({ $type, theme }) =>
     $type === "title" ? theme.fontWeight.title : theme.fontWeight.normal};
-  cursor: ${({ $type }) => ($type === "logout" ? "pointer" : "defaults")};
+  cursor: ${({ $type }) => ($type === "logout" ? "pointer" : "default")};
+
+  &:hover {
+    background-color: ${({ $type, theme }) =>
+      $type === "logout" ? theme.color.activeColor : "transparent"};
+  }
 `;
 
 const Icon = styled.img.attrs<NavBarImageProps>(({ $picture }) => ({
