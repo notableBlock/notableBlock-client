@@ -27,7 +27,7 @@ const Item = styled.div`
 const Status = styled.p<SavingStatusItemProps>`
   position: absolute;
   top: 1rem;
-  left: calc(5% + 2rem);
+  left: calc(5% + 1rem);
   color: ${({ $isSaving, theme }) =>
     $isSaving ? theme.color.successColor : theme.color.placeholderColor};
 
