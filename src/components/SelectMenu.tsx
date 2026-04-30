@@ -59,8 +59,14 @@ function SelectMenu(
     };
   }, [handleKeyDown]);
 
+  const isExpanded = items.some((item) => "icon" in item && Boolean(item.icon));
+
   return (
-    <S.Layout ref={ref} $position={positionAttributes ?? NOTE_EDITING_SELECT_MENU_POSITION}>
+    <S.Layout
+      ref={ref}
+      $position={positionAttributes ?? NOTE_EDITING_SELECT_MENU_POSITION}
+      $expanded={isExpanded}
+    >
       {items.map((item, index) => {
         const isFileInput = item.label === "로컬에서 가져오기";
 

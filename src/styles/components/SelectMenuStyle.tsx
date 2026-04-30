@@ -5,6 +5,7 @@ interface SelectMenuLayoutProps {
     top: number | string;
     left: number | string;
   };
+  $expanded?: boolean;
 }
 
 interface SelectMenuItemProps {
@@ -19,7 +20,9 @@ const Layout = styled.div<SelectMenuLayoutProps>`
   left: ${({ $position }) =>
     typeof $position.left === "number" ? $position.left + "px" : $position.left};
   flex-direction: column;
-  width: 16rem;
+  width: ${({ $expanded }) => ($expanded ? "16rem" : "max-content")};
+  min-width: ${({ $expanded }) => ($expanded ? "auto" : "6rem")};
+  max-width: 16rem;
   max-height: 18rem;
   overflow-y: auto;
   background-color: ${({ theme }) => theme.color.whiteColor};
@@ -30,7 +33,7 @@ const Layout = styled.div<SelectMenuLayoutProps>`
   z-index: 1000;
 
   @media screen and (max-width: 768px) {
-    width: min(16rem, 90vw);
+    max-width: min(16rem, 90vw);
   }
 `;
 
