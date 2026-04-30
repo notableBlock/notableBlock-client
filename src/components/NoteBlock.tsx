@@ -46,7 +46,14 @@ function NoteBlock(
   const {
     blockState: { tag, imageUrl, setImageUrl },
     refs: { fileInputRef, contentEditableRef },
-    blockHandlers: { handleChange, handleSelectTag, handleKeyUp, handleKeyDown, handleImageUpload },
+    blockHandlers: {
+      handleChange,
+      handleSelectTag,
+      handleKeyUp,
+      handleKeyDown,
+      handleImageUpload,
+      handleBlur,
+    },
   } = useBlockInteraction({
     block: {
       id,
@@ -128,6 +135,7 @@ function NoteBlock(
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onKeyUp={handleKeyUp}
+          onBlur={handleBlur}
           onClick={isSharedPage ? () => {} : onClick}
           $isDragging={isDragging}
           disabled={isSharedPage}

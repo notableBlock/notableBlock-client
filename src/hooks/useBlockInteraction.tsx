@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router";
+import hljs from "highlight.js/lib/common";
 
 import { useBlockActions } from "contexts/BlockActionsContext";
 
@@ -196,6 +197,17 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
     }
   };
 
+  const handleBlur = useCallback(() => {
+    if (tag !== "code") return;
+    if (!contentEditableRef.current) return;
+
+    const plainText = contentEditableRef.current.innerText;
+    if (!plainText.trim()) return;
+
+    const highlighted = hljs.highlightAuto(plainText).value.replace(/\n/g, "<br>");
+    setHtml(highlighted);
+  }, [tag, setHtml]);
+
   const handleImageUpload = async () => {
     if (!fileInputRef.current || !fileInputRef.current.files) return;
 
@@ -229,6 +241,7 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
       handleKeyDown,
       handleSelectTag,
       handleImageUpload,
+      handleBlur,
     },
   };
 };

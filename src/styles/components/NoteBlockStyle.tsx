@@ -61,6 +61,38 @@ const Layout = styled.div`
       padding: 0.75rem 1rem;
     }
   }
+
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-built_in {
+    color: #cba6f7;
+  }
+  .hljs-string,
+  .hljs-attr {
+    color: #a6e3a1;
+  }
+  .hljs-number,
+  .hljs-literal {
+    color: #fab387;
+  }
+  .hljs-comment,
+  .hljs-quote {
+    color: #6c7086;
+    font-style: italic;
+  }
+  .hljs-function .hljs-title,
+  .hljs-title.function_ {
+    color: #89b4fa;
+  }
+  .hljs-title,
+  .hljs-name,
+  .hljs-tag {
+    color: #89dceb;
+  }
+  .hljs-variable,
+  .hljs-params {
+    color: #f5e0dc;
+  }
 `;
 
 const TextItem = styled(ContentEditable)<NoteBlockItemProps>`
