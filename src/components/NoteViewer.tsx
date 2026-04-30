@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import DOMPurify from "isomorphic-dompurify";
+import hljs from "highlight.js/lib/common";
 
 import Button from "components/common/Button";
 import SelectMenu from "components/SelectMenu";
@@ -95,6 +96,21 @@ function NoteViewer({
                   }}
                 />
               );
+            }
+
+            // 코드 블록: <br> → \n 변환 후 highlight.js 자동 감지로 구문 강조
+            if (block.tag === "code") {
+              const sanitized = DOMPurify.sanitize(block.html ?? "");
+              const plainText = sanitized
+                .replace(/<br\s*\/?>/gi, "\n")
+                .replace(/<[^>]+>/g, "")
+                .replace(/&lt;/g, "<")
+                .replace(/&gt;/g, ">")
+                .replace(/&amp;/g, "&")
+                .replace(/&nbsp;/g, " ");
+              const highlighted = hljs.highlightAuto(plainText).value;
+
+              return <code key={block.id} dangerouslySetInnerHTML={{ __html: highlighted }} />;
             }
 
             // 텍스트 블록: 허용되지 않은 태그("script", "iframe" 등)는 "p"로 대체

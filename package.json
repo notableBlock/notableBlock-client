@@ -29,6 +29,7 @@
     "axios": "^1.7.7",
     "d3": "^7.9.0",
     "dotenv": "^16.4.7",
+    "highlight.js": "^11.11.1",
     "isomorphic-dompurify": "^2.18.0",
     "lucide-react": "^0.577.0",
     "match-sorter": "^8.0.0",

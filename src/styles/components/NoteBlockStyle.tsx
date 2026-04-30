@@ -35,6 +35,32 @@ const Layout = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.normal};
     line-height: 1.7;
   }
+
+  code {
+    display: block;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    tab-size: 2;
+
+    &:hover,
+    &:focus {
+      background-color: #1e1e2e;
+      box-shadow: inset 2px 0 0 ${({ theme }) => theme.color.mainColor};
+    }
+
+    @media screen and (max-width: 768px) {
+      font-size: 0.8125rem;
+      padding: 0.75rem 1rem;
+    }
+  }
 `;
 
 const TextItem = styled(ContentEditable)<NoteBlockItemProps>`

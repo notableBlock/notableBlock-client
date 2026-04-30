@@ -1,7 +1,11 @@
 import type { BlockId } from "types/ids";
 
-export type BlockElement = HTMLHeadingElement | HTMLParagraphElement | HTMLImageElement;
-export type Tag = "h1" | "h2" | "h3" | "p" | "img";
+export type BlockElement =
+  | HTMLHeadingElement
+  | HTMLParagraphElement
+  | HTMLImageElement
+  | HTMLElement;
+export type Tag = "h1" | "h2" | "h3" | "p" | "img" | "code";
 
 export interface Block {
   id: BlockId;

@@ -72,7 +72,11 @@ function SelectMenu(
               ref={fileInputRef}
               onChange={(event) => onImportFromLocal?.(event)}
             />
-            <S.MenuItem onClick={handleFileInputClick}>{item.label}</S.MenuItem>
+            <S.MenuItem onClick={handleFileInputClick}>
+              <S.TextBox>
+                <S.Label>{item.label}</S.Label>
+              </S.TextBox>
+            </S.MenuItem>
           </S.MenuBox>
         ) : (
           <S.MenuItem
@@ -88,7 +92,17 @@ function SelectMenu(
               setSelectionIndex(index);
             }}
           >
-            {item.label}
+            {item.icon && (
+              <S.IconBox $isSelected={index === selectionIndex}>{item.icon}</S.IconBox>
+            )}
+            <S.TextBox>
+              <S.Label>{item.label}</S.Label>
+              {item.description && (
+                <S.Description $isSelected={index === selectionIndex}>
+                  {item.description}
+                </S.Description>
+              )}
+            </S.TextBox>
           </S.MenuItem>
         );
       })}

@@ -82,6 +82,56 @@ const Content = styled.div`
     color: ${({ theme }) => theme.color.metaTextColor};
   }
 
+  code {
+    display: block;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    padding: 1rem 1.25rem;
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    tab-size: 2;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-built_in {
+    color: #cba6f7;
+  }
+  .hljs-string,
+  .hljs-attr {
+    color: #a6e3a1;
+  }
+  .hljs-number,
+  .hljs-literal {
+    color: #fab387;
+  }
+  .hljs-comment,
+  .hljs-quote {
+    color: #6c7086;
+    font-style: italic;
+  }
+  .hljs-function .hljs-title,
+  .hljs-title.function_ {
+    color: #89b4fa;
+  }
+  .hljs-title,
+  .hljs-name,
+  .hljs-tag {
+    color: #89dceb;
+  }
+  .hljs-variable,
+  .hljs-params {
+    color: #f5e0dc;
+  }
+
   &::after {
     content: "";
     position: absolute;

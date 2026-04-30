@@ -67,12 +67,26 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
 
   const handleEnterKey = useCallback(
     (event: KeyboardEvent) => {
-      if (previousKeyRef.current === "Shift" || isSelectMenuOpenRef.current) return;
+      if (isSelectMenuOpenRef.current) return;
+
+      // 코드 블록: Enter는 줄바꿈, Shift+Enter는 새 블록 (다른 블록과 반대)
+      if (tag === "code") {
+        if (previousKeyRef.current === "Shift") {
+          event.preventDefault();
+          handleAddBlock({ id });
+          return;
+        }
+        event.preventDefault();
+        document.execCommand("insertLineBreak");
+        return;
+      }
+
+      if (previousKeyRef.current === "Shift") return;
       event.preventDefault();
 
       handleAddBlock({ id });
     },
-    [id, handleAddBlock]
+    [id, tag, handleAddBlock]
   );
 
   const handleBackspaceKey = useCallback(
@@ -129,8 +143,21 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
   };
 
   const handleKeyUp: KeyboardEventHandler = (event: KeyboardEvent<HTMLImageElement>) => {
-    if (event.key !== "/") return;
-    handleOpenSelectMenu(event);
+    if (event.key === "/") {
+      handleOpenSelectMenu(event);
+      return;
+    }
+
+    // ``` 입력 시 빈 블록을 코드 블록으로 전환 (innerText로 정확히 백틱 3개만 있는지 확인)
+    if (event.key === "`" && contentEditableRef.current?.innerText === "```") {
+      setTag("code");
+      setHtml("");
+
+      setTimeout(() => {
+        if (!contentEditableRef.current) return;
+        moveCaretToEnd(contentEditableRef.current);
+      }, 0);
+    }
   };
 
   const handleSelectTag = (selectedTag: Tag) => {
