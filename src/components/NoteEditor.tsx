@@ -11,6 +11,8 @@ import useControlBlocks from "hooks/useControlBlocks";
 import usePrevBlocks from "hooks/usePrevBlocks";
 import useDragDrop from "hooks/useDragDrop";
 
+import areBlocksEqual from "utils/areBlocksEqual";
+
 import * as S from "styles/components/NoteEditorStyle";
 
 import type { NoteEditorProps } from "types/components";
@@ -60,7 +62,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
 
   useEffect(() => {
     if (prevBlocks.length === 0) return;
-    if (JSON.stringify(prevBlocks) === JSON.stringify(blocks)) return;
+    if (areBlocksEqual(prevBlocks, blocks)) return;
     if (isSharedPage || !noteId) return;
 
     onSaveStatus(false);
