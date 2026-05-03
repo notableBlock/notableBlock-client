@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useLocation } from "react-router";
 
 import NoteBlock from "components/NoteBlock";
@@ -33,7 +33,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
   } = useControlBlocks();
 
   const {
-    noteActions: { updateNoteOnServerDebounced },
+    noteActions: { updateNoteOnServerDebounced, flushNoteUpdate },
   } = useControlNotes();
 
   const prevBlocks = usePrevBlocks(blocks);
@@ -68,6 +68,48 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
     onSaveStatus(false);
     updateNoteOnServerDebounced(blocks, onSaveStatus, noteId);
   }, [blocks, noteId, prevBlocks, isSharedPage, updateNoteOnServerDebounced, onSaveStatus]);
+
+  // beforeunload 핸들러에서 stale closure 방지를 위해 최신 상태를 ref에 보관
+  const latestStateRef = useRef({ blocks, prevBlocks, isSharedPage, noteId });
+  useEffect(() => {
+    latestStateRef.current = { blocks, prevBlocks, isSharedPage, noteId };
+  });
+
+  // SPA 라우팅 이탈: 컴포넌트 unmount 시 디바운스 큐에 대기 중인 변경 즉시 저장
+  useEffect(() => {
+    return () => {
+      flushNoteUpdate();
+    };
+  }, [flushNoteUpdate]);
+
+  // 브라우저 닫기/새로고침: fetch keepalive로 페이지 종료 후에도 요청 보장
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const {
+        blocks: latestBlocks,
+        prevBlocks: latestPrevBlocks,
+        isSharedPage: latestIsShared,
+        noteId: latestNoteId,
+      } = latestStateRef.current;
+
+      if (latestIsShared || !latestNoteId) return;
+      if (areBlocksEqual(latestPrevBlocks, latestBlocks)) return;
+
+      fetch(`${import.meta.env.VITE_SERVER_URL}/notes`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        body: JSON.stringify({ data: { noteId: latestNoteId, blocks: latestBlocks } }),
+        credentials: "include",
+        keepalive: true,
+      });
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   useEffect(() => {
     if (!prevBlocks) return;

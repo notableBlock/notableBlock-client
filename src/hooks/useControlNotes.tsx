@@ -66,7 +66,7 @@ const useControlNotes = (setIsLoading?: Dispatch<SetStateAction<boolean>>) => {
     []
   );
 
-  const updateNoteOnServerDebounced = useDebouncedSave(updateNoteOnServer, {
+  const [updateNoteOnServerDebounced, flushNoteUpdate] = useDebouncedSave(updateNoteOnServer, {
     delay: 500,
     maxWait: 5000,
   });
@@ -252,6 +252,7 @@ const useControlNotes = (setIsLoading?: Dispatch<SetStateAction<boolean>>) => {
     noteActions: {
       handleCreateNewNote,
       updateNoteOnServerDebounced,
+      flushNoteUpdate,
       handleCopySharedNote,
       handleSelectMenu,
     },
