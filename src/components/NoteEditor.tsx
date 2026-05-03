@@ -95,13 +95,13 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
       if (latestIsShared || !latestNoteId) return;
       if (areBlocksEqual(latestPrevBlocks, latestBlocks)) return;
 
-      fetch(`${import.meta.env.VITE_SERVER_URL}/notes`, {
+      fetch(`${import.meta.env.VITE_SERVER_URL}/notes/${latestNoteId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
         },
-        body: JSON.stringify({ data: { noteId: latestNoteId, blocks: latestBlocks } }),
+        body: JSON.stringify({ data: { blocks: latestBlocks } }),
         credentials: "include",
         keepalive: true,
       });

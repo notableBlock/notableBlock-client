@@ -60,11 +60,8 @@ const getSharedBlocks = async (noteId: NoteId) => {
 
 const updateNote = async (blocks: Block[], noteId: NoteId) => {
   try {
-    await axios.put("/notes", {
-      data: {
-        noteId: noteId,
-        blocks: blocks,
-      },
+    await axios.put(`/notes/${noteId}`, {
+      data: { blocks },
     });
   } catch (err) {
     console.log(err);
