@@ -202,6 +202,22 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
           ref: contentEditableRef.current,
         });
         break;
+      case "divider":
+        // divider는 caret을 받지 못하므로 입력 흐름 유지를 위해 다음 빈 p 블록을 자동 추가
+        setTag(selectedTag);
+        setHtml("");
+        handleCloseSelectMenu();
+
+        if (!contentEditableRef.current) return;
+
+        handleAddBlock({
+          id,
+          html: "",
+          tag: "p",
+          imageUrl: "",
+          ref: contentEditableRef.current,
+        });
+        break;
       default:
         setTag(selectedTag);
         setHtml(htmlBackup);
