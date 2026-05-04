@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { matchSorter } from "match-sorter";
 
 import useSelectionStore from "stores/useSelectionStore";
@@ -59,6 +59,14 @@ function SelectMenu(
     };
   }, [handleKeyDown]);
 
+  // 키보드 네비게이션 시 선택 항목이 가시 영역 밖이면 자동 스크롤
+  // block: "nearest" — 이미 보이면 no-op이라 마우스 hover로 인한 점프 없음
+  const itemRefs = useRef<(HTMLElement | null)[]>([]);
+  useEffect(() => {
+    const target = itemRefs.current[selectionIndex];
+    target?.scrollIntoView({ block: "nearest" });
+  }, [selectionIndex]);
+
   const isExpanded = items.some((item) => "icon" in item && Boolean(item.icon));
 
   return (
@@ -71,7 +79,12 @@ function SelectMenu(
         const isFileInput = item.label === "로컬에서 가져오기";
 
         return isFileInput ? (
-          <S.MenuBox key={item.id}>
+          <S.MenuBox
+            key={item.id}
+            ref={(el: HTMLDivElement | null) => {
+              itemRefs.current[index] = el;
+            }}
+          >
             <S.FileItem
               type="file"
               accept=".tar"
@@ -87,6 +100,9 @@ function SelectMenu(
         ) : (
           <S.MenuItem
             key={item.id}
+            ref={(el: HTMLButtonElement | null) => {
+              itemRefs.current[index] = el;
+            }}
             $isSelected={index === selectionIndex}
             tabIndex={0}
             onClick={() => {
