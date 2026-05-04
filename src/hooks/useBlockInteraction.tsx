@@ -7,6 +7,7 @@ import { useBlockActions } from "contexts/BlockActionsContext";
 import { uploadNoteImage } from "services/noteServices";
 
 import moveCaretToEnd from "utils/moveCaretToEnd";
+import { toggleInlineCode } from "utils/inlineFormat";
 
 import type { KeyboardEvent, KeyboardEventHandler, Dispatch, SetStateAction } from "react";
 import type { ContentEditableEvent } from "react-contenteditable";
@@ -120,6 +121,25 @@ const useBlockInteraction = ({ block, htmlState, menuHandlers }: UseBlockInterac
 
     if (event.nativeEvent.isComposing && ["Enter", "ArrowUp", "ArrowDown"].includes(event.key))
       return;
+
+    // 인라인 포맷팅 단축키: Cmd/Ctrl + B / I / E
+    // - IME 조합 중에는 비활성 (조합 한글 손상 방지)
+    // - code 블록 안에서는 비활성 (blur 시 highlightAuto가 innerHTML을 덮어써 무의미)
+    const isMod = event.metaKey || event.ctrlKey;
+    if (isMod && !event.nativeEvent.isComposing && tag !== "code") {
+      const formatKey = event.key.toLowerCase();
+      if (formatKey === "b" || formatKey === "i" || formatKey === "e") {
+        event.preventDefault();
+        if (formatKey === "b") document.execCommand("bold");
+        else if (formatKey === "i") document.execCommand("italic");
+        else toggleInlineCode();
+        // execCommand/DOM 변형은 ContentEditable의 input 이벤트를 발생시켜
+        // handleChange → setHtml가 자동 트리거됨
+        setPreviousKey(event.key);
+        return;
+      }
+    }
+
     switch (event.key) {
       case "/":
         setHtmlBackup(userText);

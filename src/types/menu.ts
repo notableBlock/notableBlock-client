@@ -16,14 +16,20 @@ type SlashLabel =
   | "섹션 제목(소)"
   | "텍스트"
   | "이미지"
-  | "코드 블록";
+  | "코드 블록"
+  | "할 일"
+  | "인용"
+  | "구분선";
 type SlashId =
   | "page-title"
   | "heading"
   | "subheading"
   | "paragraph"
   | "image"
-  | "code-block";
+  | "code-block"
+  | "todo"
+  | "blockquote"
+  | "divider";
 export type ArrowKey = "ArrowUp" | "ArrowDown";
 
 export interface ManageItem {

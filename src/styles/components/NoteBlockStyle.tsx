@@ -36,6 +36,16 @@ const Layout = styled.div`
     line-height: 1.7;
   }
 
+  blockquote {
+    font-size: 0.9375rem;
+    font-weight: ${({ theme }) => theme.fontWeight.normal};
+    line-height: 1.7;
+    font-style: italic;
+    color: ${({ theme }) => theme.color.metaTextColor};
+    border-left: 3px solid ${({ theme }) => theme.color.mainColor};
+    margin: 0;
+  }
+
   code {
     display: block;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -165,4 +175,41 @@ const EmptyItem = styled.div`
   width: 1.5rem;
 `;
 
-export { Layout, TextItem, ImageItem, DragItem, EmptyItem };
+// 구분선 블록: ContentEditable 미사용, caret 통과는 useControlBlocks의 ArrowKey 스킵으로 처리
+const DividerItem = styled.div`
+  flex-grow: 1;
+  height: 1px;
+  margin: 0.75rem 0;
+  background-color: ${({ theme }) => theme.color.borderColor};
+`;
+
+interface TodoItemProps {
+  $checked?: boolean;
+}
+
+// 할 일 블록: 좌측 체크박스(비편집) + 우측 ContentEditable 텍스트
+const TodoItem = styled.div<TodoItemProps>`
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  & > input[type="checkbox"] {
+    margin-top: 0.7rem;
+    width: 1rem;
+    height: 1rem;
+    accent-color: ${({ theme }) => theme.color.mainColor};
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  & > p {
+    flex-grow: 1;
+    text-decoration: ${({ $checked }) => ($checked ? "line-through" : "none")};
+    color: ${({ $checked, theme }) =>
+      $checked ? theme.color.placeholderColor : theme.color.contentTextColor};
+    transition: color 0.15s ease, text-decoration 0.15s ease;
+  }
+`;
+
+export { Layout, TextItem, ImageItem, DragItem, EmptyItem, DividerItem, TodoItem };

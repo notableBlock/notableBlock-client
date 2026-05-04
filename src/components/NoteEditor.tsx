@@ -147,6 +147,7 @@ function NoteEditor({ onSaveStatus }: NoteEditorProps) {
                   html={block.html ?? ""}
                   tag={block.tag ?? "p"}
                   imageUrl={block.imageUrl ?? ""}
+                  checked={block.checked}
                   isFocusedBlock={block.id === focusedBlockId}
                   isSharedPage={isSharedPage}
                   isDragging={index === draggedIndex}

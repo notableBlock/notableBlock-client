@@ -1,4 +1,14 @@
-import { Heading1, Heading2, Heading3, Type, Image, Code } from "lucide-react";
+import {
+  Heading1,
+  Heading2,
+  Heading3,
+  Type,
+  Image,
+  Code,
+  Quote,
+  Minus,
+  CheckSquare,
+} from "lucide-react";
 
 import type { SlashItem } from "types/menu";
 
@@ -32,6 +42,27 @@ const tagsMenu: SlashItem[] = [
     label: "텍스트",
     icon: <Type size={ICON_SIZE} aria-hidden />,
     description: "일반 본문 텍스트",
+  },
+  {
+    id: "todo",
+    tag: "todo",
+    label: "할 일",
+    icon: <CheckSquare size={ICON_SIZE} aria-hidden />,
+    description: "체크박스가 있는 할 일 목록",
+  },
+  {
+    id: "blockquote",
+    tag: "blockquote",
+    label: "인용",
+    icon: <Quote size={ICON_SIZE} aria-hidden />,
+    description: "강조하고 싶은 인용 구문",
+  },
+  {
+    id: "divider",
+    tag: "divider",
+    label: "구분선",
+    icon: <Minus size={ICON_SIZE} aria-hidden />,
+    description: "섹션 사이의 가로 구분선",
   },
   {
     id: "image",

@@ -39,15 +39,10 @@ const useControlBlocks = () => {
         }
 
         const oldBlock = prevBlocks[updatedIndex];
+        // 부분 업데이트 호환을 위한 spread merge (todo 체크박스 토글 등 partial 호출 지원)
+        const mergedBlock = { ...oldBlock, ...updatedBlock };
         const newBlocks = prevBlocks.map((block, index) =>
-          index === updatedIndex
-            ? {
-                ...block,
-                tag: updatedBlock.tag,
-                html: updatedBlock.html,
-                imageUrl: updatedBlock.imageUrl,
-              }
-            : block
+          index === updatedIndex ? mergedBlock : block
         );
 
         const hasNoDuplicateImage = !newBlocks.some(
@@ -57,8 +52,8 @@ const useControlBlocks = () => {
 
         if (
           oldBlock.imageUrl &&
-          ((oldBlock.tag === "img" && updatedBlock.tag !== "img") ||
-            oldBlock.imageUrl !== updatedBlock.imageUrl) &&
+          ((oldBlock.tag === "img" && mergedBlock.tag !== "img") ||
+            oldBlock.imageUrl !== mergedBlock.imageUrl) &&
           hasNoDuplicateImage
         ) {
           deleteNoteImage(oldBlock.imageUrl);
@@ -115,7 +110,11 @@ const useControlBlocks = () => {
           arrowKey === "ArrowUp" ? currentBlockIndex - 1 : currentBlockIndex + 1;
         if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
 
-        while (prevBlocks[targetBlockIndex]?.tag === "img") {
+        // 포커스 불가 블록(이미지, 구분선)은 화살표 이동 시 스킵
+        while (
+          prevBlocks[targetBlockIndex]?.tag === "img" ||
+          prevBlocks[targetBlockIndex]?.tag === "divider"
+        ) {
           targetBlockIndex += arrowKey === "ArrowUp" ? -1 : 1;
 
           if (targetBlockIndex < 0 || targetBlockIndex >= prevBlocks.length) return prevBlocks;
@@ -151,12 +150,17 @@ const useControlBlocks = () => {
   const focusPrevBlock = useCallback(() => {
     let prevBlockIndex = prevBlocks.findIndex((block) => block.id === currentBlockId) - 1;
 
-    while (prevBlockIndex >= 0 && blocks[prevBlockIndex].tag === "img") {
+    while (
+      prevBlockIndex >= 0 &&
+      (blocks[prevBlockIndex].tag === "img" || blocks[prevBlockIndex].tag === "divider")
+    ) {
       prevBlockIndex--;
     }
 
     if (prevBlockIndex < 0) {
-      prevBlockIndex = blocks.findIndex((block) => block.tag !== "img");
+      prevBlockIndex = blocks.findIndex(
+        (block) => block.tag !== "img" && block.tag !== "divider"
+      );
     }
 
     if (prevBlockIndex < 0) return;

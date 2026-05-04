@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useState, useEffect } from "react";
 
 import SelectMenu from "components/SelectMenu";
 import Placeholder from "./common/Placeholder";
@@ -20,6 +20,7 @@ function NoteBlock(
     html: propsHtml,
     tag: propsTag,
     imageUrl: propsImageUrl,
+    checked: propsChecked,
     isFocusedBlock,
     isSharedPage,
     isDragging,
@@ -126,7 +127,7 @@ function NoteBlock(
       ) : (
         <S.EmptyItem />
       )}
-      {tag !== "img" && (
+      {tag !== "img" && tag !== "divider" && tag !== "todo" && (
         <S.TextItem
           innerRef={contentEditableRef}
           ref={ref}
@@ -141,7 +142,42 @@ function NoteBlock(
           disabled={isSharedPage}
         />
       )}
-      {tag !== "img" && isHTMLEmpty && isFocusedBlock && <Placeholder />}
+      {tag === "todo" && (
+        <S.TodoItem $checked={!!propsChecked}>
+          <input
+            type="checkbox"
+            checked={!!propsChecked}
+            disabled={isSharedPage}
+            onChange={(event) => {
+              // 체크 상태만 partial update — html/tag/imageUrl는 보존
+              onUpdatePage({ id, checked: event.target.checked });
+            }}
+            aria-label="할 일 체크"
+          />
+          <S.TextItem
+            innerRef={contentEditableRef}
+            ref={ref}
+            html={html}
+            tagName="p"
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
+            onBlur={handleBlur}
+            onClick={isSharedPage ? () => {} : onClick}
+            $isDragging={isDragging}
+            disabled={isSharedPage}
+          />
+        </S.TodoItem>
+      )}
+      {tag !== "img" && tag !== "divider" && isHTMLEmpty && isFocusedBlock && <Placeholder />}
+      {tag === "divider" && (
+        <S.DividerItem
+          ref={ref as React.ForwardedRef<HTMLDivElement>}
+          contentEditable={false}
+          role="separator"
+          aria-label="구분선"
+        />
+      )}
       {tag === "img" && (
         <S.ImageItem ref={ref} $isDragging={isDragging}>
           <input

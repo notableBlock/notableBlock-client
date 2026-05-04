@@ -27,6 +27,8 @@ export interface NoteBlockProps {
   html: string;
   tag: Tag;
   imageUrl: string;
+  // todo 블록 체크 상태 (todo 외 블록에서는 무시됨)
+  checked?: boolean;
   isFocusedBlock: boolean;
   isSharedPage: boolean;
   isDragging: boolean;
