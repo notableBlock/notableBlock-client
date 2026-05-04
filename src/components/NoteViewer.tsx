@@ -19,11 +19,9 @@ import shareIcon from "assets/images/share-icon.png";
 
 import * as S from "styles/components/NoteViewerStyle";
 
-import { ALLOWED_BLOCK_TAGS } from "constants/security";
-
 import type { MouseEvent } from "react";
 import type { NoteViewerProps } from "types/components";
-import type { Block, Tag } from "types/block";
+import type { Block } from "types/block";
 import type { Coordinate } from "types/menu";
 
 function NoteViewer({
@@ -113,9 +111,35 @@ function NoteViewer({
               return <code key={block.id} dangerouslySetInnerHTML={{ __html: highlighted }} />;
             }
 
-            // 텍스트 블록: 허용되지 않은 태그("script", "iframe" 등)는 "p"로 대체
-            const HTMLTag =
-              block.tag && ALLOWED_BLOCK_TAGS.has(block.tag) ? block.tag : ("p" as Tag);
+            // 구분선: 유효 HTML 태그가 아니므로 별도 렌더 (hr)
+            if (block.tag === "divider") {
+              return <S.DividerLine key={block.id} aria-hidden />;
+            }
+
+            // 할 일: 비활성 체크박스 + 텍스트, checked 상태에 따라 line-through
+            if (block.tag === "todo") {
+              const html = DOMPurify.sanitize(block.html ?? "");
+              return (
+                <S.TodoLine key={block.id} $checked={!!block.checked}>
+                  <input
+                    type="checkbox"
+                    checked={!!block.checked}
+                    disabled
+                    readOnly
+                    aria-label="할 일 체크"
+                  />
+                  <span dangerouslySetInnerHTML={{ __html: html }} />
+                </S.TodoLine>
+              );
+            }
+
+            // 텍스트 블록(h1/h2/h3/p/blockquote): 동적 JSX 태그는 유효 HTML 태그로만 좁힘
+            // (divider/todo/img/code는 위 분기에서 이미 처리됨)
+            const HTMLTag: "h1" | "h2" | "h3" | "p" | "blockquote" = (
+              ["h1", "h2", "h3", "p", "blockquote"] as const
+            ).includes(block.tag as "p")
+              ? (block.tag as "h1" | "h2" | "h3" | "p" | "blockquote")
+              : "p";
             const html = DOMPurify.sanitize(block.html ?? "");
 
             return <HTMLTag key={block.id} dangerouslySetInnerHTML={{ __html: html }} />;

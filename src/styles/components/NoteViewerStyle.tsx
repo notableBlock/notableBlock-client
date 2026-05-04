@@ -82,6 +82,16 @@ const Content = styled.div`
     color: ${({ theme }) => theme.color.metaTextColor};
   }
 
+  blockquote {
+    font-size: 0.9375rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: ${({ theme }) => theme.color.metaTextColor};
+    border-left: 3px solid ${({ theme }) => theme.color.mainColor};
+    padding-left: 0.75rem;
+    margin: 0.25rem 0;
+  }
+
   code {
     display: block;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -203,4 +213,51 @@ const PreviewImage = styled.img`
   }
 `;
 
-export { Layout, Header, Content, Footer, Section, Icon, Link, PreviewImage };
+// 뷰어용 구분선: hr 의미 그대로 사용
+const DividerLine = styled.hr`
+  width: 100%;
+  border: none;
+  border-top: 1px solid ${({ theme }) => theme.color.borderColor};
+  margin: 0.5rem 0;
+`;
+
+interface TodoLineProps {
+  $checked?: boolean;
+}
+
+// 뷰어용 todo: 비활성 체크박스 + 텍스트
+const TodoLine = styled.div<TodoLineProps>`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.25rem;
+
+  & > input[type="checkbox"] {
+    margin-top: 0.3rem;
+    accent-color: ${({ theme }) => theme.color.mainColor};
+    cursor: default;
+    flex-shrink: 0;
+  }
+
+  & > span {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    text-decoration: ${({ $checked }) => ($checked ? "line-through" : "none")};
+    color: ${({ $checked, theme }) =>
+      $checked ? theme.color.placeholderColor : theme.color.contentTextColor};
+  }
+`;
+
+export {
+  Layout,
+  Header,
+  Content,
+  Footer,
+  Section,
+  Icon,
+  Link,
+  PreviewImage,
+  DividerLine,
+  TodoLine,
+};
