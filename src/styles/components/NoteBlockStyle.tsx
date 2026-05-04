@@ -46,7 +46,8 @@ const Layout = styled.div`
     margin: 0;
   }
 
-  code {
+  /* 코드 블록(tag === "code")만 매칭 — 인라인 <code>(p 안 등)는 GlobalStyle이 처리 */
+  & > code {
     display: block;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 0.875rem;
